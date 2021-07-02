@@ -10,7 +10,7 @@ const books = [
     {name: 'Hi', genre: 'Fantasy', id: "4", authorId: '1'},
     {name: 'Super', genre: 'No Worries', id: "5", authorId: '2'},
     {name: 'Charge', genre: 'Cool', id: "6", authorId: '2'},
-    {name: 'Charles', genre: 'Coodsd', id: "7", authorId: '2'},
+    {name: 'Charles', genre: 'Coodsd', id: "7", authorId: '3'},
 ]
 
 const authors = [

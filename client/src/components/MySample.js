@@ -1,10 +1,10 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import {gql} from 'apollo-boost'
 import { graphql } from 'react-apollo'
+//connecting to redux store
 import {connect} from 'react-redux'
+//needed for multiple default export at the end of component
 import {compose} from 'redux'
-
-
 
 const getBooksQuerry = gql`
 {
@@ -17,7 +17,7 @@ const getBooksQuerry = gql`
     }
 `
 
-class BookList extends Component {
+class BookList extends PureComponent {
     increment = () => {
         this.props.dispatch({ type: "INCREMENT"})
     }
@@ -53,7 +53,8 @@ class BookList extends Component {
 const mapStateToProps = state => ({
     count: state.count
 })
-//graphql(getBooksQuerry)(BookList);
+
+//multiple Default Export
 export default compose(
     connect(mapStateToProps),
     graphql(getBooksQuerry)

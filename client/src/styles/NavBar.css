@@ -1,0 +1,62 @@
+.navbar-container {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-wrapper {
+    background-color: rgb(252, 252, 252);
+    width: 95%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.nav-menu {
+    display: flex;
+}
+a {
+    text-decoration: none;
+    
+}
+
+.nav-item {
+    height: auto;
+    width: 100px;
+    list-style: none;
+    color: #1D1F22;
+    font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 120%;
+}
+
+.logo {
+    height: 29.92669677734375px;
+width: 31.181222915649414px;
+border-radius: 0px;
+
+}
+.navbar-container-two {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-container-three {
+    width: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.basket {
+    height: 18px;
+width: 20px;
+border-radius: 0px;
+
+}

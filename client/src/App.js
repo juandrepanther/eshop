@@ -1,5 +1,7 @@
 import {Component} from 'react'
-import BookList from './components/BookList'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Category from './components/Category'
+import NavBar from './components/NavBar'
 import './styles/App.css'
 //Apollo imports
 import ApolloClient from 'apollo-boost'
@@ -14,22 +16,22 @@ const client = new ApolloClient({
   uri: 'http://localhost:4000/'
 })
 
-
-
 //Class main render
 class App extends Component {
   
   render() {
     
     return (
-      <Provider store={store}>
-      <ApolloProvider client={client}>
-      <div className='main'>
-        <h5 className="header">Hello Class Component</h5>
-        <BookList />
-      </div>
-      </ApolloProvider>
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+        <ApolloProvider client={client}>
+        
+          <NavBar />
+          <Category />
+        
+        </ApolloProvider>
+        </Provider>
+      </BrowserRouter>
     )
   }
 }

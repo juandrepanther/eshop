@@ -1,6 +1,6 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import { increment, decrement, addValue } from "../redux/counterSlice";
+import { addValue } from "../redux/rootReducers";
 
 //needed for multiple default export at the end of component
 
@@ -85,6 +85,6 @@ const mapStateToProps = (state) => ({
     count: state.counter.value
   });
   
-  const mapDispatchToProps = { increment, decrement, addValue };
+  const mapDispatchToProps = { addValue };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

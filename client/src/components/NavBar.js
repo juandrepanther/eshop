@@ -1,6 +1,6 @@
 import { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { addValue } from '../redux/rootReducers'
+import { addCategory } from '../redux/rootReducers'
 
 //needed for multiple default export at the end of component
 
@@ -27,8 +27,8 @@ class NavBar extends PureComponent {
   }
 
   update = () => {
-    const { addValue } = this.props
-    addValue(this.state.value)
+    const { addCategory } = this.props
+    addCategory(this.state.value)
   }
 
   render() {
@@ -71,22 +71,21 @@ class NavBar extends PureComponent {
               value={this.state.value}
               onChange={this.handleChange}
             ></input>
- 
+
             <button onClick={this.update}>Update</button>
           </div>
         </div>
       </>
     )
   }
-
 }
 
 //code ralted to REDUX states
 
 const mapStateToProps = (state) => ({
-  count: state.counter.value,
+  category: state.category.category,
 })
 
-const mapDispatchToProps = { addValue }
+const mapDispatchToProps = { addCategory }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

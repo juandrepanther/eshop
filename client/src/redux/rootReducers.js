@@ -1,22 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: ''
+  category: '',
 }
 
 export const rootReducers = createSlice({
-  name: 'counter',
+  name: 'category',
   initialState,
   reducers: {
-    
-    addValue: (state, action) => {
-        state.value = action.payload
+    addCategory: (state, action) => {
+      state.category = action.payload
     },
-    
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount, addValue } = rootReducers.actions
+export const { addCategory } = rootReducers.actions
 
 export default rootReducers.reducer

@@ -1,4 +1,9 @@
 import {PureComponent} from 'react'
+import {connect} from 'react-redux'
+import { increment, decrement, addValue } from "../redux/counterSlice";
+
+//needed for multiple default export at the end of component
+
 import '../styles/NavBar.css'
 import Logo from '../media/Logo.png'
 import Basket from '../media/Basket.png'
@@ -6,18 +11,37 @@ import Basket from '../media/Basket.png'
 import {NavLink} from 'react-router-dom'
 
 class NavBar extends PureComponent {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.update = this.update.bind(this)
+        
+    }
+        handleChange = (e) => {
+            console.log(e.target.value);
+        this.setState({
+            value: e.target.value
+        })   
+        }
+
+        update = () => {
+            const {addValue} = this.props
+            addValue(this.state.value)
+        }
 
     render() {
+        console.log(this.props);
         return (
           <>
            <div className='navbar-container'>
                <div className="navbar-wrapper">
                <div className='navbar-container-one'>
                    <ul className='nav-menu'>
-                        <NavLink to='/clothes'><li className='nav-item'>CLOTHES</li></NavLink>
-                        <NavLink to='/tech'><li className='nav-item'>TECH</li></NavLink>
-                        <NavLink to='/kids'><li className='nav-item'>KIDS</li></NavLink>
-                        
+                        <NavLink to='/clothes'><li className='nav-item' value='clothes'>CLOTHES</li></NavLink>
+                        <NavLink to='/tech'><li className='nav-item' value='tech'>TECH</li></NavLink>
                    </ul>
                </div>
                <div className='navbar-container-two'>
@@ -33,6 +57,18 @@ class NavBar extends PureComponent {
                     <img src={Basket} alt="" className="basket" />
                 </div>
                 </div>
+
+
+                <div>
+        <input type='text' value={this.state.value} onChange={this.handleChange}></input>
+        
+        <button onClick={this.update}>
+          Update
+        </button>
+        
+        </div>
+
+
            </div>
            
            </>  
@@ -42,4 +78,13 @@ class NavBar extends PureComponent {
     
 }
 
-export default NavBar
+//code ralted to REDUX states
+
+
+const mapStateToProps = (state) => ({
+    count: state.counter.value
+  });
+  
+  const mapDispatchToProps = { increment, decrement, addValue };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

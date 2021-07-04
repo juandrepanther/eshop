@@ -1,6 +1,10 @@
 import { PureComponent } from 'react'
 import {gql} from 'apollo-boost'
 import { graphql } from 'react-apollo'
+import {connect} from 'react-redux'
+import {compose} from 'redux'
+import '../styles/Category.css'
+import Card from './Card'
 
 
 const getAllProducts = gql`
@@ -37,7 +41,13 @@ class Category extends PureComponent {
         if (data.loading) {
             return <div>Loading Products...</div>
         } else {
-            return console.log('Products uploaded')
+            return (
+                <div className='products-container'>
+                    <div className='products-card-wrapper'>
+                        <Card data={this.props.data.category.products} />
+                    </div>
+                </div>
+            )
         }
     }
     render() {
@@ -50,5 +60,12 @@ class Category extends PureComponent {
     }
 }
 
+//REDUX CODES
+const mapStateToProps = state => ({
+  category: state.category
+})
 
-export default graphql(getAllProducts)(Category)
+export default compose(
+  graphql(getAllProducts),
+  connect(mapStateToProps)
+)(Category)

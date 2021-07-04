@@ -8,7 +8,7 @@ import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
 //Redux imports
 import {Provider} from 'react-redux'
-import {store} from './redux/reducers'
+import {store} from './redux/store'
 
 //Apollo Setup
 
@@ -25,10 +25,11 @@ class App extends Component {
       <BrowserRouter>
         <Provider store={store}>
         <ApolloProvider client={client}>
-        
           <NavBar />
-          <Category />
-        
+          <Switch>
+            <Route exact path='/clothes' component={Category}/>
+            <Route exact path='/tech' component={Category}/>
+          </Switch>
         </ApolloProvider>
         </Provider>
       </BrowserRouter>

@@ -35,17 +35,31 @@ const getAllProducts = gql`
 
 //here is my filtered cards. Filtered from props in Routes
 const ShowCards = ({ data }) => {
-  console.log(data)
-
-  return (
-    <>
-      <div className='products-container'>
-        <div className='products-card-wrapper'>
-          {`Props Transfared Succesfully to Route and Card.js must be deleted Next - ${data}`}
+  if (data) {
+    console.log(data)
+    return (
+      <>
+        <div className='products-container'>
+          <div className='products-card-wrapper'>
+            {data.map((product) => {
+              return (
+                <div className='card-container'>
+                  <img
+                    className='card-image'
+                    alt=''
+                    src={product.gallery[0]}></img>
+                  <div className='card-text-box'>
+                    <h3>{product.name}</h3>
+                    <h3>set currency in Redux first</h3>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 }
 
 class Category extends PureComponent {
@@ -62,6 +76,7 @@ class Category extends PureComponent {
         (i) => i.category === 'clothes'
       )
     }
+
     if (category === 'tech') return data_tech
     if (category === 'clothes') return data_clothes
   }

@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { BrowserRouter, Switch } from 'react-router-dom'
 
-import Category from './components/Category'
+import Hero from './components/Hero'
 import NavBar from './components/NavBar'
 import './styles/App.css'
 //Apollo imports
@@ -25,7 +25,7 @@ class App extends Component {
           <Provider store={store}>
             <ApolloProvider client={client}>
               <NavBar />
-              <Category />
+              <Hero />
             </ApolloProvider>
           </Provider>
         </Switch>

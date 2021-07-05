@@ -1,6 +1,7 @@
 import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { addCategory } from '../redux/rootReducers'
+import { changeCurrency } from '../redux/currencyReducer'
 
 //needed for multiple default export at the end of component
 
@@ -15,8 +16,10 @@ class NavBar extends PureComponent {
     super(props)
     this.state = {
       value: '',
+  
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleCurrency = this.handleCurrency.bind(this)
     this.update = this.update.bind(this)
   }
   handleChange = (e) => {
@@ -24,6 +27,10 @@ class NavBar extends PureComponent {
     this.setState({
       value: e.target.value,
     })
+  }
+  handleCurrency = (e) => {
+    const { changeCurrency } = this.props
+    changeCurrency(e.target.value)
   }
 
   update = () => {
@@ -55,11 +62,29 @@ class NavBar extends PureComponent {
               <img src={Logo} alt="" className="logo" />
             </div>
             <div className="navbar-container-three">
-              <select className="currency">
-                <option value="1" className="option"></option>
-                <option value="2" className="option"></option>
-                <option value="3" className="option"></option>
-                <option value="4" className="option"></option>
+              <select
+                className="currency"
+                value={this.props.currency}
+                onChange={this.handleCurrency}
+              >
+                <option value="icon" className="option">
+                  icon
+                </option>
+                <option value="USD" className="option">
+                  USD
+                </option>
+                <option value="GBP" className="option">
+                  GBP
+                </option>
+                <option value="AUD" className="option">
+                  AUD
+                </option>
+                <option value="JPY" className="option">
+                  JPY
+                </option>
+                <option value="RUB" className="option">
+                  RUB
+                </option>
               </select>
               <img src={Basket} alt="" className="basket" />
             </div>
@@ -84,8 +109,10 @@ class NavBar extends PureComponent {
 
 const mapStateToProps = (state) => ({
   category: state.category.category,
+  currency: state.currency.currency,
+  
 })
 
-const mapDispatchToProps = { addCategory }
+const mapDispatchToProps = { addCategory, changeCurrency }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import '../styles/Category.css'
+import Card from './Card'
 
 const getAllProducts = gql`
   {
@@ -33,36 +34,7 @@ const getAllProducts = gql`
   }
 `
 
-//here is my filtered cards. Filtered from props in Routes
-const ShowCards = ({ data }) => {
-  if (data) {
-    console.log(data)
-    return (
-      <>
-        <div className='products-container'>
-          <div className='products-card-wrapper'>
-            {data.map((product) => {
-              return (
-                <div className='card-container'>
-                  <img
-                    className='card-image'
-                    alt=''
-                    src={product.gallery[0]}></img>
-                  <div className='card-text-box'>
-                    <h3>{product.name}</h3>
-                    <h3>set currency in Redux first</h3>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </>
-    )
-  }
-}
-
-class Category extends PureComponent {
+class Hero extends PureComponent {
   displayProducts(category) {
     const data = this.props.data
     let data_tech
@@ -86,16 +58,16 @@ class Category extends PureComponent {
       <div>
         <Route
           exact
-          path='/clothes'
+          path="/clothes"
           component={(props) => (
-            <ShowCards {...props} data={this.displayProducts('clothes')} />
+            <Card {...props} data={this.displayProducts('clothes')} />
           )}
         />
         <Route
           exact
-          path='/tech'
+          path="/tech"
           component={(props) => (
-            <ShowCards {...props} data={this.displayProducts('tech')} />
+            <Card {...props} data={this.displayProducts('tech')} />
           )}
         />
       </div>
@@ -111,4 +83,4 @@ const mapStateToProps = (state) => ({
 export default compose(
   graphql(getAllProducts),
   connect(mapStateToProps)
-)(Category)
+)(Hero)

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import PDP from './PDP'
 import parse from 'html-react-parser'
 
 class Card extends PureComponent {
@@ -59,7 +58,9 @@ class Card extends PureComponent {
                     <div className='item-citeria-items'>
                       {criteria.items.map((decision) => {
                         return (
-                          <div className='item-citeria-items-box'>
+                          <div
+                            className='item-citeria-items-box'
+                            key={decision.id}>
                             {decision.displayValue}
                           </div>
                         )
@@ -72,7 +73,9 @@ class Card extends PureComponent {
             <h2>PRICE</h2>
 
             <button className='button-add-to-card'>ADD TO CART</button>
-            {parse(this.state.data.description)}
+            <div className='item-description'>
+              {parse(this.state.data.description)}
+            </div>
           </div>
         </div>
       </>

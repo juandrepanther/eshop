@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class Card extends Component {
+  open() {
+    alert('opened Modal')
+  }
   render() {
     const currency = this.props.currency //example USD 'string'
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
@@ -17,7 +20,11 @@ class Card extends Component {
             <div className="products-card-wrapper">
               {this.props.data.map((product, i) => {
                 return (
-                  <div key={i} className="card-container">
+                  <div
+                    key={i}
+                    className="card-container"
+                    onClick={() => this.open()}
+                  >
                     <img
                       className="card-image"
                       alt=""

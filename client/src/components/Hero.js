@@ -58,14 +58,14 @@ class Hero extends PureComponent {
       <div>
         <Route
           exact
-          path="/clothes"
+          path='/clothes'
           component={(props) => (
             <Card {...props} data={this.displayProducts('clothes')} />
           )}
         />
         <Route
           exact
-          path="/tech"
+          path='/tech'
           component={(props) => (
             <Card {...props} data={this.displayProducts('tech')} />
           )}
@@ -80,7 +80,4 @@ const mapStateToProps = (state) => ({
   category: state.category,
 })
 
-export default compose(
-  graphql(getAllProducts),
-  connect(mapStateToProps)
-)(Hero)
+export default compose(graphql(getAllProducts), connect(mapStateToProps))(Hero)

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PDP from './PDP'
+import parse from 'html-react-parser'
 
 class Card extends PureComponent {
   constructor(props) {
@@ -29,7 +30,7 @@ class Card extends PureComponent {
             {this.state.data.gallery.map((url, index) => {
               return (
                 <>
-                  <div className='pdp-section-gallery-thumbs'>
+                  <div className='pdp-section-gallery-thumbs' key={index}>
                     <img
                       alt=''
                       src={url}
@@ -48,18 +49,43 @@ class Card extends PureComponent {
               alt=''
               src={this.state.data.gallery[this.state.bigImageUrl]}></img>
           </div>
-          <div className='pdp-section-dashboard'>Hello</div>
+          <div className='pdp-section-dashboard'>
+            <p>{this.state.data.name}</p>
+            <div className='item-options'>
+              {this.state.data.attributes.map((criteria) => {
+                return (
+                  <div className='item-citeria-wrapper' key={criteria.id}>
+                    {`${criteria.name}:`}
+                    <div className='item-citeria-items'>
+                      {criteria.items.map((decision) => {
+                        return (
+                          <div className='item-citeria-items-box'>
+                            {decision.displayValue}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <h2>PRICE</h2>
+
+            <button className='button-add-to-card'>ADD TO CART</button>
+            {parse(this.state.data.description)}
+          </div>
         </div>
       </>
     )
   }
   render() {
-    console.log(this.state.data)
+    const test = this.state.data.attributes
     const currency = this.props.currency //example USD 'string'
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const index = currencyItem.indexOf(currency)
     const icons = ['$', '£', '$', '¥', '₽']
 
+    console.log(test)
     if (!this.props.data.length) {
       return null
     } else {

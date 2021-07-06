@@ -1,6 +1,6 @@
 import { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { addCategory } from '../redux/rootReducers'
+
 import { changeCurrency } from '../redux/currencyReducer'
 
 //needed for multiple default export at the end of component
@@ -14,32 +14,16 @@ import { NavLink } from 'react-router-dom'
 class NavBar extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      value: '',
-  
-    }
-    this.handleChange = this.handleChange.bind(this)
+
     this.handleCurrency = this.handleCurrency.bind(this)
-    this.update = this.update.bind(this)
   }
-  handleChange = (e) => {
-    console.log(e.target.value)
-    this.setState({
-      value: e.target.value,
-    })
-  }
+
   handleCurrency = (e) => {
     const { changeCurrency } = this.props
     changeCurrency(e.target.value)
   }
 
-  update = () => {
-    const { addCategory } = this.props
-    addCategory(this.state.value)
-  }
-
   render() {
-    console.log(this.props)
     return (
       <>
         <div className="navbar-container">
@@ -89,16 +73,6 @@ class NavBar extends PureComponent {
               <img src={Basket} alt="" className="basket" />
             </div>
           </div>
-
-          <div>
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            ></input>
-
-            <button onClick={this.update}>Update</button>
-          </div>
         </div>
       </>
     )
@@ -108,11 +82,9 @@ class NavBar extends PureComponent {
 //code ralted to REDUX states
 
 const mapStateToProps = (state) => ({
-  category: state.category.category,
   currency: state.currency.currency,
-  
 })
 
-const mapDispatchToProps = { addCategory, changeCurrency }
+const mapDispatchToProps = { changeCurrency }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

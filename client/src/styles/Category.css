@@ -39,7 +39,51 @@
     width: 100%;
     height: 60px;
     background-color:white;
+    margin-right: 16px;
 }
 .card-text-box h3 {
     margin-top: 5px;
+}
+.pdp-container {
+    box-sizing: border-box;
+    display: flex; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 50px;
+  
+  justify-content: center;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.pdp-section-gallery-thumbs-item {
+    cursor: pointer;
+}
+.pdp-section-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    height: 80%;
+}
+
+.pdp-section-dashboard {
+    width: 30%;
+    height: 80%;
+    background-color: coral;
+}
+.pdp-section-gallery-bigImage {
+    box-sizing: border-box;
+    width: 50%;
+    height: 80%;
+}
+.pdp-section-gallery-bigImage-image {
+    
+    width: auto;
+    height: 80%;
 }

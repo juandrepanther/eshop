@@ -93,11 +93,12 @@
     box-sizing: border-box;
     width: 50%;
     height: 80%;
+    margin: 0px 20px;
 }
 .pdp-section-gallery-bigImage-image {
-    
-    width: auto;
-    height: 80%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 .item-citeria-wrapper {
     font-family: Roboto Condensed;

@@ -9,19 +9,25 @@ class Card extends PureComponent {
       data: {},
       showPdp: false,
       bigImageUrl: 0,
+      cardIndex: 0,
     }
     this.handleClick = this.handleClick.bind(this)
     this.changeBigImage = this.changeBigImage.bind(this)
   }
 
-  handleClick(data) {
-    this.setState({ data: data, showPdp: true })
+  handleClick(data, cardIndex) {
+    this.setState({
+      ...this.state,
+      data: data,
+      showPdp: true,
+      cardIndex: cardIndex,
+    })
   }
 
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
   }
-  open() {
+  open(currencyIndex) {
     return (
       <>
         <div className='pdp-container'>
@@ -71,7 +77,18 @@ class Card extends PureComponent {
               })}
             </div>
             <h2>PRICE</h2>
-
+            {this.props.data.map((product) => {
+              return (
+                <>
+                  {/* {
+                    product.prices.map((i) => Object.values(i)[0])[
+                      currencyIndex
+                    ]
+                  } */}
+                  {product.prices.map((i) => console.log(i))}
+                </>
+              )
+            })}
             <button className='button-add-to-card'>ADD TO CART</button>
             <div className='item-description'>
               {parse(this.state.data.description)}
@@ -82,13 +99,14 @@ class Card extends PureComponent {
     )
   }
   render() {
-    const test = this.state.data.attributes
     const currency = this.props.currency //example USD 'string'
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const index = currencyItem.indexOf(currency)
+
     const icons = ['$', '£', '$', '¥', '₽']
 
-    console.log(test)
+    console.log(this.state)
+
     if (!this.props.data.length) {
       return null
     } else {
@@ -96,13 +114,13 @@ class Card extends PureComponent {
         <>
           <div className='products-container'>
             <div className='products-card-wrapper'>
-              {this.props.data.map((product, i) => {
+              {this.props.data.map((product, cardIndex) => {
                 return (
                   <div
-                    key={i}
+                    key={cardIndex}
                     className='card-container'
                     onClick={() => {
-                      this.handleClick(product)
+                      this.handleClick(product, cardIndex)
                     }}>
                     <img
                       className='card-image'
@@ -118,7 +136,7 @@ class Card extends PureComponent {
                   </div>
                 )
               })}
-              {this.state.showPdp && this.open()}
+              {this.state.showPdp && this.open(index)}
             </div>
           </div>
         </>

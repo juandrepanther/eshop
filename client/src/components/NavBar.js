@@ -21,6 +21,7 @@ class NavBar extends PureComponent {
 
     this.handleCurrency = this.handleCurrency.bind(this)
     this.showCartOverlay = this.showCartOverlay.bind(this)
+    this.closeCartOverlay = this.closeCartOverlay.bind(this)
   }
 
   handleCurrency = (e) => {
@@ -29,6 +30,9 @@ class NavBar extends PureComponent {
   }
   showCartOverlay = () => {
     this.setState({ ...this.state, showOverlay: !this.state.showOverlay })
+  }
+  closeCartOverlay() {
+    this.setState({ ...this.state, showOverlay: false })
   }
 
   render() {
@@ -39,7 +43,10 @@ class NavBar extends PureComponent {
             <div className='navbar-container-one'>
               <ul className='nav-menu'>
                 <NavLink to='/clothes'>
-                  <li className='nav-item' value='clothes'>
+                  <li
+                    className='nav-item'
+                    value='clothes'
+                    onClick={() => this.closeCartOverlay()}>
                     CLOTHES
                   </li>
                 </NavLink>

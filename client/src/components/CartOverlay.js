@@ -4,9 +4,56 @@ import '../styles/CartOverlay.css'
 import { connect } from 'react-redux'
 
 class CartOverlay extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      show: false,
+    }
+    this.showCart = this.showCart.bind(this)
+  }
+
+  showCart() {
+    this.setState({ show: true })
+  }
   render() {
     const items = this.props.items
-    console.log(items)
+
+    function Cart() {
+      return (
+        <div className='cart-container'>
+          <div className='cart-wrapper'>
+            <h5>CART</h5>
+            {items.map((item, index) => {
+              return (
+                <>
+                  <div className='cartoverlay-item' key={index}>
+                    <div className='cartoverlay-item-info'>
+                      <p>{item.data.name}</p>
+                      <p>Price 50$</p>
+                      <div className='cartoverlay-item-info-decisions-box-wrapper'>
+                        {Object.values(item.decisions).map((decision) => {
+                          return (
+                            <>
+                              <div className='cartoverlay-item-info-decisions-box'>
+                                {decision}
+                              </div>
+                            </>
+                          )
+                        })}
+                      </div>
+                    </div>
+                    <div className='cartoverlay-item-counter'>Counter</div>
+                    <div className='cartoverlay-item-image'>
+                      <img alt='' src={item.data.gallery[0]} />
+                    </div>
+                  </div>
+                </>
+              )
+            })}
+          </div>
+        </div>
+      )
+    }
 
     return (
       <>
@@ -36,7 +83,11 @@ class CartOverlay extends PureComponent {
                         })}
                       </div>
                     </div>
-                    <div className='cartoverlay-item-counter'>Counter</div>
+                    <div className='cartoverlay-item-counter'>
+                      <button>+</button>
+                      <div>{item.count}</div>
+                      <button>-</button>
+                    </div>
                     <div className='cartoverlay-item-image'>
                       <img alt='' src={item.data.gallery[0]} />
                     </div>
@@ -50,10 +101,15 @@ class CartOverlay extends PureComponent {
             <div className='cartoverlay-total-price'>$50</div>
           </div>
           <div className='cartoverlay-checkout-box'>
-            <button className='cartoverlay-checkout-bagBtn'>VIEW BAG</button>
+            <button
+              className='cartoverlay-checkout-bagBtn'
+              onClick={() => this.showCart()}>
+              VIEW BAG
+            </button>
             <button className='cartoverlay-checkout-checkBtn'>CHECK OUT</button>
           </div>
         </div>
+        {this.state.show && <Cart />}
       </>
     )
   }

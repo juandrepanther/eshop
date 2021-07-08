@@ -42,7 +42,11 @@ class Card extends PureComponent {
   }
   addItemsToStore() {
     const { addItems } = this.props
-    addItems({ data: this.state.data, decisions: this.state.decisions })
+    addItems({
+      data: this.state.data,
+      decisions: this.state.decisions,
+      count: 1,
+    })
 
     this.setState(initialData)
   }

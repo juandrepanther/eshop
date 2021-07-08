@@ -36,8 +36,6 @@ class Card extends PureComponent {
       ...this.state,
       decisions: { ...this.state.decisions, ...obj },
     })
-
-    console.log(this.state.decisions, this.state.data.items)
   }
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
@@ -47,8 +45,6 @@ class Card extends PureComponent {
     addItems({ data: this.state.data, decisions: this.state.decisions })
 
     this.setState(initialData)
-
-    console.log(this.props)
   }
   open(currencyIndex) {
     return (

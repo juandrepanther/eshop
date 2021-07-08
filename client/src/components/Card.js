@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
 
 class Card extends PureComponent {
@@ -15,6 +16,7 @@ class Card extends PureComponent {
     this.handleClick = this.handleClick.bind(this)
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
+    this.addItemsToStore = this.addItemsToStore.bind(this)
   }
 
   handleClick(data, cardIndex) {
@@ -26,17 +28,27 @@ class Card extends PureComponent {
     })
   }
 
+  //function for choosing criterias of Price (Sizes, Capacity etc.)
   saveToStore(criteria, decision) {
-    const obj = { [criteria]: decision }
+    const obj = { [criteria]: decision, writable: true }
     this.setState({
       ...this.state,
       decisions: Object.assign(this.state.decisions, obj),
     })
 
-    console.log(this.state.decisions)
+    console.log(this.state.decisions, this.state.data)
   }
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
+  }
+  addItemsToStore() {
+    const { addItems } = this.props
+    addItems({ data: this.state.data, decisions: this.state.decisions })
+    setTimeout(() => {
+      this.setState({ ...this.state, showPdp: false })
+    }, 2000)
+
+    console.log(this.props)
   }
   open(currencyIndex) {
     return (
@@ -75,7 +87,7 @@ class Card extends PureComponent {
                     <div className='item-citeria-items'>
                       {criteria.items.map((decision) => {
                         return (
-                          <div
+                          <button
                             value={decision.displayValue}
                             onClick={() =>
                               this.saveToStore(
@@ -86,7 +98,7 @@ class Card extends PureComponent {
                             className='item-citeria-items-box'
                             key={decision.id}>
                             {decision.displayValue}
-                          </div>
+                          </button>
                         )
                       })}
                     </div>
@@ -107,7 +119,11 @@ class Card extends PureComponent {
                 </>
               )
             })}
-            <button className='button-add-to-card'>ADD TO CART</button>
+            <button
+              onClick={() => this.addItemsToStore()}
+              className='button-add-to-card'>
+              ADD TO CART
+            </button>
             <div className='item-description'>
               {parse(this.state.data.description)}
             </div>
@@ -165,6 +181,7 @@ class Card extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
+  items: state.items.items,
 })
-
-export default connect(mapStateToProps)(Card)
+const mapDispatchToProps = { addItems }
+export default connect(mapStateToProps, mapDispatchToProps)(Card)

@@ -129,6 +129,10 @@ letter-spacing: 0em;
     color: white;
     transition: 0.2s;
 }
+.item-citeria-items-box:focus {
+    background-color:  rgb(49, 49, 49);
+    color: white;
+}
 .button-add-to-card {
     background-color: #5ECE7B;
     height: 52px;

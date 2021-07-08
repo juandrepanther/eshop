@@ -10,7 +10,7 @@ class Card extends PureComponent {
       showPdp: false,
       bigImageUrl: 0,
       cardIndex: 0,
-      decisions: []
+      decisions: [],
     }
     this.handleClick = this.handleClick.bind(this)
     this.changeBigImage = this.changeBigImage.bind(this)
@@ -25,23 +25,15 @@ class Card extends PureComponent {
       cardIndex: cardIndex,
     })
   }
-  saveToStore(criteriaA, decision) {
-    //firstly need to write checking if exist the same decision for criteria
-    //and then make possible to add new criteria to store decision state
-    //example input: Size:42
-    let ifExists = this.state.decisions.find(i => Object.keys(i)[0] === criteriaA);
-    if(ifExists){
-      console.log('Found the same Criteria and below it needs to be overwritten')
-      console.log(ifExists.criteriaA)
-      
-    } else {
-      console.log(criteriaA, decision)
-      this.setState( prevState => ({
-      decisions: [...prevState.decisions,  {[criteriaA]: decision}]
-      
-  }))}
-    
-  console.log(this.state)
+
+  saveToStore(criteria, decision) {
+    const obj = { [criteria]: decision }
+    this.setState({
+      ...this.state,
+      decisions: Object.assign(this.state.decisions, obj),
+    })
+
+    console.log(this.state.decisions)
   }
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
@@ -84,8 +76,13 @@ class Card extends PureComponent {
                       {criteria.items.map((decision) => {
                         return (
                           <div
-                          value={decision.displayValue}
-                          onClick={()=> this.saveToStore(criteria.name, decision.displayValue)}
+                            value={decision.displayValue}
+                            onClick={() =>
+                              this.saveToStore(
+                                criteria.name,
+                                decision.displayValue
+                              )
+                            }
                             className='item-citeria-items-box'
                             key={decision.id}>
                             {decision.displayValue}

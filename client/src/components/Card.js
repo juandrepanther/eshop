@@ -3,16 +3,17 @@ import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
 
+const initialData = {
+  data: {},
+  showPdp: false,
+  bigImageUrl: 0,
+  cardIndex: 0,
+  decisions: [],
+}
 class Card extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      data: {},
-      showPdp: false,
-      bigImageUrl: 0,
-      cardIndex: 0,
-      decisions: [],
-    }
+    this.state = initialData
     this.handleClick = this.handleClick.bind(this)
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
@@ -30,13 +31,13 @@ class Card extends PureComponent {
 
   //function for choosing criterias of Price (Sizes, Capacity etc.)
   saveToStore(criteria, decision) {
-    const obj = { [criteria]: decision, writable: true }
+    const obj = { [criteria]: decision }
     this.setState({
       ...this.state,
-      decisions: Object.assign(this.state.decisions, obj),
+      decisions: { ...this.state.decisions, ...obj },
     })
 
-    console.log(this.state.decisions, this.state.data)
+    console.log(this.state.decisions, this.state.data.items)
   }
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
@@ -44,9 +45,8 @@ class Card extends PureComponent {
   addItemsToStore() {
     const { addItems } = this.props
     addItems({ data: this.state.data, decisions: this.state.decisions })
-    setTimeout(() => {
-      this.setState({ ...this.state, showPdp: false })
-    }, 2000)
+
+    this.setState(initialData)
 
     console.log(this.props)
   }

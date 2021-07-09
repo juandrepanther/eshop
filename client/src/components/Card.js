@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
@@ -10,7 +10,7 @@ const initialData = {
   cardIndex: 0,
   decisions: [],
 }
-class Card extends PureComponent {
+class Card extends Component {
   constructor(props) {
     super(props)
     this.state = initialData
@@ -51,18 +51,19 @@ class Card extends PureComponent {
     this.setState(initialData)
   }
   open(currencyIndex) {
+    const productCurrencyArr = []
     return (
       <>
-        <div className='pdp-container'>
-          <div className='pdp-section-gallery'>
+        <div className="pdp-container">
+          <div className="pdp-section-gallery">
             {this.state.data.gallery.map((url, index) => {
               return (
                 <>
-                  <div className='pdp-section-gallery-thumbs' key={index}>
+                  <div className="pdp-section-gallery-thumbs" key={index}>
                     <img
-                      alt=''
+                      alt=""
                       src={url}
-                      className='pdp-section-gallery-thumbs-item'
+                      className="pdp-section-gallery-thumbs-item"
                       style={{ width: '100px', height: '100px' }}
                       onClick={() => this.changeBigImage(index)}
                     />
@@ -71,20 +72,21 @@ class Card extends PureComponent {
               )
             })}
           </div>
-          <div className='pdp-section-gallery-bigImage'>
+          <div className="pdp-section-gallery-bigImage">
             <img
-              className='pdp-section-gallery-bigImage-image'
-              alt=''
-              src={this.state.data.gallery[this.state.bigImageUrl]}></img>
+              className="pdp-section-gallery-bigImage-image"
+              alt=""
+              src={this.state.data.gallery[this.state.bigImageUrl]}
+            ></img>
           </div>
-          <div className='pdp-section-dashboard'>
+          <div className="pdp-section-dashboard">
             <p>{this.state.data.name}</p>
-            <div className='item-options'>
+            <div className="item-options">
               {this.state.data.attributes.map((criteria) => {
                 return (
-                  <div className='item-citeria-wrapper' key={criteria.id}>
+                  <div className="item-citeria-wrapper" key={criteria.id}>
                     {`${criteria.name}:`}
-                    <div className='item-citeria-items'>
+                    <div className="item-citeria-items">
                       {criteria.items.map((decision) => {
                         return (
                           <button
@@ -95,8 +97,9 @@ class Card extends PureComponent {
                                 decision.displayValue
                               )
                             }
-                            className='item-citeria-items-box'
-                            key={decision.id}>
+                            className="item-citeria-items-box"
+                            key={decision.id}
+                          >
                             {decision.displayValue}
                           </button>
                         )
@@ -107,24 +110,17 @@ class Card extends PureComponent {
               })}
             </div>
             <h2>PRICE</h2>
-            {this.props.data.map((product) => {
-              return (
-                <>
-                  {/* {
-                    product.prices.map((i) => Object.values(i)[0])[
-                      currencyIndex
-                    ]
-                  } */}
-                  {/* {product.prices.map((i) => console.log(i))} */}
-                </>
-              )
+            {this.state.data.prices.map((product) => {
+              productCurrencyArr.push(product)
             })}
+            <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
             <button
               onClick={() => this.addItemsToStore()}
-              className='button-add-to-card'>
+              className="button-add-to-card"
+            >
               ADD TO CART
             </button>
-            <div className='item-description'>
+            <div className="item-description">
               {parse(this.state.data.description)}
             </div>
           </div>
@@ -132,6 +128,7 @@ class Card extends PureComponent {
       </>
     )
   }
+
   render() {
     const currency = this.props.currency //example USD 'string'
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
@@ -139,28 +136,28 @@ class Card extends PureComponent {
 
     const icons = ['$', '£', '$', '¥', '₽']
 
-    //console.log(this.state)
-
     if (!this.props.data.length) {
       return null
     } else {
       return (
         <>
-          <div className='products-container'>
-            <div className='products-card-wrapper'>
+          <div className="products-container">
+            <div className="products-card-wrapper">
               {this.props.data.map((product, cardIndex) => {
                 return (
                   <div
                     key={cardIndex}
-                    className='card-container'
+                    className="card-container"
                     onClick={() => {
                       this.handleClick(product, cardIndex)
-                    }}>
+                    }}
+                  >
                     <img
-                      className='card-image'
-                      alt=''
-                      src={product.gallery[0]}></img>
-                    <div className='card-text-box'>
+                      className="card-image"
+                      alt=""
+                      src={product.gallery[0]}
+                    ></img>
+                    <div className="card-text-box">
                       <h3>{product.name}</h3>
                       <h3>
                         {`${icons[index]}`}

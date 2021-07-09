@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
@@ -10,7 +10,7 @@ const initialData = {
   cardIndex: 0,
   decisions: [],
 }
-class Card extends Component {
+class Card extends PureComponent {
   constructor(props) {
     super(props)
     this.state = initialData
@@ -43,12 +43,14 @@ class Card extends Component {
   addItemsToStore() {
     const { addItems } = this.props
     addItems({
+      id: Math.random(),
       data: this.state.data,
       decisions: this.state.decisions,
       count: 1,
     })
 
     this.setState(initialData)
+    console.log(this.props.items)
   }
   open(currencyIndex) {
     const productCurrencyArr = []

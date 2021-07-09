@@ -52,6 +52,7 @@ class Card extends Component {
   }
   open(currencyIndex) {
     const productCurrencyArr = []
+
     return (
       <>
         <div className="pdp-container">

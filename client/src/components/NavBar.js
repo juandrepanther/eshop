@@ -38,56 +38,55 @@ class NavBar extends PureComponent {
   render() {
     return (
       <>
-        <div className='navbar-container'>
-          <div className='navbar-wrapper'>
-            <div className='navbar-container-one'>
-              <ul className='nav-menu'>
-                <NavLink to='/clothes'>
+        <div className="navbar-container">
+          <div className="navbar-wrapper">
+            <div className="navbar-container-one">
+              <ul className="nav-menu">
+                <NavLink to="/clothes">
                   <li
-                    className='nav-item'
-                    value='clothes'
-                    onClick={() => this.closeCartOverlay()}>
+                    className="nav-item"
+                    value="clothes"
+                    onClick={() => this.closeCartOverlay()}
+                  >
                     CLOTHES
                   </li>
                 </NavLink>
-                <NavLink to='/tech'>
-                  <li className='nav-item' value='tech'>
+                <NavLink to="/tech">
+                  <li className="nav-item" value="tech">
                     TECH
                   </li>
                 </NavLink>
               </ul>
             </div>
-            <div className='navbar-container-two'>
-              <img src={Logo} alt='' className='logo' />
+            <div className="navbar-container-two">
+              <img src={Logo} alt="" className="logo" />
             </div>
-            <div className='navbar-container-three'>
+            <div className="navbar-container-three">
               <select
-                className='currency'
+                className="currency"
                 value={this.props.currency}
-                onChange={this.handleCurrency}>
-                <option value='icon' className='option'>
-                  icon
+                onChange={this.handleCurrency}
+              >
+                <option value="USD" className="option">
+                  $ USD
                 </option>
-                <option value='USD' className='option'>
-                  USD
+                <option value="GBP" className="option">
+                  £ GBP
                 </option>
-                <option value='GBP' className='option'>
-                  GBP
+                <option value="AUD" className="option">
+                  $ AUD
                 </option>
-                <option value='AUD' className='option'>
-                  AUD
+                <option value="JPY" className="option">
+                  ¥ JPY
                 </option>
-                <option value='JPY' className='option'>
-                  JPY
-                </option>
-                <option value='RUB' className='option'>
-                  RUB
+                <option value="RUB" className="option">
+                  ₽ RUB
                 </option>
               </select>
               <img
                 src={Basket}
-                alt=''
-                className='basket'
+                alt=""
+                className="basket"
                 onClick={() => this.showCartOverlay()}
               />
             </div>

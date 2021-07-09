@@ -24,6 +24,7 @@ class CartOverlay extends PureComponent {
       id: itemId,
       number: 5,
     })
+    console.log(itemId)
   }
   render() {
     const items = this.props.items

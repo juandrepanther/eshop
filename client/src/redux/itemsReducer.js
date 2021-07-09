@@ -13,10 +13,9 @@ export const itemsReducer = createSlice({
       console.log('Added')
     },
     incrementCounter: (state, action) => {
-      const objChange = state.items.filter(
-        (item) => item.id === action.payload.id
-      )
-      console.log(objChange)
+      state.items.map((item) => {
+        console.log(item)
+      })
 
       // return {
       //   ...state,

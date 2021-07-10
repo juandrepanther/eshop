@@ -22,17 +22,29 @@ class NavBar extends PureComponent {
     this.handleCurrency = this.handleCurrency.bind(this)
     this.showCartOverlay = this.showCartOverlay.bind(this)
     this.closeCartOverlay = this.closeCartOverlay.bind(this)
+    this.showBasketItem = this.showBasketItem.bind(this)
   }
 
   handleCurrency = (e) => {
     const { changeCurrency } = this.props
     changeCurrency(e.target.value)
   }
+
   showCartOverlay = () => {
     this.setState({ ...this.state, showOverlay: !this.state.showOverlay })
   }
+
   closeCartOverlay() {
     this.setState({ ...this.state, showOverlay: false })
+  }
+
+  showBasketItem() {
+    const isItems = this.props.items
+    if (isItems.length != 0) {
+      return (
+        <div className="small-basket-counter">{this.props.items.length}</div>
+      )
+    }
   }
 
   render() {
@@ -83,12 +95,15 @@ class NavBar extends PureComponent {
                   ₽ RUB
                 </option>
               </select>
-              <img
-                src={Basket}
-                alt=""
-                className="basket"
-                onClick={() => this.showCartOverlay()}
-              />
+              <div className="basket-wrapper">
+                <img
+                  src={Basket}
+                  alt=""
+                  className="basket"
+                  onClick={() => this.showCartOverlay()}
+                />
+                {this.showBasketItem()}
+              </div>
             </div>
           </div>
           {this.state.showOverlay && <CartOverlay />}
@@ -102,6 +117,7 @@ class NavBar extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
+  items: state.items.items,
 })
 
 const mapDispatchToProps = { changeCurrency }

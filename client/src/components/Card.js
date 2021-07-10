@@ -64,8 +64,6 @@ class Card extends PureComponent {
   }
 
   open(currencyIndex) {
-    const productCurrencyArr = []
-
     return (
       <>
         <div className="pdp-container">
@@ -73,7 +71,7 @@ class Card extends PureComponent {
             {this.state.data.gallery.map((url, index) => {
               return (
                 <>
-                  <div className="pdp-section-gallery-thumbs" key={index}>
+                  <div className="pdp-section-gallery-thumbs" key={index + 50}>
                     <img
                       alt=""
                       src={url}
@@ -101,9 +99,10 @@ class Card extends PureComponent {
                   <div className="item-citeria-wrapper" key={criteria.id}>
                     {`${criteria.name}:`}
                     <div className="item-citeria-items">
-                      {criteria.items.map((decision) => {
+                      {criteria.items.map((decision, index) => {
                         return (
                           <button
+                            key={index}
                             value={decision.displayValue}
                             onClick={() =>
                               this.saveToStore(
@@ -112,7 +111,6 @@ class Card extends PureComponent {
                               )
                             }
                             className="item-citeria-items-box"
-                            key={decision.id}
                           >
                             {decision.displayValue}
                           </button>

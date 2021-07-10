@@ -27,9 +27,9 @@ class CartOverlay extends Component {
     const itemCurrencyArr = []
     const items = this.props.items
 
-    items.map((item) => {
+    items.map((item) =>
       item.data.prices.map((product) => itemCurrencyArr.push(product))
-    })
+    )
 
     if (itemCurrencyArr.length) {
       const currentCurrency = this.props.currency

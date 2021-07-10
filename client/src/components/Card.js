@@ -18,6 +18,7 @@ class Card extends PureComponent {
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
     this.addItemsToStore = this.addItemsToStore.bind(this)
+    this.getPrice = this.getPrice.bind(this)
   }
 
   handleClick(data, cardIndex) {
@@ -37,9 +38,11 @@ class Card extends PureComponent {
       decisions: { ...this.state.decisions, ...obj },
     })
   }
+
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
   }
+
   addItemsToStore() {
     const { addItems } = this.props
     addItems({
@@ -51,6 +54,15 @@ class Card extends PureComponent {
 
     this.setState(initialData)
   }
+
+  getPrice(currencyIndex) {
+    const productCurrencyArr = []
+    this.state.data.prices.map((product) => productCurrencyArr.push(product))
+    return (
+      <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+    )
+  }
+
   open(currencyIndex) {
     const productCurrencyArr = []
 
@@ -112,10 +124,7 @@ class Card extends PureComponent {
               })}
             </div>
             <h2>PRICE</h2>
-            {this.state.data.prices.map((product) =>
-              productCurrencyArr.push(product)
-            )}
-            <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+            {this.getPrice(currencyIndex)}
             <button
               onClick={() => this.addItemsToStore()}
               className="button-add-to-card"

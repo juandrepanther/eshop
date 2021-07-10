@@ -50,7 +50,6 @@ class Card extends PureComponent {
     })
 
     this.setState(initialData)
-    console.log(this.props.items)
   }
   open(currencyIndex) {
     const productCurrencyArr = []

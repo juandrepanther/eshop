@@ -1,10 +1,10 @@
-import { PureComponent } from 'react'
+import { Component } from 'react'
 import '../styles/CartOverlay.css'
 
 import { connect } from 'react-redux'
-import { incrementCounter } from '../redux/itemsReducer'
+import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 
-class CartOverlay extends PureComponent {
+class CartOverlay extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,14 +18,20 @@ class CartOverlay extends PureComponent {
   showCart() {
     this.setState({ ...this.state, show: true })
   }
-  updateCounter(itemId) {
-    const { incrementCounter } = this.props
-    incrementCounter({
-      id: itemId,
-      number: 5,
-    })
-    console.log(itemId)
+
+  updateCounter(itemId, task) {
+    const { incrementCounter, decrementCounter } = this.props
+    if (task === 'increment') {
+      incrementCounter({
+        id: itemId,
+      })
+    } else if (task === 'decrement') {
+      decrementCounter({
+        id: itemId,
+      })
+    }
   }
+
   render() {
     const items = this.props.items
     const currency = this.props.currency //example USD 'string'
@@ -83,7 +89,6 @@ class CartOverlay extends PureComponent {
           </div>
           <div className="cartoverlay-items-wrapper">
             {items.map((item, index) => {
-              console.log(item)
               return (
                 <>
                   <div key={item.id} className="cartoverlay-item" key={index}>
@@ -109,11 +114,17 @@ class CartOverlay extends PureComponent {
                       </div>
                     </div>
                     <div className="cartoverlay-item-counter">
-                      <button onClick={() => this.updateCounter(item.id)}>
+                      <button
+                        onClick={() => this.updateCounter(item.id, 'increment')}
+                      >
                         +
                       </button>
                       <div>{item.count}</div>
-                      <button>-</button>
+                      <button
+                        onClick={() => this.updateCounter(item.id, 'decrement')}
+                      >
+                        -
+                      </button>
                     </div>
                     <div className="cartoverlay-item-image">
                       <img alt="" src={item.data.gallery[0]} />
@@ -147,7 +158,7 @@ const mapStateToProps = (state) => ({
   items: state.items.items,
   currency: state.currency.currency,
 })
-const mapDispatchToProps = { incrementCounter }
+const mapDispatchToProps = { incrementCounter, decrementCounter }
 //here will be deleteItems reducer later on
 //const mapDispatchToProps = { changeCurrency }
 

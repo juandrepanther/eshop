@@ -13,24 +13,34 @@ export const itemsReducer = createSlice({
       console.log('Added')
     },
     incrementCounter: (state, action) => {
-      state.items.map((item) => {
-        console.log(item)
-      })
+      const { id } = action.payload
 
-      // return {
-      //   ...state,
-      //   items: state.items.map((item) => {
-      //     if (item.id === action.payload.id) {
-      //       item.count = 30
-      //       return item
-      //     }
-      //   }),
-      // }
+      return {
+        ...state.items,
+        items: state.items.map((item) =>
+          item.id === id ? { ...item, count: item.count + 1 } : item
+        ),
+      }
+    },
+    decrementCounter: (state, action) => {
+      const { id } = action.payload
+
+      return {
+        ...state.items,
+        items: state.items.map((item) => {
+          if (item.count >= 2) {
+            return item.id === id ? { ...item, count: item.count - 1 } : item
+          } else {
+            return item
+          }
+        }),
+      }
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addItems, incrementCounter } = itemsReducer.actions
+export const { addItems, incrementCounter, decrementCounter } =
+  itemsReducer.actions
 
 export default itemsReducer.reducer

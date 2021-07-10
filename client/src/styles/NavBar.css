@@ -32,7 +32,12 @@ a {
   font-size: 16px;
   line-height: 120%;
 }
-
+.currency-options-bar {
+  width: 33px;
+  border: none;
+  font-size: 18px;
+  margin-right: 20px;
+}
 .logo {
   height: 29.92669677734375px;
   width: 31.181222915649414px;

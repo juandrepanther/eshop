@@ -40,7 +40,7 @@ class NavBar extends PureComponent {
 
   showBasketItem() {
     const isItems = this.props.items
-    if (isItems.length != 0) {
+    if (isItems.length !== 0) {
       return (
         <div className="small-basket-counter">{this.props.items.length}</div>
       )
@@ -75,7 +75,7 @@ class NavBar extends PureComponent {
             </div>
             <div className="navbar-container-three">
               <select
-                className="currency"
+                className="currency-options-bar"
                 value={this.props.currency}
                 onChange={this.handleCurrency}
               >

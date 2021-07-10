@@ -76,7 +76,7 @@ class CartOverlay extends Component {
 
     return (
       <div className="cart-container">
-        {items.map((item) => {
+        {items.map(() => {
           return (
             <div className="cart-wrapper">
               <h5>CART</h5>

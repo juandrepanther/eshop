@@ -10,13 +10,48 @@ class CartOverlay extends Component {
     this.state = {
       show: false,
       count: 1,
+      item: [],
     }
     this.showCart = this.showCart.bind(this)
     this.updateCounter = this.updateCounter.bind(this)
+    this.getTotal = this.getTotal.bind(this)
+    this.getPrice = this.getPrice.bind(this)
   }
 
   showCart() {
     this.setState({ ...this.state, show: true })
+  }
+
+  getTotal() {
+    const itemCurrencyArr = []
+    const items = this.props.items
+
+    items.map((item) => {
+      item.data.prices.map((product) => itemCurrencyArr.push(product))
+    })
+
+    if (itemCurrencyArr.length) {
+      const currentCurrency = this.props.currency
+      const countersArr = this.props.items.map((item) => item.count)
+      const res = []
+
+      itemCurrencyArr
+        .filter((item) => item.currency === currentCurrency)
+        .map((item) => item.amount)
+        .forEach((price, priceIndex) =>
+          res.push(Math.floor(price * countersArr[priceIndex] * 100) / 100)
+        )
+
+      return res.reduce((a, b) => a + b).toFixed(2)
+    } else return '0'
+  }
+
+  getPrice(item, currencyIndex) {
+    const itemCurrencyArr = [] //fullfiled and updated array
+    item.data.prices.map((product) => itemCurrencyArr.push(product))
+    return (
+      <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+    )
   }
 
   updateCounter(itemId, task) {
@@ -37,23 +72,19 @@ class CartOverlay extends Component {
     const currency = this.props.currency //example USD 'string'
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const currencyIndex = currencyItem.indexOf(currency)
-    const itemCurrencyArr = []
 
     function Cart() {
       return (
         <div className="cart-container">
           <div className="cart-wrapper">
             <h5>CART</h5>
-            {items.map((item, index) => {
+            {items.map((item) => {
               return (
                 <>
-                  <div className="cartoverlay-item" key={index}>
+                  <div className="cartoverlay-item" key={item.id}>
                     <div className="cartoverlay-item-info">
                       <p>{item.data.name}</p>
-                      {item.data.prices.map((product) => {
-                        itemCurrencyArr.push(product)
-                      })}
-                      <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+                      {this.getPrice(item, currencyIndex)}
                       <div className="cartoverlay-item-info-decisions-box-wrapper">
                         {Object.values(item.decisions).map((decision) => {
                           return (
@@ -88,16 +119,13 @@ class CartOverlay extends Component {
               : `My Bag ${items.length} items`}
           </div>
           <div className="cartoverlay-items-wrapper">
-            {items.map((item, index) => {
+            {items.map((item) => {
               return (
                 <>
-                  <div key={item.id} className="cartoverlay-item" key={index}>
+                  <div key={item.id} className="cartoverlay-item">
                     <div className="cartoverlay-item-info">
                       <p>{item.data.name}</p>
-                      {item.data.prices.map((product) => {
-                        itemCurrencyArr.push(product)
-                      })}
-                      <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+                      {this.getPrice(item, currencyIndex)}
                       <div className="cartoverlay-item-info-decisions-box-wrapper">
                         {Object.values(item.decisions).map((decision) => {
                           return (
@@ -136,7 +164,9 @@ class CartOverlay extends Component {
           </div>
           <div className="cartoverlay-total-box">
             <div className="cartoverlay-total-text">Total</div>
-            <div className="cartoverlay-total-price">$50</div>
+            <div className="cartoverlay-total-price">{`${
+              this.props.currency
+            } ${this.getTotal()}`}</div>
           </div>
           <div className="cartoverlay-checkout-box">
             <button

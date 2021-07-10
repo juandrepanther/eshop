@@ -112,9 +112,9 @@ class Card extends PureComponent {
               })}
             </div>
             <h2>PRICE</h2>
-            {this.state.data.prices.map((product) => {
+            {this.state.data.prices.map((product) =>
               productCurrencyArr.push(product)
-            })}
+            )}
             <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
             <button
               onClick={() => this.addItemsToStore()}

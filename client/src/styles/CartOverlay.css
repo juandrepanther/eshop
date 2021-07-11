@@ -61,6 +61,19 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.cartoverlay-item-counter > button {
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  color:black;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
 .cartoverlay-item-image {
   flex-grow: 1;
@@ -130,6 +143,22 @@
   transition: 0.2s;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .cart-container {
   position: absolute;
   top: 50px;
@@ -154,9 +183,94 @@
 }
 .cart-wrapper {
   height: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding-left: 300px;
-  padding-right: 100px;
+  justify-content: flex-start;
+}
+
+
+
+
+
+
+
+.cart-header {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.cart-items-wrapper {
+  width: 100%;
+  height: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cart-item {
+  height: 137px;
+  margin: 5px 0px;
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  padding: 5px 0px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.cart-item-info {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.cart-item-info > p {
+  flex-grow: 1;
+}
+.cart-item-counter {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cart-item-counter > button {
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  color:black;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cart-item-image {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart-item-image img {
+  width: 105px;
+  height: 137px;
+}
+.cart-item-info-decisions-box-wrapper {
+  display: flex;
+}
+.cart-item-info-decisions-box {
+  width: auto;
+  height: 24px;
+  border: 1px solid black;
+  padding: 7px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
 }

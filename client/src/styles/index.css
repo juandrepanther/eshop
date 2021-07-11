@@ -5,5 +5,6 @@
 }
 body {
   max-width: 1440px;
-  margin: auto;
+  margin: 0 auto !important; 
+	float: none !important;
 }

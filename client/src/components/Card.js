@@ -31,17 +31,6 @@ class Card extends PureComponent {
     })
   }
 
-  // notInStock(data) {
-  //   if (!data.inStock) {
-  //     const element = document.querySelector('.card-container')
-  //     //element.classList.add('notInStock')
-  //     console.log('not in Stock')
-  //     console.log(element)
-  //   } else {
-  //     console.log('inStock')
-  //   }
-  // }
-
   //function for choosing criterias of Price (Sizes, Capacity etc.)
   saveToStore(criteria, decision) {
     const obj = { [criteria]: decision }
@@ -71,23 +60,23 @@ class Card extends PureComponent {
     const productCurrencyArr = []
     this.state.data.prices.map((product) => productCurrencyArr.push(product))
     return (
-      <div className='pdp-section-dashboard-valid-price'>{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+      <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
     )
   }
 
   open(currencyIndex) {
     return (
       <>
-        <div className='pdp-container'>
-          <div className='pdp-section-gallery'>
+        <div className="pdp-container">
+          <div className="pdp-section-gallery">
             {this.state.data.gallery.map((url, index) => {
               return (
                 <>
-                  <div className='pdp-section-gallery-thumbs' key={index + 50}>
+                  <div className="pdp-section-gallery-thumbs" key={index + 50}>
                     <img
-                      alt=''
+                      alt=""
                       src={url}
-                      className='pdp-section-gallery-thumbs-item'
+                      className="pdp-section-gallery-thumbs-item"
                       style={{ width: '100px', height: '100px' }}
                       onClick={() => this.changeBigImage(index)}
                     />
@@ -96,20 +85,21 @@ class Card extends PureComponent {
               )
             })}
           </div>
-          <div className='pdp-section-gallery-bigImage'>
+          <div className="pdp-section-gallery-bigImage">
             <img
-              className='pdp-section-gallery-bigImage-image'
-              alt=''
-              src={this.state.data.gallery[this.state.bigImageUrl]}></img>
+              className="pdp-section-gallery-bigImage-image"
+              alt=""
+              src={this.state.data.gallery[this.state.bigImageUrl]}
+            ></img>
           </div>
-          <div className='pdp-section-dashboard'>
+          <div className="pdp-section-dashboard">
             <p>{this.state.data.name}</p>
-            <div className='item-options'>
+            <div className="item-options">
               {this.state.data.attributes.map((criteria) => {
                 return (
-                  <div className='item-citeria-wrapper' key={criteria.id}>
+                  <div className="item-citeria-wrapper" key={criteria.id}>
                     {`${criteria.name}:`}
-                    <div className='item-citeria-items'>
+                    <div className="item-citeria-items">
                       {criteria.items.map((decision, index) => {
                         return (
                           <button
@@ -121,7 +111,8 @@ class Card extends PureComponent {
                                 decision.displayValue
                               )
                             }
-                            className='item-citeria-items-box'>
+                            className="item-citeria-items-box"
+                          >
                             {decision.displayValue}
                           </button>
                         )
@@ -135,10 +126,11 @@ class Card extends PureComponent {
             {this.getPrice(currencyIndex)}
             <button
               onClick={() => this.addItemsToStore()}
-              className='button-add-to-card'>
+              className="button-add-to-card"
+            >
               ADD TO CART
             </button>
-            <div className='item-description'>
+            <div className="item-description">
               {parse(this.state.data.description)}
             </div>
           </div>
@@ -159,8 +151,8 @@ class Card extends PureComponent {
     } else {
       return (
         <>
-          <div className='products-container'>
-            <div className='products-card-wrapper'>
+          <div className="products-container">
+            <div className="products-card-wrapper">
               {this.props.data.map((product, cardIndex) => {
                 if (product.inStock) {
                   return (
@@ -169,12 +161,14 @@ class Card extends PureComponent {
                       className={`card-container ${stockOptions[0]}`}
                       onClick={() => {
                         this.handleClick(product, cardIndex)
-                      }}>
+                      }}
+                    >
                       <img
-                        className='card-image'
-                        alt=''
-                        src={product.gallery[0]}></img>
-                      <div className='card-text-box'>
+                        className="card-image"
+                        alt=""
+                        src={product.gallery[0]}
+                      ></img>
+                      <div className="card-text-box">
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}
@@ -191,14 +185,15 @@ class Card extends PureComponent {
                   return (
                     <div
                       key={cardIndex}
-                      className={`card-container ${stockOptions[1]}`}>
+                      className={`card-container ${stockOptions[1]}`}
+                    >
                       <img
-                        className='card-image'
-                        alt=''
+                        className="card-image"
+                        alt=""
                         src={product.gallery[0]}
                       />
                       <h5>OUT OF STOCK</h5>
-                      <div className='card-text-box'>
+                      <div className="card-text-box">
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}

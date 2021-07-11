@@ -1,174 +1,167 @@
 .products-container {
-    width: 100%;
-    height: 100vh;
-    
+  width: 100%;
+  height: 100vh;
 }
 
 .products-card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    width: 100%;
-    
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 100%;
 }
 
 .card-container {
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    
-    align-items: center;
-    
-    width: 386px;
-    margin: 20px;
-    padding-left: 16px;
-    cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  width: 386px;
+  margin: 20px;
+  padding-left: 16px;
+  cursor: pointer;
 }
 .notInStock {
-    opacity: 0.4;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .notInStock > h5 {
-    position: absolute;
-    top: 50%;
-    color: black;
-    z-index: 1;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 38px;
-    letter-spacing: 0px;
+  position: absolute;
+  top: 50%;
+  color: black;
+  z-index: 1;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0px;
 }
 .card-container:hover {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .card-image {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 .card-text-box {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background-color:white;
-    margin-right: 16px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  margin-right: 16px;
 }
 .card-text-box h3 {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 .pdp-container {
-    box-sizing: border-box;
-    display: flex; 
-  position: fixed; 
-  z-index: 1; 
-  padding-top: 100px; 
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
   left: 0;
   top: 50px;
   justify-content: center;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   background-color: rgb(255, 255, 255);
   opacity: 0.96;
-  
 }
 
 .pdp-section-gallery-thumbs-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 .pdp-section-gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 10%;
-    height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10%;
+  height: 80%;
 }
 
 .pdp-section-dashboard {
-    display: flex;
-    flex-direction: column;
-    width: 292px;
-    height: 80%;
-    background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  width: 292px;
+  height: 80%;
+  background-color: rgb(255, 255, 255);
 }
-.pdp-section-dashboard > p{
-    
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 27px;
-    letter-spacing: 0em;
-    text-align: left;
-    
+.pdp-section-dashboard > p {
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 .pdp-section-gallery-bigImage {
-    box-sizing: border-box;
-    width: 50%;
-    height: 80%;
-    margin: 0px 20px;
+  box-sizing: border-box;
+  width: 50%;
+  height: 80%;
+  margin: 0px 20px;
 }
 .pdp-section-gallery-bigImage-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 .item-citeria-wrapper {
-    font-family: Roboto Condensed;
-font-size: 18px;
-font-style: normal;
-font-weight: 700;
-line-height: 18px;
-letter-spacing: 0em;
-
-
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
 }
 .item-citeria-items {
-    display: flex;
-    
+  display: flex;
 }
 .item-citeria-items-box {
-    cursor: pointer;
-    margin: 10px 10px 10px 0px;
-    width: 63px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items:center ;
-    border: 1px solid rgb(163, 163, 163);
+  cursor: pointer;
+  margin: 10px 10px 10px 0px;
+  width: 63px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(163, 163, 163);
 }
 .item-citeria-items-box:hover {
-    background-color: rgb(49, 49, 49);
-    color: white;
-    transition: 0.2s;
+  background-color: rgb(49, 49, 49);
+  color: white;
+  transition: 0.2s;
 }
 .item-citeria-items-box:focus {
-    background-color:  rgb(49, 49, 49);
-    color: white;
+  background-color: rgb(49, 49, 49);
+  color: white;
 }
 .button-add-to-card {
-    background-color: #5ECE7B;
-    height: 52px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 19px;
-    letter-spacing: 0em;
-    border: none;
-    color: white;
-    margin: 16px 0px;
-    cursor: pointer;
+  background-color: #5ece7b;
+  height: 52px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19px;
+  letter-spacing: 0em;
+  border: none;
+  color: white;
+  margin: 16px 0px;
+  cursor: pointer;
 }
 .button-add-to-card:hover {
-    background-color: #18a33d;
-    transition: 0.2s;
+  background-color: #18a33d;
+  transition: 0.2s;
 }
 .item-description {
-    overflow: auto;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 26px;
-    letter-spacing: 0em;
+  overflow: auto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0em;
 }

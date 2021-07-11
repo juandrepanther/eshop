@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import '../styles/Category.css'
 import Card from './Card'
+import MainCart from './MainCart'
 
 const getAllProducts = gql`
   {
@@ -58,18 +59,20 @@ class Hero extends PureComponent {
       <div>
         <Route
           exact
-          path='/clothes'
+          path="/clothes"
           component={(props) => (
             <Card {...props} data={this.displayProducts('clothes')} />
           )}
         />
         <Route
           exact
-          path='/tech'
+          path="/tech"
           component={(props) => (
             <Card {...props} data={this.displayProducts('tech')} />
           )}
         />
+
+        <Route exact path="/cart" component={MainCart} />
       </div>
     )
   }

@@ -197,7 +197,29 @@
   overflow: auto;
   justify-content: flex-start;
 }
-
+.arrow-left {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  cursor: pointer;
+  border-radius: 40%;
+}
+.arrow-right {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  cursor: pointer;
+  border-radius: 60%;
+}
+.arrow-left:hover,
+.arrow-right:hover {
+  background-color: rgb(184, 184, 184);
+  transition: 0.2s;
+}
 .cart-header {
   width: 100%;
   height: 40px;
@@ -259,6 +281,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .cart-item-image img {
   width: 105px;

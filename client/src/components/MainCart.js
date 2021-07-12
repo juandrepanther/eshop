@@ -114,7 +114,5 @@ const mapStateToProps = (state) => ({
   currency: state.currency.currency,
 })
 const mapDispatchToProps = { incrementCounter, decrementCounter, deleteItem }
-//here will be deleteItems reducer later on
-//const mapDispatchToProps = { changeCurrency }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainCart)

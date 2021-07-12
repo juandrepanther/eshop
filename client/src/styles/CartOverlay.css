@@ -77,6 +77,7 @@
 }
 
 .cartoverlay-item-image {
+  position: relative;
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -85,6 +86,24 @@
 .cartoverlay-item-image img {
   width: 105px;
   height: 137px;
+}
+.delete-item {
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  color: red;
+  border: 1px solid rgb(255, 150, 150);
+  border-radius: 40%;
+  background-color: transparent;
+}
+.delete-item:hover {
+  background-color: red;
+  color: white;
+  transition: 0.2s;
 }
 .cartoverlay-item-info-decisions-box-wrapper {
   display: flex;
@@ -232,7 +251,9 @@
   align-items: center;
   cursor: pointer;
 }
-
+.cart-item-image-wrapper {
+  position: absolute;
+}
 .cart-item-image {
   flex-grow: 1;
   display: flex;

@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
+import {
+  incrementCounter,
+  decrementCounter,
+  deleteItem,
+} from '../redux/itemsReducer'
 
 class MainCart extends Component {
   constructor(props) {
@@ -12,6 +16,7 @@ class MainCart extends Component {
     }
     this.updateCounter = this.updateCounter.bind(this)
     this.getPrice = this.getPrice.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
   }
 
   getPrice(item, currencyIndex) {
@@ -34,6 +39,11 @@ class MainCart extends Component {
       })
     }
   }
+
+  deleteItem(itemIndex) {
+    const { deleteItem } = this.props
+    deleteItem({ itemIndex: itemIndex })
+  }
   render() {
     const items = this.props.items
     const currency = this.props.currency //example USD 'string'
@@ -44,7 +54,7 @@ class MainCart extends Component {
       <div className="cart-container">
         <div className="cart-wrapper">
           <h5>CART</h5>
-          {items.map((item) => {
+          {items.map((item, itemIndex) => {
             return (
               <>
                 <div className="cart-item" key={item.id}>
@@ -79,6 +89,12 @@ class MainCart extends Component {
                   <div className="cart-item-image">
                     <div className="cart-item-image-wrapper">
                       <img alt="" src={item.data.gallery[0]} />
+                      <button
+                        onClick={() => this.deleteItem(itemIndex)}
+                        className="delete-item"
+                      >
+                        X
+                      </button>
                     </div>
                     <div className="arrow-left">&#60;</div>
                     <div className="arrow-right">&#62;</div>
@@ -97,7 +113,7 @@ const mapStateToProps = (state) => ({
   items: state.items.items,
   currency: state.currency.currency,
 })
-const mapDispatchToProps = { incrementCounter, decrementCounter }
+const mapDispatchToProps = { incrementCounter, decrementCounter, deleteItem }
 //here will be deleteItems reducer later on
 //const mapDispatchToProps = { changeCurrency }
 

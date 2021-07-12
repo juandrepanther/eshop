@@ -1,6 +1,7 @@
 .products-container {
+  position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .products-card-wrapper {
@@ -58,19 +59,17 @@
   margin-top: 5px;
 }
 .pdp-container {
+  position: absolute;
   box-sizing: border-box;
   display: flex;
-  position: fixed;
   z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 50px;
+  top: 20px;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgb(255, 255, 255);
-  opacity: 0.96;
+  backdrop-filter: blur(10px);
 }
 
 .pdp-section-gallery-thumbs-item {
@@ -106,7 +105,7 @@
   margin: 0px 20px;
 }
 .pdp-section-gallery-bigImage-image {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }
@@ -131,6 +130,7 @@
   align-items: center;
   border: 1px solid rgb(163, 163, 163);
 }
+
 .item-citeria-items-box:hover {
   background-color: rgb(49, 49, 49);
   color: white;

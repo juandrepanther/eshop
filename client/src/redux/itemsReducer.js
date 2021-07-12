@@ -10,8 +10,13 @@ export const itemsReducer = createSlice({
   reducers: {
     addItems: (state, { payload }) => {
       state.items.push(payload)
-      console.log('Added')
     },
+
+    deleteItem: (state, action) => {
+      const { itemIndex } = action.payload
+      state.items.splice(itemIndex, 1)
+    },
+
     incrementCounter: (state, action) => {
       const { id } = action.payload
 
@@ -22,6 +27,7 @@ export const itemsReducer = createSlice({
         ),
       }
     },
+
     decrementCounter: (state, action) => {
       const { id } = action.payload
 
@@ -40,7 +46,7 @@ export const itemsReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItems, incrementCounter, decrementCounter } =
+export const { addItems, incrementCounter, decrementCounter, deleteItem } =
   itemsReducer.actions
 
 export default itemsReducer.reducer

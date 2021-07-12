@@ -3,7 +3,11 @@ import '../styles/CartOverlay.css'
 import { NavLink } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
+import {
+  incrementCounter,
+  decrementCounter,
+  deleteItem,
+} from '../redux/itemsReducer'
 
 class CartOverlay extends PureComponent {
   constructor(props) {
@@ -16,6 +20,7 @@ class CartOverlay extends PureComponent {
     this.updateCounter = this.updateCounter.bind(this)
     this.getTotal = this.getTotal.bind(this)
     this.getPrice = this.getPrice.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
   }
 
   getTotal() {
@@ -63,6 +68,11 @@ class CartOverlay extends PureComponent {
     }
   }
 
+  deleteItem(itemIndex) {
+    const { deleteItem } = this.props
+    deleteItem({ itemIndex: itemIndex })
+  }
+
   render() {
     const items = this.props.items
     const currency = this.props.currency //example USD 'string'
@@ -78,7 +88,7 @@ class CartOverlay extends PureComponent {
               : `My Bag ${items.length} items`}
           </div>
           <div className="cartoverlay-items-wrapper">
-            {items.map((item) => {
+            {items.map((item, itemIndex) => {
               return (
                 <>
                   <div key={item.id} className="cartoverlay-item">
@@ -115,6 +125,12 @@ class CartOverlay extends PureComponent {
                     </div>
                     <div className="cartoverlay-item-image">
                       <img alt="" src={item.data.gallery[0]} />
+                      <button
+                        onClick={() => this.deleteItem(itemIndex)}
+                        className="delete-item"
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 </>
@@ -152,6 +168,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   incrementCounter,
   decrementCounter,
+  deleteItem,
 }
 //here will be deleteItems reducer later on
 //const mapDispatchToProps = { changeCurrency }

@@ -19,7 +19,6 @@ class Card extends PureComponent {
     this.saveToStore = this.saveToStore.bind(this)
     this.addItemsToStore = this.addItemsToStore.bind(this)
     this.getPrice = this.getPrice.bind(this)
-    // this.notInStock = this.notInStock.bind(this)
   }
 
   handleClick(data, cardIndex) {

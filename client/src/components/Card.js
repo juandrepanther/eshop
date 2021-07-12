@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
-import nextId from 'react-id-generator'
 
 const initialData = {
   data: {},
@@ -23,12 +22,6 @@ class Card extends PureComponent {
     this.addItemsToStore = this.addItemsToStore.bind(this)
     this.getPrice = this.getPrice.bind(this)
   }
-  htmlId1 = nextId('one-')
-  htmlId2 = nextId('two-')
-  htmlId3 = nextId('three-')
-  htmlId4 = nextId('four-')
-  htmlId5 = nextId('five-')
-  htmlId6 = nextId('six-')
 
   handleClick(data, cardIndex) {
     this.setState({
@@ -47,7 +40,6 @@ class Card extends PureComponent {
       decisions: { ...this.state.decisions, ...obj },
       criteriaIndex: index,
     })
-    console.log(this.state.criteriaIndex)
   }
 
   changeBigImage(number) {

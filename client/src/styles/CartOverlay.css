@@ -24,9 +24,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
+  height: 30px;
 }
 
 .cartoverlay-items-wrapper {

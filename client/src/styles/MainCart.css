@@ -102,8 +102,21 @@
   align-items: center;
   cursor: pointer;
 }
-.cart-item-image-wrapper {
-  position: absolute;
+.cart-item-image-slider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+.slide-active {
+  opacity: 1;
+  transition-duration: 5s;
+  transition: scale(3);
 }
 .cart-item-image {
   flex-grow: 1;

@@ -14,10 +14,13 @@ class MainCart extends Component {
       show: false,
       count: 1,
       item: [],
+      imageIndex: 0,
     }
     this.updateCounter = this.updateCounter.bind(this)
     this.getPrice = this.getPrice.bind(this)
     this.deleteItem = this.deleteItem.bind(this)
+    this.nextSlide = this.nextSlide.bind(this)
+    this.prevSlide = this.prevSlide.bind(this)
   }
 
   getPrice(item, currencyIndex) {
@@ -45,6 +48,22 @@ class MainCart extends Component {
     const { deleteItem } = this.props
     deleteItem({ itemIndex: itemIndex })
   }
+
+  nextSlide(length) {
+    this.setState({
+      ...this.state,
+      imageIndex:
+        this.state.imageIndex === length - 1 ? 0 : this.state.imageIndex + 1,
+    })
+  }
+  prevSlide(length) {
+    this.setState({
+      ...this.state,
+      imageIndex:
+        this.state.imageIndex === 0 ? length - 1 : this.state.imageIndex - 1,
+    })
+  }
+
   render() {
     const items = this.props.items
     const currency = this.props.currency //example USD 'string'
@@ -56,6 +75,7 @@ class MainCart extends Component {
         <div className='cart-wrapper'>
           <h5>CART</h5>
           {items.map((item, itemIndex) => {
+            const length = item.data.gallery.length
             return (
               <div className='cart-item' key={item.id.toString()}>
                 <div className='cart-item-info' key={Math.random()}>
@@ -89,12 +109,23 @@ class MainCart extends Component {
                   </button>
                 </div>
                 <div className='cart-item-image' key={Math.random()}>
-                  <div className='cart-item-image-wrapper' key={Math.random()}>
-                    <img
-                      alt=''
-                      src={item.data.gallery[0]}
-                      key={Math.random()}
-                    />
+                  <div className='cart-item-image-slider' key={Math.random()}>
+                    {item.data.gallery.map((image, index) => {
+                      return (
+                        <div
+                          key={Math.random()}
+                          className={
+                            index === this.state.imageIndex
+                              ? 'slide-active'
+                              : 'slide'
+                          }>
+                          {index === this.state.imageIndex && (
+                            <img alt='' key={image} src={image} />
+                          )}
+                        </div>
+                      )
+                    })}
+
                     <button
                       key={Math.random()}
                       onClick={() => this.deleteItem(itemIndex)}
@@ -102,10 +133,16 @@ class MainCart extends Component {
                       X
                     </button>
                   </div>
-                  <div className='arrow-left' key={Math.random()}>
+                  <div
+                    className='arrow-left'
+                    key={Math.random()}
+                    onClick={() => this.prevSlide(length)}>
                     &#60;
                   </div>
-                  <div className='arrow-right' key={Math.random()}>
+                  <div
+                    onClick={() => this.nextSlide(length)}
+                    className='arrow-right'
+                    key={Math.random()}>
                     &#62;
                   </div>
                 </div>

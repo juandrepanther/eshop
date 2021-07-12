@@ -52,56 +52,64 @@ class MainCart extends Component {
     const currencyIndex = currencyItem.indexOf(currency)
 
     return (
-      <div className="cart-container">
-        <div className="cart-wrapper">
+      <div className='cart-container'>
+        <div className='cart-wrapper'>
           <h5>CART</h5>
           {items.map((item, itemIndex) => {
             return (
-              <>
-                <div className="cart-item" key={item.id}>
-                  <div className="cart-item-info">
-                    <p>{item.data.name}</p>
-                    {this.getPrice(item, currencyIndex)}
-                    <div className="cart-item-info-decisions-box-wrapper">
-                      {Object.values(item.decisions).map((decision) => {
-                        return (
-                          <>
-                            <div className="cart-item-info-decisions-box">
-                              {decision}
-                            </div>
-                          </>
-                        )
-                      })}
-                    </div>
-                  </div>
-                  <div className="cart-item-counter">
-                    <button
-                      onClick={() => this.updateCounter(item.id, 'increment')}
-                    >
-                      +
-                    </button>
-                    <div>{item.count}</div>
-                    <button
-                      onClick={() => this.updateCounter(item.id, 'decrement')}
-                    >
-                      -
-                    </button>
-                  </div>
-                  <div className="cart-item-image">
-                    <div className="cart-item-image-wrapper">
-                      <img alt="" src={item.data.gallery[0]} />
-                      <button
-                        onClick={() => this.deleteItem(itemIndex)}
-                        className="delete-item"
-                      >
-                        X
-                      </button>
-                    </div>
-                    <div className="arrow-left">&#60;</div>
-                    <div className="arrow-right">&#62;</div>
+              <div className='cart-item' key={item.id.toString()}>
+                <div className='cart-item-info' key={Math.random()}>
+                  <p key={Math.random()}>{item.data.name}</p>
+                  {this.getPrice(item, currencyIndex)}
+                  <div
+                    className='cart-item-info-decisions-box-wrapper'
+                    key={Math.random()}>
+                    {Object.values(item.decisions).map((decision) => {
+                      return (
+                        <div
+                          className='cart-item-info-decisions-box'
+                          key={Math.random()}>
+                          {decision}
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
-              </>
+                <div className='cart-item-counter' key={Math.random()}>
+                  <button
+                    onClick={() => this.updateCounter(item.id, 'increment')}
+                    key={Math.random()}>
+                    +
+                  </button>
+                  <div key={Math.random()}>{item.count}</div>
+                  <button
+                    onClick={() => this.updateCounter(item.id, 'decrement')}
+                    key={Math.random()}>
+                    -
+                  </button>
+                </div>
+                <div className='cart-item-image' key={Math.random()}>
+                  <div className='cart-item-image-wrapper' key={Math.random()}>
+                    <img
+                      alt=''
+                      src={item.data.gallery[0]}
+                      key={Math.random()}
+                    />
+                    <button
+                      key={Math.random()}
+                      onClick={() => this.deleteItem(itemIndex)}
+                      className='delete-item'>
+                      X
+                    </button>
+                  </div>
+                  <div className='arrow-left' key={Math.random()}>
+                    &#60;
+                  </div>
+                  <div className='arrow-right' key={Math.random()}>
+                    &#62;
+                  </div>
+                </div>
+              </div>
             )
           })}
         </div>

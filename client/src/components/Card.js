@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import parse from 'html-react-parser'
+import nextId from 'react-id-generator'
 
 const initialData = {
   data: {},
@@ -9,6 +10,8 @@ const initialData = {
   bigImageUrl: 0,
   cardIndex: 0,
   decisions: [],
+  criteriaIndex: '',
+  clickedBox: '',
 }
 class Card extends PureComponent {
   constructor(props) {
@@ -20,6 +23,12 @@ class Card extends PureComponent {
     this.addItemsToStore = this.addItemsToStore.bind(this)
     this.getPrice = this.getPrice.bind(this)
   }
+  htmlId1 = nextId('one-')
+  htmlId2 = nextId('two-')
+  htmlId3 = nextId('three-')
+  htmlId4 = nextId('four-')
+  htmlId5 = nextId('five-')
+  htmlId6 = nextId('six-')
 
   handleClick(data, cardIndex) {
     this.setState({
@@ -31,12 +40,14 @@ class Card extends PureComponent {
   }
 
   //function for choosing criterias of Price (Sizes, Capacity etc.)
-  saveToStore(criteria, decision) {
+  saveToStore([criteria, decision], index) {
     const obj = { [criteria]: decision }
     this.setState({
       ...this.state,
       decisions: { ...this.state.decisions, ...obj },
+      criteriaIndex: index,
     })
+    console.log(this.state.criteriaIndex)
   }
 
   changeBigImage(number) {
@@ -59,59 +70,55 @@ class Card extends PureComponent {
     const productCurrencyArr = []
     this.state.data.prices.map((product) => productCurrencyArr.push(product))
     return (
-      <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+      <div className='pdp-section-dashboard-valid-price'>{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
     )
   }
-
   open(currencyIndex) {
     return (
       <>
-        <div className="pdp-container">
-          <div className="pdp-section-gallery">
+        <div className='pdp-container'>
+          <div className='pdp-section-gallery'>
             {this.state.data.gallery.map((url, index) => {
               return (
-                <>
-                  <div className="pdp-section-gallery-thumbs" key={index + 50}>
-                    <img
-                      alt=""
-                      src={url}
-                      className="pdp-section-gallery-thumbs-item"
-                      style={{ width: '100px', height: '100px' }}
-                      onClick={() => this.changeBigImage(index)}
-                    />
-                  </div>
-                </>
+                <div className='pdp-section-gallery-thumbs' key={Math.random()}>
+                  <img
+                    key={url}
+                    alt=''
+                    src={url}
+                    className='pdp-section-gallery-thumbs-item'
+                    style={{ width: '100px', height: '100px' }}
+                    onClick={() => this.changeBigImage(index)}
+                  />
+                </div>
               )
             })}
           </div>
-          <div className="pdp-section-gallery-bigImage">
+          <div className='pdp-section-gallery-bigImage'>
             <img
-              className="pdp-section-gallery-bigImage-image"
-              alt=""
-              src={this.state.data.gallery[this.state.bigImageUrl]}
-            ></img>
+              className='pdp-section-gallery-bigImage-image'
+              alt=''
+              src={this.state.data.gallery[this.state.bigImageUrl]}></img>
           </div>
-          <div className="pdp-section-dashboard">
+          <div className='pdp-section-dashboard'>
             <p>{this.state.data.name}</p>
-            <div className="item-options">
-              {this.state.data.attributes.map((criteria) => {
+            <div className='item-options'>
+              {this.state.data.attributes.map((criteria, criteriaIndex) => {
                 return (
-                  <div className="item-citeria-wrapper" key={criteria.id}>
+                  <div className='item-citeria-wrapper' key={criteria.id}>
                     {`${criteria.name}:`}
-                    <div className="item-citeria-items">
+                    <div className='item-citeria-items' key={Math.random()}>
                       {criteria.items.map((decision, index) => {
                         return (
                           <button
-                            key={index}
+                            key={decision.id}
                             value={decision.displayValue}
                             onClick={() =>
                               this.saveToStore(
-                                criteria.name,
-                                decision.displayValue
+                                [criteria.name, decision.displayValue],
+                                index
                               )
                             }
-                            className="item-citeria-items-box"
-                          >
+                            className='item-citeria-items-box'>
                             {decision.displayValue}
                           </button>
                         )
@@ -125,11 +132,10 @@ class Card extends PureComponent {
             {this.getPrice(currencyIndex)}
             <button
               onClick={() => this.addItemsToStore()}
-              className="button-add-to-card"
-            >
+              className='button-add-to-card'>
               ADD TO CART
             </button>
-            <div className="item-description">
+            <div className='item-description'>
               {parse(this.state.data.description)}
             </div>
           </div>
@@ -139,7 +145,7 @@ class Card extends PureComponent {
   }
 
   render() {
-    const currency = this.props.currency //example USD 'string'
+    const currency = this.props.currency
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const index = currencyItem.indexOf(currency)
     const stockOptions = ['', 'notInStock']
@@ -150,24 +156,22 @@ class Card extends PureComponent {
     } else {
       return (
         <>
-          <div className="products-container">
-            <div className="products-card-wrapper">
+          <div className='products-container'>
+            <div className='products-card-wrapper'>
               {this.props.data.map((product, cardIndex) => {
                 if (product.inStock) {
                   return (
                     <div
-                      key={cardIndex}
+                      key={product.description}
                       className={`card-container ${stockOptions[0]}`}
                       onClick={() => {
                         this.handleClick(product, cardIndex)
-                      }}
-                    >
+                      }}>
                       <img
-                        className="card-image"
-                        alt=""
-                        src={product.gallery[0]}
-                      ></img>
-                      <div className="card-text-box">
+                        className='card-image'
+                        alt=''
+                        src={product.gallery[0]}></img>
+                      <div className='card-text-box'>
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}
@@ -183,16 +187,15 @@ class Card extends PureComponent {
                 } else {
                   return (
                     <div
-                      key={cardIndex}
-                      className={`card-container ${stockOptions[1]}`}
-                    >
+                      key={product.description}
+                      className={`card-container ${stockOptions[1]}`}>
                       <img
-                        className="card-image"
-                        alt=""
+                        className='card-image'
+                        alt=''
                         src={product.gallery[0]}
                       />
                       <h5>OUT OF STOCK</h5>
-                      <div className="card-text-box">
+                      <div className='card-text-box'>
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}

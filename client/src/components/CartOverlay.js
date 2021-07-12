@@ -48,10 +48,11 @@ class CartOverlay extends PureComponent {
   }
 
   getPrice(item, currencyIndex) {
-    const itemCurrencyArr = [] //fullfiled and updated array
+    const itemCurrencyArr = []
     item.data.prices.map((product) => itemCurrencyArr.push(product))
     return (
-      <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+      <p
+        key={Math.random()}>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
     )
   }
 
@@ -75,82 +76,76 @@ class CartOverlay extends PureComponent {
 
   render() {
     const items = this.props.items
-    const currency = this.props.currency //example USD 'string'
+    const currency = this.props.currency
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const currencyIndex = currencyItem.indexOf(currency)
-    console.log(this.props)
+
     return (
       <>
-        <div className="cartoverlay-container">
-          <div className="cartoverlay-header">
+        <div className='cartoverlay-container'>
+          <div className='cartoverlay-header'>
             {items.length === 1
               ? `My Bag ${items.length} item`
               : `My Bag ${items.length} items`}
           </div>
-          <div className="cartoverlay-items-wrapper">
+          <div className='cartoverlay-items-wrapper'>
             {items.map((item, itemIndex) => {
               return (
-                <>
-                  <div key={item.id} className="cartoverlay-item">
-                    <div className="cartoverlay-item-info">
-                      <p>{item.data.name}</p>
-                      {this.getPrice(item, currencyIndex)}
-                      <div className="cartoverlay-item-info-decisions-box-wrapper">
-                        {Object.values(item.decisions).map((decision) => {
-                          return (
-                            <>
-                              <div
-                                key={item.id}
-                                className="cartoverlay-item-info-decisions-box"
-                              >
-                                {decision}
-                              </div>
-                            </>
-                          )
-                        })}
-                      </div>
-                    </div>
-                    <div className="cartoverlay-item-counter">
-                      <button
-                        onClick={() => this.updateCounter(item.id, 'increment')}
-                      >
-                        +
-                      </button>
-                      <div>{item.count}</div>
-                      <button
-                        onClick={() => this.updateCounter(item.id, 'decrement')}
-                      >
-                        -
-                      </button>
-                    </div>
-                    <div className="cartoverlay-item-image">
-                      <img alt="" src={item.data.gallery[0]} />
-                      <button
-                        onClick={() => this.deleteItem(itemIndex)}
-                        className="delete-item"
-                      >
-                        X
-                      </button>
+                <div key={item.id} className='cartoverlay-item'>
+                  <div className='cartoverlay-item-info'>
+                    <p>{item.data.name}</p>
+                    {this.getPrice(item, currencyIndex)}
+                    <div
+                      className='cartoverlay-item-info-decisions-box-wrapper'
+                      key={Math.random()}>
+                      {Object.values(item.decisions).map((decision) => {
+                        return (
+                          <div
+                            key={Math.random()}
+                            className='cartoverlay-item-info-decisions-box'>
+                            {decision}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
-                </>
+                  <div className='cartoverlay-item-counter'>
+                    <button
+                      onClick={() => this.updateCounter(item.id, 'increment')}>
+                      +
+                    </button>
+                    <div>{item.count}</div>
+                    <button
+                      onClick={() => this.updateCounter(item.id, 'decrement')}>
+                      -
+                    </button>
+                  </div>
+                  <div className='cartoverlay-item-image'>
+                    <img alt='' src={item.data.gallery[0]} />
+                    <button
+                      onClick={() => this.deleteItem(itemIndex)}
+                      className='delete-item'>
+                      X
+                    </button>
+                  </div>
+                </div>
               )
             })}
           </div>
-          <div className="cartoverlay-footer-wrapper">
-            <div className="cartoverlay-total-box">
-              <div className="cartoverlay-total-text">Total</div>
-              <div className="cartoverlay-total-price">{`${
+          <div className='cartoverlay-footer-wrapper'>
+            <div className='cartoverlay-total-box'>
+              <div className='cartoverlay-total-text'>Total</div>
+              <div className='cartoverlay-total-price'>{`${
                 this.props.currency
               } ${this.getTotal()}`}</div>
             </div>
-            <div className="cartoverlay-checkout-box">
-              <NavLink to="/cart">
-                <button className="cartoverlay-checkout-bagBtn">
+            <div className='cartoverlay-checkout-box'>
+              <NavLink to='/cart'>
+                <button className='cartoverlay-checkout-bagBtn'>
                   VIEW BAG
                 </button>
               </NavLink>
-              <button className="cartoverlay-checkout-checkBtn">
+              <button className='cartoverlay-checkout-checkBtn'>
                 CHECK OUT
               </button>
             </div>
@@ -170,7 +165,5 @@ const mapDispatchToProps = {
   decrementCounter,
   deleteItem,
 }
-//here will be deleteItems reducer later on
-//const mapDispatchToProps = { changeCurrency }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartOverlay)

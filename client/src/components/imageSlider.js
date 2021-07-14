@@ -1,10 +1,6 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  deleteItem,
-  incrementCounter,
-  decrementCounter,
-} from '../redux/itemsReducer'
+import { deleteItem } from '../redux/itemsReducer'
 
 class imageSlider extends Component {
   constructor(props) {
@@ -32,7 +28,7 @@ class imageSlider extends Component {
   }
 
   deleteItem(itemIndex) {
-    const { deleteItem, incrementCounter, decrementCounter } = this.props
+    const { deleteItem } = this.props
     deleteItem({ itemIndex: itemIndex })
   }
 
@@ -40,7 +36,6 @@ class imageSlider extends Component {
     const item = this.props.item
     const length = item.data.gallery.length
     const itemIndex = this.props.itemIndex
-    console.log(this.props)
 
     return (
       <div className="cart-item-image" key={Math.random()}>
@@ -90,6 +85,6 @@ const mapStateToProps = (state) => ({
   items: state.items.items,
   currency: state.currency.currency,
 })
-const mapDispatchToProps = { incrementCounter, decrementCounter, deleteItem }
+const mapDispatchToProps = { deleteItem }
 
 export default connect(mapStateToProps, mapDispatchToProps)(imageSlider)

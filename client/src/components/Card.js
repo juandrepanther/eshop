@@ -1,83 +1,70 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
+import parse from 'html-react-parser'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
-import parse from 'html-react-parser'
+import { showPdp } from '../redux/showPdpReducer'
+import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 
-const initialData = {
-  data: {},
-  showPdp: false,
-  bigImageUrl: 0,
-  cardIndex: 0,
-  decisions: [],
-  criteriaIndex: '',
-  clickedBox: '',
-}
-class Card extends PureComponent {
+class Card extends Component {
   constructor(props) {
     super(props)
-    this.state = initialData
-    this.handleClick = this.handleClick.bind(this)
+    this.state = {
+      bigImageUrl: 0,
+      decisions: [],
+    }
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
-    this.addItemsToStore = this.addItemsToStore.bind(this)
     this.getPrice = this.getPrice.bind(this)
-  }
-
-  handleClick(data, cardIndex) {
-    this.setState({
-      ...this.state,
-      data: data,
-      showPdp: true,
-      cardIndex: cardIndex,
-    })
-  }
-
-  //function for choosing criterias of Price (Sizes, Capacity etc.)
-  saveToStore([criteria, decision], index) {
-    const obj = { [criteria]: decision }
-    this.setState({
-      ...this.state,
-      decisions: { ...this.state.decisions, ...obj },
-      criteriaIndex: index,
-    })
+    this.addItemsToStore = this.addItemsToStore.bind(this)
   }
 
   changeBigImage(number) {
     this.setState({ ...this.state, bigImageUrl: number })
   }
 
-  addItemsToStore() {
-    const { addItems } = this.props
+  saveToStore([criteria, decision]) {
+    const obj = { [criteria]: decision }
+    const { addDecision } = this.props
+    addDecision(obj)
+  }
+
+  addItemsToStore(data) {
+    const { addItems, showPdp, deleteDecision } = this.props
     addItems({
       id: Math.random(),
-      data: this.state.data,
-      decisions: this.state.decisions,
+      data: data,
+      decisions: this.props.decisions,
       count: 1,
     })
 
-    this.setState(initialData)
+    showPdp(false)
+    deleteDecision()
   }
 
-  getPrice(currencyIndex) {
+  getPrice(currencyIndex, data) {
     const productCurrencyArr = []
-    this.state.data.prices.map((product) => productCurrencyArr.push(product))
+    data.prices.map((product) => productCurrencyArr.push(product))
     return (
-      <div className='pdp-section-dashboard-valid-price'>{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+      <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
     )
   }
-  open(currencyIndex) {
+
+  render() {
+    const currencyIndex = this.props.currencyIndex
+    const data = this.props.data
+
     return (
       <>
-        <div className='pdp-container'>
-          <div className='pdp-section-gallery'>
-            {this.state.data.gallery.map((url, index) => {
+        <div className="pdp-container">
+          <div className="pdp-section-gallery">
+            {data.gallery.map((url, index) => {
               return (
-                <div className='pdp-section-gallery-thumbs' key={Math.random()}>
+                <div className="pdp-section-gallery-thumbs" key={Math.random()}>
                   <img
                     key={url}
-                    alt=''
+                    alt=""
                     src={url}
-                    className='pdp-section-gallery-thumbs-item'
+                    className="pdp-section-gallery-thumbs-item"
                     style={{ width: '100px', height: '100px' }}
                     onClick={() => this.changeBigImage(index)}
                   />
@@ -85,34 +72,39 @@ class Card extends PureComponent {
               )
             })}
           </div>
-          <div className='pdp-section-gallery-bigImage'>
+          <div className="pdp-section-gallery-bigImage">
             <img
-              className='pdp-section-gallery-bigImage-image'
-              alt=''
-              src={this.state.data.gallery[this.state.bigImageUrl]}></img>
+              className="pdp-section-gallery-bigImage-image"
+              alt=""
+              src={data.gallery[this.state.bigImageUrl]}
+            ></img>
           </div>
-          <div className='pdp-section-dashboard'>
-            <p>{this.state.data.name}</p>
-            <div className='item-options'>
-              {this.state.data.attributes.map((criteria, criteriaIndex) => {
+          <div className="pdp-section-dashboard">
+            <p>{data.name}</p>
+            <div className="item-options">
+              {data.attributes.map((criteria) => {
                 return (
-                  <div className='item-citeria-wrapper' key={criteria.id}>
+                  <div className="item-citeria-wrapper" key={criteria.id}>
                     {`${criteria.name}:`}
-                    <div className='item-citeria-items' key={Math.random()}>
-                      {criteria.items.map((decision, index) => {
+                    <div className="item-citeria-items" key={Math.random()}>
+                      {criteria.items.map((decision) => {
                         return (
-                          <button
-                            key={decision.id}
-                            value={decision.displayValue}
-                            onClick={() =>
-                              this.saveToStore(
-                                [criteria.name, decision.displayValue],
-                                index
-                              )
-                            }
-                            className='item-citeria-items-box'>
-                            {decision.displayValue}
-                          </button>
+                          <div>
+                            <input
+                              onChange={() =>
+                                this.saveToStore([
+                                  criteria.name,
+                                  decision.displayValue,
+                                ])
+                              }
+                              name={criteria.name}
+                              type="radio"
+                              key={decision.id}
+                              value={decision}
+                              className="item-citeria-items-box"
+                            />
+                            <span>{decision.displayValue}</span>
+                          </div>
                         )
                       })}
                     </div>
@@ -121,99 +113,25 @@ class Card extends PureComponent {
               })}
             </div>
             <h2>PRICE</h2>
-            {this.getPrice(currencyIndex)}
+            {this.getPrice(currencyIndex, data)}
             <button
-              onClick={() => this.addItemsToStore()}
-              className='button-add-to-card'>
+              onClick={() => this.addItemsToStore(data)}
+              className="button-add-to-card"
+            >
               ADD TO CART
             </button>
-            <div className='item-description'>
-              {parse(this.state.data.description)}
-            </div>
+            <div className="item-description">{parse(data.description)}</div>
           </div>
         </div>
       </>
     )
-  }
-
-  render() {
-    const currency = this.props.currency
-    const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-    const index = currencyItem.indexOf(currency)
-    const stockOptions = ['', 'notInStock']
-    const icons = ['$', '£', '$', '¥', '₽']
-
-    if (!this.props.data.length) {
-      return null
-    } else {
-      return (
-        <>
-          <div className='products-container'>
-            <div className='products-card-wrapper'>
-              {this.props.data.map((product, cardIndex) => {
-                if (product.inStock) {
-                  return (
-                    <div
-                      key={product.description}
-                      className={`card-container ${stockOptions[0]}`}
-                      onClick={() => {
-                        this.handleClick(product, cardIndex)
-                      }}>
-                      <img
-                        className='card-image'
-                        alt=''
-                        src={product.gallery[0]}></img>
-                      <div className='card-text-box'>
-                        <h3>{product.name}</h3>
-                        <h3>
-                          {`${icons[index]}`}
-                          {
-                            product.prices.map((i) => Object.values(i)[0])[
-                              index
-                            ]
-                          }
-                        </h3>
-                      </div>
-                    </div>
-                  )
-                } else {
-                  return (
-                    <div
-                      key={product.description}
-                      className={`card-container ${stockOptions[1]}`}>
-                      <img
-                        className='card-image'
-                        alt=''
-                        src={product.gallery[0]}
-                      />
-                      <h5>OUT OF STOCK</h5>
-                      <div className='card-text-box'>
-                        <h3>{product.name}</h3>
-                        <h3>
-                          {`${icons[index]}`}
-                          {
-                            product.prices.map((i) => Object.values(i)[0])[
-                              index
-                            ]
-                          }
-                        </h3>
-                      </div>
-                    </div>
-                  )
-                }
-              })}
-              {this.state.showPdp && this.open(index)}
-            </div>
-          </div>
-        </>
-      )
-    }
   }
 }
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   items: state.items.items,
+  decisions: state.decisions.decisions,
 })
-const mapDispatchToProps = { addItems }
+const mapDispatchToProps = { addItems, showPdp, addDecision, deleteDecision }
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

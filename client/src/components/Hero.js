@@ -5,8 +5,9 @@ import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import '../styles/Category.css'
-import Card from './Card'
+import Cards from './Cards'
 import MainCart from './MainCart'
+import { showPdp } from '../redux/showPdpReducer'
 
 const getAllProducts = gql`
   {
@@ -53,6 +54,10 @@ class Hero extends PureComponent {
     if (category === 'tech') return data_tech
     if (category === 'clothes') return data_clothes
   }
+  correctStatePdp() {
+    const { showPdp } = this.props
+    showPdp(false)
+  }
 
   render() {
     return (
@@ -61,14 +66,17 @@ class Hero extends PureComponent {
           exact
           path="/clothes"
           component={(props) => (
-            <Card {...props} data={this.displayProducts('clothes')} />
+            <Cards
+              {...props}
+              data={(this.correctStatePdp(), this.displayProducts('clothes'))}
+            />
           )}
         />
         <Route
           exact
           path="/tech"
           component={(props) => (
-            <Card {...props} data={this.displayProducts('tech')} />
+            <Cards {...props} data={this.displayProducts('tech')} />
           )}
         />
 
@@ -82,5 +90,8 @@ class Hero extends PureComponent {
 const mapStateToProps = (state) => ({
   category: state.category,
 })
-
-export default compose(graphql(getAllProducts), connect(mapStateToProps))(Hero)
+const mapDispatchToProps = { showPdp }
+export default compose(
+  graphql(getAllProducts),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Hero)

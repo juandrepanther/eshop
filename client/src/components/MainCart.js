@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import '../styles/MainCart.css'
-import {
-  incrementCounter,
-  decrementCounter,
-  deleteItem,
-} from '../redux/itemsReducer'
+import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
+import ImageSlider from './imageSlider'
 
 class MainCart extends Component {
   constructor(props) {
@@ -18,9 +15,6 @@ class MainCart extends Component {
     }
     this.updateCounter = this.updateCounter.bind(this)
     this.getPrice = this.getPrice.bind(this)
-    this.deleteItem = this.deleteItem.bind(this)
-    this.nextSlide = this.nextSlide.bind(this)
-    this.prevSlide = this.prevSlide.bind(this)
   }
 
   getPrice(item, currencyIndex) {
@@ -44,26 +38,6 @@ class MainCart extends Component {
     }
   }
 
-  deleteItem(itemIndex) {
-    const { deleteItem } = this.props
-    deleteItem({ itemIndex: itemIndex })
-  }
-
-  nextSlide(length) {
-    this.setState({
-      ...this.state,
-      imageIndex:
-        this.state.imageIndex === length - 1 ? 0 : this.state.imageIndex + 1,
-    })
-  }
-  prevSlide(length) {
-    this.setState({
-      ...this.state,
-      imageIndex:
-        this.state.imageIndex === 0 ? length - 1 : this.state.imageIndex - 1,
-    })
-  }
-
   render() {
     const items = this.props.items
     const currency = this.props.currency //example USD 'string'
@@ -71,81 +45,47 @@ class MainCart extends Component {
     const currencyIndex = currencyItem.indexOf(currency)
 
     return (
-      <div className='cart-container'>
-        <div className='cart-wrapper'>
+      <div className="cart-container">
+        <div className="cart-wrapper">
           <h5>CART</h5>
           {items.map((item, itemIndex) => {
-            const length = item.data.gallery.length
             return (
-              <div className='cart-item' key={item.id.toString()}>
-                <div className='cart-item-info' key={Math.random()}>
+              <div className="cart-item" key={item.id.toString()}>
+                <div className="cart-item-info" key={Math.random()}>
                   <p key={Math.random()}>{item.data.name}</p>
                   {this.getPrice(item, currencyIndex)}
                   <div
-                    className='cart-item-info-decisions-box-wrapper'
-                    key={Math.random()}>
+                    className="cart-item-info-decisions-box-wrapper"
+                    key={Math.random()}
+                  >
                     {Object.values(item.decisions).map((decision) => {
                       return (
                         <div
-                          className='cart-item-info-decisions-box'
-                          key={Math.random()}>
+                          className="cart-item-info-decisions-box"
+                          key={Math.random()}
+                        >
                           {decision}
                         </div>
                       )
                     })}
                   </div>
                 </div>
-                <div className='cart-item-counter' key={Math.random()}>
+                <div className="cart-item-counter" key={Math.random()}>
                   <button
                     onClick={() => this.updateCounter(item.id, 'increment')}
-                    key={Math.random()}>
+                    key={Math.random()}
+                  >
                     +
                   </button>
                   <div key={Math.random()}>{item.count}</div>
                   <button
                     onClick={() => this.updateCounter(item.id, 'decrement')}
-                    key={Math.random()}>
+                    key={Math.random()}
+                  >
                     -
                   </button>
                 </div>
-                <div className='cart-item-image' key={Math.random()}>
-                  <div className='cart-item-image-slider' key={Math.random()}>
-                    {item.data.gallery.map((image, index) => {
-                      return (
-                        <div
-                          key={Math.random()}
-                          className={
-                            index === this.state.imageIndex
-                              ? 'slide-active'
-                              : 'slide'
-                          }>
-                          {index === this.state.imageIndex && (
-                            <img alt='' key={image} src={image} />
-                          )}
-                        </div>
-                      )
-                    })}
-
-                    <button
-                      key={Math.random()}
-                      onClick={() => this.deleteItem(itemIndex)}
-                      className='delete-item'>
-                      X
-                    </button>
-                  </div>
-                  <div
-                    className='arrow-left'
-                    key={Math.random()}
-                    onClick={() => this.prevSlide(length)}>
-                    &#60;
-                  </div>
-                  <div
-                    onClick={() => this.nextSlide(length)}
-                    className='arrow-right'
-                    key={Math.random()}>
-                    &#62;
-                  </div>
-                </div>
+                <ImageSlider item={item} itemIndex={itemIndex} />
               </div>
             )
           })}
@@ -159,6 +99,6 @@ const mapStateToProps = (state) => ({
   items: state.items.items,
   currency: state.currency.currency,
 })
-const mapDispatchToProps = { incrementCounter, decrementCounter, deleteItem }
+const mapDispatchToProps = { incrementCounter, decrementCounter }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainCart)

@@ -76,7 +76,10 @@ class Hero extends PureComponent {
           exact
           path="/tech"
           component={(props) => (
-            <Cards {...props} data={this.displayProducts('tech')} />
+            <Cards
+              {...props}
+              data={(this.correctStatePdp(), this.displayProducts('tech'))}
+            />
           )}
         />
 

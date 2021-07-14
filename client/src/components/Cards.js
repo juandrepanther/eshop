@@ -35,7 +35,7 @@ class Cards extends PureComponent {
     const stockOptions = ['', 'notInStock']
     const icons = ['$', '£', '$', '¥', '₽']
     const status = this.props.status.status
-    showPdp(false)
+
     if (!this.props.data.length) {
       return null
     } else {

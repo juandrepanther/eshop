@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { showPdp } from '../redux/showPdpReducer'
+import HoverBasket from '../media/HoverBasket.png'
 
 import Card from './Card'
 
@@ -53,6 +54,9 @@ class Cards extends PureComponent {
                         this.handleClick(product, cardIndex)
                       }}
                     >
+                      <div className="card-hover-cart">
+                        <img alt="" src={HoverBasket} />
+                      </div>
                       <img
                         className="card-image"
                         alt=""

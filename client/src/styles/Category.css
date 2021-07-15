@@ -16,7 +16,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-
+  position: relative;
   align-items: center;
 
   width: 386px;
@@ -24,6 +24,35 @@
   padding-left: 16px;
   cursor: pointer;
 }
+.card-container:hover > div:nth-child(1) {
+  opacity: 1;
+  transition: 0.5s;
+}
+.card-hover-cart {
+  opacity: 0;
+  position: absolute;
+  bottom: 72px;
+  right: 31px;
+  width: 52px;
+  height: 52px;
+  background-color: #5ece7b;
+  border-radius: 50%;
+  z-index: 1;
+}
+.card-hover-cart > img {
+  position: absolute;
+  width: 28px;
+  height: 30.4px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .notInStock {
   opacity: 0.4;
   pointer-events: none;
@@ -57,6 +86,7 @@
 }
 .card-text-box h3 {
   margin-top: 5px;
+  padding-left: 16px;
 }
 .pdp-container {
   position: absolute;
@@ -122,31 +152,50 @@
 }
 .item-criteria-items-boxwrapper {
   position: relative;
-  font-size: 13px;
-  background-color: transparent;
+  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.item-criteria-items-boxwrapper .radio-text {
+  position: relative;
 }
 
-.item-citeria-items-box {
-  position: relative;
-  cursor: pointer;
-  margin: 10px 10px 10px 0px;
+.item-criteria-items-boxwrapper .radio-text:before,
+.item-criteria-items-boxwrapper .radio-text:after {
+  content: attr(data-content);
+}
+.item-criteria-items-boxwrapper .radio-text:before {
+  border: 1px solid #1d1f22;
   width: 63px;
   height: 45px;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(163, 163, 163);
+}
+.item-criteria-items-boxwrapper .radio-text:after {
+  background: #1d1f22;
+  color: white;
+  width: 65px;
+  height: 48px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item-criteria-items-boxwrapper input:checked + div:after {
+  opacity: 1;
 }
 
-.item-citeria-items-box:hover {
-  background-color: rgb(49, 49, 49);
-  color: white;
-  transition: 0.2s;
+.item-criteria-items-box {
+  display: none;
 }
-.item-citeria-items-box:focus {
-  background-color: rgb(49, 49, 49);
-  color: white;
-}
+
 .button-add-to-card {
   background-color: #5ece7b;
   height: 52px;

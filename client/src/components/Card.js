@@ -12,7 +12,6 @@ class Card extends PureComponent {
     this.state = {
       bigImageUrl: 0,
       decisions: {},
-      //   test: false,
     }
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
@@ -25,26 +24,21 @@ class Card extends PureComponent {
   }
 
   saveToStore([criteria, decision]) {
-    // const obj = { [criteria]: decision }
-    // const { addDecision } = this.props
-    // //this.setState({ ...this.state, test: false })
-    // //addDecision(obj)
     const newObj = { [criteria]: decision }
 
     if (Object.keys(this.state.decisions).length >= 1) {
       const decisionsClone = { ...this.state.decisions }
       const newDecisionsObj = Object.assign(decisionsClone, newObj)
-      //this.state.decision now is true
       this.setState({
         ...this.state,
-        decisions: (this.state.decisions = newDecisionsObj),
+        decisions: (this.state.decisions = { ...newDecisionsObj }),
       })
     }
 
     if (Object.keys(this.state.decisions).length === 0) {
       this.setState({
         ...this.state,
-        decisions: (this.state.decisions = newObj),
+        decisions: (this.state.decisions = { ...newObj }),
       })
     }
   }

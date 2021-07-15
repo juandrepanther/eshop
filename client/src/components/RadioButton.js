@@ -6,16 +6,16 @@ class RadioButton extends PureComponent {
     const criteria = this.props.criteria
 
     return (
-      <div className="item-criteria-items-boxwrapper">
+      <label className="item-criteria-items-boxwrapper">
         <input
           name={criteria.name}
           type="radio"
           key={decision.id}
           value={decision}
-          className="item-citeria-items-box"
+          className="item-criteria-items-box"
         />
-        <span>{decision.displayValue}</span>
-      </div>
+        <div className="radio-text" data-content={decision.displayValue}></div>
+      </label>
     )
   }
 }

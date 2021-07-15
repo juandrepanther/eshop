@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
-
 import Card from './Card'
 
 const initialData = {
@@ -37,13 +36,13 @@ class Cards extends PureComponent {
     const icons = ['$', '£', '$', '¥', '₽']
     const status = this.props.status.status
 
-    if (!this.props.data.length) {
+    if (!Object.keys(this.props.data).length) {
       return null
     } else {
       return (
         <>
-          <div className="products-container">
-            <div className="products-card-wrapper">
+          <div className='products-container'>
+            <div className='products-card-wrapper'>
               {this.props.data.map((product, cardIndex) => {
                 if (product.inStock) {
                   return (
@@ -52,17 +51,15 @@ class Cards extends PureComponent {
                       className={`card-container ${stockOptions[0]}`}
                       onClick={() => {
                         this.handleClick(product, cardIndex)
-                      }}
-                    >
-                      <div className="card-hover-cart">
-                        <img alt="" src={HoverBasket} />
+                      }}>
+                      <div className='card-hover-cart'>
+                        <img alt='' src={HoverBasket} />
                       </div>
                       <img
-                        className="card-image"
-                        alt=""
-                        src={product.gallery[0]}
-                      ></img>
-                      <div className="card-text-box">
+                        className='card-image'
+                        alt=''
+                        src={product.gallery[0]}></img>
+                      <div className='card-text-box'>
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}
@@ -79,15 +76,14 @@ class Cards extends PureComponent {
                   return (
                     <div
                       key={product.description}
-                      className={`card-container ${stockOptions[1]}`}
-                    >
+                      className={`card-container ${stockOptions[1]}`}>
                       <img
-                        className="card-image"
-                        alt=""
+                        className='card-image'
+                        alt=''
                         src={product.gallery[0]}
                       />
                       <h5>OUT OF STOCK</h5>
-                      <div className="card-text-box">
+                      <div className='card-text-box'>
                         <h3>{product.name}</h3>
                         <h3>
                           {`${icons[index]}`}

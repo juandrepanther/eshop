@@ -65,7 +65,7 @@ class Card extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.decisions !== nextState.count) {
+    if (this.state.decisions !== nextState.decisions) {
       return false
     }
     return true

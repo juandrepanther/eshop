@@ -54,7 +54,7 @@ class Hero extends PureComponent {
     if (category === 'tech') return data_tech
     if (category === 'clothes') return data_clothes
   }
-  correctStatePdp() {
+  removePdp() {
     const { showPdp } = this.props
     showPdp(false)
   }
@@ -64,26 +64,26 @@ class Hero extends PureComponent {
       <div>
         <Route
           exact
-          path="/clothes"
+          path='/clothes'
           component={(props) => (
             <Cards
               {...props}
-              data={(this.correctStatePdp(), this.displayProducts('clothes'))}
+              data={(this.removePdp(), this.displayProducts('clothes'))}
             />
           )}
         />
         <Route
           exact
-          path="/tech"
+          path='/tech'
           component={(props) => (
             <Cards
               {...props}
-              data={(this.correctStatePdp(), this.displayProducts('tech'))}
+              data={(this.removePdp(), this.displayProducts('tech'))}
             />
           )}
         />
 
-        <Route exact path="/cart" component={MainCart} />
+        <Route exact path='/cart' component={MainCart} />
       </div>
     )
   }

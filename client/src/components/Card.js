@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import parse from 'html-react-parser'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import { showPdp } from '../redux/showPdpReducer'
+import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 
-class Card extends Component {
+class Card extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
       bigImageUrl: 0,
-      decisions: [],
+      decisions: {},
+      //   test: false,
     }
     this.changeBigImage = this.changeBigImage.bind(this)
     this.saveToStore = this.saveToStore.bind(this)
@@ -23,9 +25,28 @@ class Card extends Component {
   }
 
   saveToStore([criteria, decision]) {
-    const obj = { [criteria]: decision }
-    const { addDecision } = this.props
-    addDecision(obj)
+    // const obj = { [criteria]: decision }
+    // const { addDecision } = this.props
+    // //this.setState({ ...this.state, test: false })
+    // //addDecision(obj)
+    const newObj = { [criteria]: decision }
+
+    if (Object.keys(this.state.decisions).length >= 1) {
+      const decisionsClone = { ...this.state.decisions }
+      const newDecisionsObj = Object.assign(decisionsClone, newObj)
+      //this.state.decision now is true
+      this.setState({
+        ...this.state,
+        decisions: (this.state.decisions = newDecisionsObj),
+      })
+    }
+
+    if (Object.keys(this.state.decisions).length === 0) {
+      this.setState({
+        ...this.state,
+        decisions: (this.state.decisions = newObj),
+      })
+    }
   }
 
   addItemsToStore(data) {
@@ -33,7 +54,7 @@ class Card extends Component {
     addItems({
       id: Math.random(),
       data: data,
-      decisions: this.props.decisions,
+      decisions: this.state.decisions,
       count: 1,
     })
 
@@ -89,21 +110,19 @@ class Card extends Component {
                     <div className="item-citeria-items" key={Math.random()}>
                       {criteria.items.map((decision) => {
                         return (
-                          <div>
-                            <input
-                              onChange={() =>
-                                this.saveToStore([
-                                  criteria.name,
-                                  decision.displayValue,
-                                ])
-                              }
-                              name={criteria.name}
-                              type="radio"
-                              key={decision.id}
-                              value={decision}
-                              className="item-citeria-items-box"
+                          <div
+                            key={Math.random()}
+                            onClick={() =>
+                              this.saveToStore([
+                                criteria.name,
+                                decision.displayValue,
+                              ])
+                            }
+                          >
+                            <RadioButton
+                              decision={decision}
+                              criteria={criteria}
                             />
-                            <span>{decision.displayValue}</span>
                           </div>
                         )
                       })}

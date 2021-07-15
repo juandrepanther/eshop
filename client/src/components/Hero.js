@@ -43,7 +43,7 @@ class Hero extends PureComponent {
     let data_clothes
 
     if (data.loading) {
-      return <div>Loading Products...</div>
+      return null
     } else {
       data_tech = data.category.products.filter((i) => i.category === 'tech')
       data_clothes = data.category.products.filter(

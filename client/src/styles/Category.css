@@ -120,7 +120,14 @@
 .item-citeria-items {
   display: flex;
 }
+.item-criteria-items-boxwrapper {
+  position: relative;
+  font-size: 13px;
+  background-color: transparent;
+}
+
 .item-citeria-items-box {
+  position: relative;
   cursor: pointer;
   margin: 10px 10px 10px 0px;
   width: 63px;

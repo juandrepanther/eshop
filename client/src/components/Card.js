@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import parse from 'html-react-parser'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
@@ -6,7 +6,7 @@ import { showPdp } from '../redux/showPdpReducer'
 import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 
-class Card extends PureComponent {
+class Card extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,14 +31,14 @@ class Card extends PureComponent {
       const newDecisionsObj = Object.assign(decisionsClone, newObj)
       this.setState({
         ...this.state,
-        decisions: (this.state.decisions = { ...newDecisionsObj }),
+        decisions: newDecisionsObj,
       })
     }
 
     if (Object.keys(this.state.decisions).length === 0) {
       this.setState({
         ...this.state,
-        decisions: (this.state.decisions = { ...newObj }),
+        decisions: newObj,
       })
     }
   }
@@ -60,8 +60,15 @@ class Card extends PureComponent {
     const productCurrencyArr = []
     data.prices.map((product) => productCurrencyArr.push(product))
     return (
-      <div className="pdp-section-dashboard-valid-price">{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
+      <div className='pdp-section-dashboard-valid-price'>{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
     )
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.decisions !== nextState.count) {
+      return false
+    }
+    return true
   }
 
   render() {
@@ -70,16 +77,16 @@ class Card extends PureComponent {
 
     return (
       <>
-        <div className="pdp-container">
-          <div className="pdp-section-gallery">
+        <div className='pdp-container'>
+          <div className='pdp-section-gallery'>
             {data.gallery.map((url, index) => {
               return (
-                <div className="pdp-section-gallery-thumbs" key={Math.random()}>
+                <div className='pdp-section-gallery-thumbs' key={Math.random()}>
                   <img
                     key={url}
-                    alt=""
+                    alt=''
                     src={url}
-                    className="pdp-section-gallery-thumbs-item"
+                    className='pdp-section-gallery-thumbs-item'
                     style={{ width: '100px', height: '100px' }}
                     onClick={() => this.changeBigImage(index)}
                   />
@@ -87,21 +94,20 @@ class Card extends PureComponent {
               )
             })}
           </div>
-          <div className="pdp-section-gallery-bigImage">
+          <div className='pdp-section-gallery-bigImage'>
             <img
-              className="pdp-section-gallery-bigImage-image"
-              alt=""
-              src={data.gallery[this.state.bigImageUrl]}
-            ></img>
+              className='pdp-section-gallery-bigImage-image'
+              alt=''
+              src={data.gallery[this.state.bigImageUrl]}></img>
           </div>
-          <div className="pdp-section-dashboard">
+          <div className='pdp-section-dashboard'>
             <p>{data.name}</p>
-            <div className="item-options">
+            <div className='item-options'>
               {data.attributes.map((criteria) => {
                 return (
-                  <div className="item-citeria-wrapper" key={criteria.id}>
+                  <div className='item-citeria-wrapper' key={criteria.id}>
                     {`${criteria.name}:`}
-                    <div className="item-citeria-items" key={Math.random()}>
+                    <div className='item-citeria-items' key={Math.random()}>
                       {criteria.items.map((decision) => {
                         return (
                           <div
@@ -111,8 +117,7 @@ class Card extends PureComponent {
                                 criteria.name,
                                 decision.displayValue,
                               ])
-                            }
-                          >
+                            }>
                             <RadioButton
                               decision={decision}
                               criteria={criteria}
@@ -129,11 +134,10 @@ class Card extends PureComponent {
             {this.getPrice(currencyIndex, data)}
             <button
               onClick={() => this.addItemsToStore(data)}
-              className="button-add-to-card"
-            >
+              className='button-add-to-card'>
               ADD TO CART
             </button>
-            <div className="item-description">{parse(data.description)}</div>
+            <div className='item-description'>{parse(data.description)}</div>
           </div>
         </div>
       </>

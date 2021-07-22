@@ -31,6 +31,7 @@ a {
   font-weight: 600;
   font-size: 16px;
   line-height: 120%;
+  text-align: center;
 }
 .currency-options-bar {
   width: 33px;

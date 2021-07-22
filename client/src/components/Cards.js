@@ -1,8 +1,67 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
 import Card from './Card'
+
+//graphQl querries, filtering and apollo-client
+import { graphql, withApollo } from 'react-apollo'
+import { gql } from 'apollo-boost'
+
+const GET_PRODUCTS = gql`
+  {
+    category {
+      products {
+        category
+        name
+        description
+        gallery
+        prices {
+          amount
+          currency
+        }
+        inStock
+        attributes {
+          id
+          name
+          type
+          items {
+            id
+            displayValue
+          }
+        }
+      }
+    }
+  }
+`
+
+// const GET_CLOTHES = gql`
+//   {
+//     category(input: { title: "clothes" }) {
+//       products {
+//         category
+//         name
+//         description
+//         gallery
+//         prices {
+//           amount
+//           currency
+//         }
+//         inStock
+//         attributes {
+//           id
+//           name
+//           type
+//           items {
+//             id
+//             displayValue
+//           }
+//         }
+//       }
+//     }
+//   }
+// `
 
 const initialData = {
   data: {},
@@ -17,18 +76,14 @@ class Cards extends PureComponent {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(data, cardIndex) {
-    const { showPdp } = this.props
-    this.setState({
-      ...this.state,
-      data: data,
-      cardIndex: cardIndex,
-      showPdp: true,
-    })
-    showPdp(true)
-  }
+  displayProducts() {
+    // this.props.client.mutate({
+    //   variables: {
+    //     cat: 'clothes',
+    //   },
+    // })
 
-  render() {
+    const data = this.props.data
     const currency = this.props.currency
     const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
     const index = currencyItem.indexOf(currency)
@@ -36,14 +91,16 @@ class Cards extends PureComponent {
     const icons = ['$', '£', '$', '¥', '₽']
     const status = this.props.status.status
 
-    if (!Object.keys(this.props.data).length) {
-      return null
+    console.log(this.props)
+
+    if (data.loading) {
+      return <p>Still Loading...</p>
     } else {
       return (
         <>
           <div className='products-container'>
             <div className='products-card-wrapper'>
-              {this.props.data.map((product, cardIndex) => {
+              {data.category.products.map((product, cardIndex) => {
                 if (product.inStock) {
                   return (
                     <div
@@ -105,6 +162,21 @@ class Cards extends PureComponent {
       )
     }
   }
+
+  handleClick(data, cardIndex) {
+    const { showPdp } = this.props
+    this.setState({
+      ...this.state,
+      data: data,
+      cardIndex: cardIndex,
+      showPdp: true,
+    })
+    showPdp(true)
+  }
+
+  render() {
+    return <>{this.displayProducts()}</>
+  }
 }
 
 const mapStateToProps = (state) => ({
@@ -113,4 +185,8 @@ const mapStateToProps = (state) => ({
   status: state.status,
 })
 const mapDispatchToProps = { showPdp }
-export default connect(mapStateToProps, mapDispatchToProps)(Cards)
+export default compose(
+  graphql(GET_PRODUCTS),
+  withApollo,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Cards)

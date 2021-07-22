@@ -2,6 +2,7 @@ import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { changeCurrency } from '../redux/currencyReducer'
+import { showPdp } from '../redux/showPdpReducer'
 
 //needed for multiple default export at the end of component
 
@@ -36,6 +37,7 @@ class NavBar extends PureComponent {
 
   closeCartOverlay() {
     this.setState({ ...this.state, showOverlay: false })
+    this.props.showPdp(false)
   }
 
   showBasketItem() {
@@ -54,6 +56,14 @@ class NavBar extends PureComponent {
           <div className='navbar-wrapper'>
             <div className='navbar-container-one'>
               <ul className='nav-menu'>
+                <NavLink to='/'>
+                  <li
+                    className='nav-item'
+                    value='all'
+                    onClick={() => this.closeCartOverlay()}>
+                    ALL
+                  </li>
+                </NavLink>
                 <NavLink to='/clothes'>
                   <li
                     className='nav-item'
@@ -63,7 +73,10 @@ class NavBar extends PureComponent {
                   </li>
                 </NavLink>
                 <NavLink to='/tech'>
-                  <li className='nav-item' value='tech'>
+                  <li
+                    className='nav-item'
+                    value='tech'
+                    onClick={() => this.closeCartOverlay()}>
                     TECH
                   </li>
                 </NavLink>
@@ -118,6 +131,6 @@ const mapStateToProps = (state) => ({
   items: state.items.items,
 })
 
-const mapDispatchToProps = { changeCurrency }
+const mapDispatchToProps = { changeCurrency, showPdp }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

@@ -5,7 +5,7 @@ import Hero from './components/Hero'
 import NavBar from './components/NavBar'
 import './styles/App.css'
 //Apollo imports
-import ApolloClient from 'apollo-boost'
+import ApolloClient, { InMemoryCache } from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 //Redux imports
 import { Provider } from 'react-redux'
@@ -15,6 +15,7 @@ import { store } from './redux/store'
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/',
+  cache: new InMemoryCache(),
 })
 
 class App extends Component {

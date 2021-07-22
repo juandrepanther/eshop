@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import { changeCurrency } from '../redux/currencyReducer'
 import { showPdp } from '../redux/showPdpReducer'
 
-//needed for multiple default export at the end of component
-
 import '../styles/NavBar.css'
 import Logo from '../media/Logo.png'
 import Basket from '../media/Basket.png'
@@ -44,7 +42,7 @@ class NavBar extends PureComponent {
     const isItems = this.props.items
     if (isItems.length !== 0) {
       return (
-        <div className='small-basket-counter'>{this.props.items.length}</div>
+        <div className="small-basket-counter">{this.props.items.length}</div>
       )
     }
   }
@@ -52,6 +50,7 @@ class NavBar extends PureComponent {
   render() {
     return (
       <>
+<<<<<<< HEAD
         <div className='navbar-container'>
           <div className='navbar-wrapper'>
             <div className='navbar-container-one'>
@@ -65,52 +64,66 @@ class NavBar extends PureComponent {
                   </li>
                 </NavLink>
                 <NavLink to='/clothes'>
+=======
+        <div className="navbar-container">
+          <div className="navbar-wrapper">
+            <div className="navbar-container-one">
+              <ul className="nav-menu">
+                <NavLink to="/clothes">
+>>>>>>> 7c2e035f4187a4b67eb8be087660d3f6e053c03c
                   <li
-                    className='nav-item'
-                    value='clothes'
-                    onClick={() => this.closeCartOverlay()}>
+                    className="nav-item"
+                    value="clothes"
+                    onClick={() => this.closeCartOverlay()}
+                  >
                     CLOTHES
                   </li>
                 </NavLink>
+<<<<<<< HEAD
                 <NavLink to='/tech'>
                   <li
                     className='nav-item'
                     value='tech'
                     onClick={() => this.closeCartOverlay()}>
+=======
+                <NavLink to="/tech">
+                  <li className="nav-item" value="tech">
+>>>>>>> 7c2e035f4187a4b67eb8be087660d3f6e053c03c
                     TECH
                   </li>
                 </NavLink>
               </ul>
             </div>
-            <div className='navbar-container-two'>
-              <img src={Logo} alt='' className='logo' />
+            <div className="navbar-container-two">
+              <img src={Logo} alt="" className="logo" />
             </div>
-            <div className='navbar-container-three'>
+            <div className="navbar-container-three">
               <select
-                className='currency-options-bar'
+                className="currency-options-bar"
                 value={this.props.currency}
-                onChange={this.handleCurrency}>
-                <option value='USD' className='option'>
+                onChange={this.handleCurrency}
+              >
+                <option value="USD" className="option">
                   $ USD
                 </option>
-                <option value='GBP' className='option'>
+                <option value="GBP" className="option">
                   £ GBP
                 </option>
-                <option value='AUD' className='option'>
+                <option value="AUD" className="option">
                   $ AUD
                 </option>
-                <option value='JPY' className='option'>
+                <option value="JPY" className="option">
                   ¥ JPY
                 </option>
-                <option value='RUB' className='option'>
+                <option value="RUB" className="option">
                   ₽ RUB
                 </option>
               </select>
-              <div className='basket-wrapper'>
+              <div className="basket-wrapper">
                 <img
                   src={Basket}
-                  alt=''
-                  className='basket'
+                  alt=""
+                  className="basket"
                   onClick={() => this.showCartOverlay()}
                 />
                 {this.showBasketItem()}

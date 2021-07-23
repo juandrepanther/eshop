@@ -32,26 +32,55 @@ class imageSlider extends Component {
   deleteItem({ itemIndex: itemIndex })
  }
 
- render() {
+ renderImages() {
+  const item = this.props.item
+  return (
+   <>
+    {item.data.gallery.map((image, index) => {
+     return (
+      <div
+       key={Math.random()}
+       className={index === this.state.imageIndex ? 'slide-active' : 'slide'}
+      >
+       {index === this.state.imageIndex && (
+        <img alt="" key={image} src={image} />
+       )}
+      </div>
+     )
+    })}
+   </>
+  )
+ }
+
+ renderArrows() {
   const item = this.props.item
   const length = item.data.gallery.length
-  const itemIndex = this.props.itemIndex
+  return (
+   <>
+    <div
+     className="arrow-left"
+     key={Math.random()}
+     onClick={() => this.prevSlide(length)}
+    >
+     {length >= 2 ? <>&#60;</> : null}
+    </div>
+    <div
+     onClick={() => this.nextSlide(length)}
+     className="arrow-right"
+     key={Math.random()}
+    >
+     {length >= 2 ? <>&#62;</> : null}
+    </div>
+   </>
+  )
+ }
 
+ render() {
+  const itemIndex = this.props.itemIndex
   return (
    <div className="cart-item-image" key={Math.random()}>
     <div className="cart-item-image-slider" key={Math.random()}>
-     {item.data.gallery.map((image, index) => {
-      return (
-       <div
-        key={Math.random()}
-        className={index === this.state.imageIndex ? 'slide-active' : 'slide'}
-       >
-        {index === this.state.imageIndex && (
-         <img alt="" key={image} src={image} />
-        )}
-       </div>
-      )
-     })}
+     {this.renderImages()}
 
      <button
       key={Math.random()}
@@ -61,24 +90,12 @@ class imageSlider extends Component {
       X
      </button>
     </div>
-    <div
-     className="arrow-left"
-     key={Math.random()}
-     onClick={() => this.prevSlide(length)}
-    >
-     &#60;
-    </div>
-    <div
-     onClick={() => this.nextSlide(length)}
-     className="arrow-right"
-     key={Math.random()}
-    >
-     &#62;
-    </div>
+    {this.renderArrows()}
    </div>
   )
  }
 }
+
 const mapStateToProps = (state) => ({
  items: state.items.items,
  currency: state.currency.currency,

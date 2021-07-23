@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  decisions: [],
+ decisions: [],
 }
 
 export const decisionsReducer = createSlice({
-  name: 'decisions',
-  initialState,
-  reducers: {
-    addDecision: (state, { payload }) => {
-      state.decisions = { ...state.decisions, ...payload }
-    },
-    deleteDecision: (state) => {
-      state.decisions = []
-    },
+ name: 'decisions',
+ initialState,
+ reducers: {
+  addDecision: (state, { payload }) => {
+   state.decisions = { ...state.decisions, ...payload }
   },
+  deleteDecision: (state) => {
+   state.decisions = []
+  },
+ },
 })
 
 // Action creators are generated for each case reducer function

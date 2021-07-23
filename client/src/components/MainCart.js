@@ -5,99 +5,96 @@ import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 import ImageSlider from './imageSlider'
 
 class MainCart extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      show: false,
-      count: 1,
-      item: [],
-      imageIndex: 0,
-    }
-    this.updateCounter = this.updateCounter.bind(this)
-    this.getPrice = this.getPrice.bind(this)
+ constructor(props) {
+  super(props)
+  this.state = {
+   show: false,
+   count: 1,
+   item: [],
+   imageIndex: 0,
   }
+  this.updateCounter = this.updateCounter.bind(this)
+  this.getPrice = this.getPrice.bind(this)
+ }
 
-  getPrice(item, currencyIndex) {
-    const itemCurrencyArr = [] //fullfiled and updated array
-    item.data.prices.map((product) => itemCurrencyArr.push(product))
-    return (
-      <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
-    )
+ getPrice(item, currencyIndex) {
+  const itemCurrencyArr = [] //fullfiled and updated array
+  item.data.prices.map((product) => itemCurrencyArr.push(product))
+  return (
+   <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+  )
+ }
+
+ updateCounter(itemId, task) {
+  const { incrementCounter, decrementCounter } = this.props
+  if (task === 'increment') {
+   incrementCounter({
+    id: itemId,
+   })
+  } else if (task === 'decrement') {
+   decrementCounter({
+    id: itemId,
+   })
   }
+ }
 
-  updateCounter(itemId, task) {
-    const { incrementCounter, decrementCounter } = this.props
-    if (task === 'increment') {
-      incrementCounter({
-        id: itemId,
-      })
-    } else if (task === 'decrement') {
-      decrementCounter({
-        id: itemId,
-      })
-    }
-  }
+ render() {
+  const items = this.props.items
+  const currency = this.props.currency //example USD 'string'
+  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
+  const currencyIndex = currencyItem.indexOf(currency)
 
-  render() {
-    const items = this.props.items
-    const currency = this.props.currency //example USD 'string'
-    const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-    const currencyIndex = currencyItem.indexOf(currency)
-
-    return (
-      <div className="cart-container">
-        <div className="cart-wrapper">
-          <h5>CART</h5>
-          {items.map((item, itemIndex) => {
-            return (
-              <div className="cart-item" key={item.id.toString()}>
-                <div className="cart-item-info" key={Math.random()}>
-                  <p key={Math.random()}>{item.data.name}</p>
-                  {this.getPrice(item, currencyIndex)}
-                  <div
-                    className="cart-item-info-decisions-box-wrapper"
-                    key={Math.random()}
-                  >
-                    {Object.values(item.decisions).map((decision) => {
-                      return (
-                        <div
-                          className="cart-item-info-decisions-box"
-                          key={Math.random()}
-                        >
-                          {decision}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-                <div className="cart-item-counter" key={Math.random()}>
-                  <button
-                    onClick={() => this.updateCounter(item.id, 'increment')}
-                    key={Math.random()}
-                  >
-                    +
-                  </button>
-                  <div key={Math.random()}>{item.count}</div>
-                  <button
-                    onClick={() => this.updateCounter(item.id, 'decrement')}
-                    key={Math.random()}
-                  >
-                    -
-                  </button>
-                </div>
-                <ImageSlider item={item} itemIndex={itemIndex} />
-              </div>
-            )
+  return (
+   <div className="cart-container">
+    <div className="cart-wrapper">
+     <h5>CART</h5>
+     {items.map((item, itemIndex) => {
+      return (
+       <div className="cart-item" key={item.id.toString()}>
+        <div className="cart-item-info" key={Math.random()}>
+         <p key={Math.random()}>{item.data.name}</p>
+         {this.getPrice(item, currencyIndex)}
+         <div
+          className="cart-item-info-decisions-box-wrapper"
+          key={Math.random()}
+         >
+          {Object.values(item.decisions).map((decision) => {
+           return (
+            <div className="cart-item-info-decisions-box" key={Math.random()}>
+             {decision}
+            </div>
+           )
           })}
+         </div>
         </div>
-      </div>
-    )
-  }
+        <div className="cart-item-counter" key={Math.random()}>
+         <button
+          onClick={() => this.updateCounter(item.id, 'increment')}
+          key={Math.random()}
+         >
+          +
+         </button>
+         <div key={Math.random()}>{item.count}</div>
+         <button
+          onClick={() => this.updateCounter(item.id, 'decrement')}
+          key={Math.random()}
+         >
+          -
+         </button>
+        </div>
+        <ImageSlider item={item} itemIndex={itemIndex} />
+       </div>
+      )
+     })}
+    </div>
+   </div>
+  )
+ }
 }
 
 const mapStateToProps = (state) => ({
-  items: state.items.items,
-  currency: state.currency.currency,
+ items: state.items.items,
+ currency: state.currency.currency,
 })
 const mapDispatchToProps = { incrementCounter, decrementCounter }
 

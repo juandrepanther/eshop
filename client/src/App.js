@@ -14,25 +14,25 @@ import { store } from './redux/store'
 //Apollo Setup
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
-  cache: new InMemoryCache(),
+ uri: 'http://localhost:4000/',
+ cache: new InMemoryCache(),
 })
 
 class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Provider store={store}>
-            <ApolloProvider client={client}>
-              <NavBar />
-              <Hero />
-            </ApolloProvider>
-          </Provider>
-        </Switch>
-      </BrowserRouter>
-    )
-  }
+ render() {
+  return (
+   <BrowserRouter>
+    <Switch>
+     <Provider store={store}>
+      <ApolloProvider client={client}>
+       <NavBar />
+       <Hero />
+      </ApolloProvider>
+     </Provider>
+    </Switch>
+   </BrowserRouter>
+  )
+ }
 }
 
 export default App

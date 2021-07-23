@@ -1,20 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  category: '',
-  
+ category: '',
 }
 
-export const rootReducers = createSlice(
-{
-  name: 'category',
-  initialState,
-  reducers: {
-    addCategory: (state, {payload}) => {
-      state.category = payload
-    },
-    
+export const rootReducers = createSlice({
+ name: 'category',
+ initialState,
+ reducers: {
+  addCategory: (state, { payload }) => {
+   state.category = payload
   },
+ },
 })
 
 // Action creators are generated for each case reducer function

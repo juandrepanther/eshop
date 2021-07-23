@@ -50,27 +50,20 @@ class NavBar extends PureComponent {
   render() {
     return (
       <>
-<<<<<<< HEAD
-        <div className='navbar-container'>
-          <div className='navbar-wrapper'>
-            <div className='navbar-container-one'>
-              <ul className='nav-menu'>
-                <NavLink to='/'>
-                  <li
-                    className='nav-item'
-                    value='all'
-                    onClick={() => this.closeCartOverlay()}>
-                    ALL
-                  </li>
-                </NavLink>
-                <NavLink to='/clothes'>
-=======
         <div className="navbar-container">
           <div className="navbar-wrapper">
             <div className="navbar-container-one">
               <ul className="nav-menu">
+                <NavLink to="/">
+                  <li
+                    className="nav-item"
+                    value="all"
+                    onClick={() => this.closeCartOverlay()}
+                  >
+                    ALL
+                  </li>
+                </NavLink>
                 <NavLink to="/clothes">
->>>>>>> 7c2e035f4187a4b67eb8be087660d3f6e053c03c
                   <li
                     className="nav-item"
                     value="clothes"
@@ -79,16 +72,12 @@ class NavBar extends PureComponent {
                     CLOTHES
                   </li>
                 </NavLink>
-<<<<<<< HEAD
-                <NavLink to='/tech'>
-                  <li
-                    className='nav-item'
-                    value='tech'
-                    onClick={() => this.closeCartOverlay()}>
-=======
                 <NavLink to="/tech">
-                  <li className="nav-item" value="tech">
->>>>>>> 7c2e035f4187a4b67eb8be087660d3f6e053c03c
+                  <li
+                    className="nav-item"
+                    value="tech"
+                    onClick={() => this.closeCartOverlay()}
+                  >
                     TECH
                   </li>
                 </NavLink>

@@ -10,6 +10,7 @@
 
 # production
 /build
+/end-point
 
 # misc
 .DS_Store

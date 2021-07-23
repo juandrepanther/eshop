@@ -9,8 +9,8 @@ import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
 const FILTER_PRODUCTS = gql`
- query ($slug: String!) {
-  category(input: { title: $slug }) {
+ query ($category: String!) {
+  category(input: { title: $category }) {
    products {
     category
     name
@@ -59,62 +59,64 @@ class Cards extends PureComponent {
 
   return (
    <>
-    <Query query={FILTER_PRODUCTS} variables={{ slug: `${category}` }}>
-     {({ loading, error, data }) => {
-      if (loading) return <h4>Loading...</h4>
-      if (error) console.log(error)
+    {category !== 'cart' ? (
+     <Query query={FILTER_PRODUCTS} variables={{ category: `${category}` }}>
+      {({ loading, error, data }) => {
+       if (loading) return <h4>Loading...</h4>
+       if (error) console.log(error)
 
-      return (
-       <div className="products-container">
-        <div className="products-card-wrapper">
-         {data.category.products.map((product, cardIndex) => {
-          if (product.inStock) {
-           return (
-            <div
-             key={product.description}
-             className={`card-container ${stockOptions[0]}`}
-             onClick={() => {
-              this.handleClick(product, cardIndex)
-             }}
-            >
-             <div className="card-hover-cart">
-              <img alt="" src={HoverBasket} />
+       return (
+        <div className="products-container">
+         <div className="products-card-wrapper">
+          {data.category.products.map((product, cardIndex) => {
+           if (product.inStock) {
+            return (
+             <div
+              key={product.description}
+              className={`card-container ${stockOptions[0]}`}
+              onClick={() => {
+               this.handleClick(product, cardIndex)
+              }}
+             >
+              <div className="card-hover-cart">
+               <img alt="" src={HoverBasket} />
+              </div>
+              <img className="card-image" alt="" src={product.gallery[0]}></img>
+              <div className="card-text-box">
+               <h3>{product.name}</h3>
+               <h3>
+                {`${icons[index]}`}
+                {product.prices.map((i) => Object.values(i)[0])[index]}
+               </h3>
+              </div>
              </div>
-             <img className="card-image" alt="" src={product.gallery[0]}></img>
-             <div className="card-text-box">
-              <h3>{product.name}</h3>
-              <h3>
-               {`${icons[index]}`}
-               {product.prices.map((i) => Object.values(i)[0])[index]}
-              </h3>
+            )
+           } else {
+            return (
+             <div
+              key={product.description}
+              className={`card-container ${stockOptions[1]}`}
+             >
+              <img className="card-image" alt="" src={product.gallery[0]} />
+              <h5>OUT OF STOCK</h5>
+              <div className="card-text-box">
+               <h3>{product.name}</h3>
+               <h3>
+                {`${icons[index]}`}
+                {product.prices.map((i) => Object.values(i)[0])[index]}
+               </h3>
+              </div>
              </div>
-            </div>
-           )
-          } else {
-           return (
-            <div
-             key={product.description}
-             className={`card-container ${stockOptions[1]}`}
-            >
-             <img className="card-image" alt="" src={product.gallery[0]} />
-             <h5>OUT OF STOCK</h5>
-             <div className="card-text-box">
-              <h3>{product.name}</h3>
-              <h3>
-               {`${icons[index]}`}
-               {product.prices.map((i) => Object.values(i)[0])[index]}
-              </h3>
-             </div>
-            </div>
-           )
-          }
-         })}
-         {status && <Card currencyIndex={index} data={this.state.data} />}
+            )
+           }
+          })}
+          {status && <Card currencyIndex={index} data={this.state.data} />}
+         </div>
         </div>
-       </div>
-      )
-     }}
-    </Query>
+       )
+      }}
+     </Query>
+    ) : null}
    </>
   )
  }

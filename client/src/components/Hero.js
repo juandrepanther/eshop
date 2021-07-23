@@ -8,8 +8,8 @@ class Hero extends PureComponent {
   return (
    <>
     <Route exact path="/" component={Cards} />
-    <Route exact path="/:category" component={Cards} />
-    <Route exact path="/cart" component={MainCart} />
+    <Route path="/:category" component={Cards} />
+    <Route path="/cart" component={MainCart} />
    </>
   )
  }

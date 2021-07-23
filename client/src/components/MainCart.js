@@ -18,7 +18,7 @@ class MainCart extends Component {
  }
 
  getPrice(item, currencyIndex) {
-  const itemCurrencyArr = [] //fullfiled and updated array
+  const itemCurrencyArr = []
   item.data.prices.map((product) => itemCurrencyArr.push(product))
   return (
    <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
@@ -40,7 +40,7 @@ class MainCart extends Component {
 
  render() {
   const items = this.props.items
-  const currency = this.props.currency //example USD 'string'
+  const currency = this.props.currency
   const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
   const currencyIndex = currencyItem.indexOf(currency)
 

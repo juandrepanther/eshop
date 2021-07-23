@@ -4,6 +4,7 @@ class RadioButton extends PureComponent {
  render() {
   const decision = this.props.decision
   const criteria = this.props.criteria
+  const isInStock = this.props.isInStock
 
   return (
    <label className="item-criteria-items-boxwrapper">
@@ -13,6 +14,7 @@ class RadioButton extends PureComponent {
      key={decision.id}
      value={decision}
      className="item-criteria-items-box"
+     disabled={!isInStock}
     />
     <div
      className="radio-text"

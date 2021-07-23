@@ -74,7 +74,6 @@ class Card extends Component {
  render() {
   const currencyIndex = this.props.currencyIndex
   const data = this.props.data
-
   return (
    <>
     <div className="pdp-container">
@@ -117,7 +116,11 @@ class Card extends Component {
                this.saveToStore([criteria.name, decision.displayValue])
               }
              >
-              <RadioButton decision={decision} criteria={criteria} />
+              <RadioButton
+               decision={decision}
+               criteria={criteria}
+               isInStock={data.inStock}
+              />
              </div>
             )
            })}
@@ -131,6 +134,7 @@ class Card extends Component {
       <button
        onClick={() => this.addItemsToStore(data)}
        className="button-add-to-card"
+       disabled={!data.inStock}
       >
        ADD TO CART
       </button>

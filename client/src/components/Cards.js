@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
 import Card from './Card'
-
-//graphQl querries, filtering and apollo-client
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
@@ -96,6 +94,9 @@ class Cards extends PureComponent {
              <div
               key={product.description}
               className={`card-container ${stockOptions[1]}`}
+              onClick={() => {
+               this.handleClick(product, cardIndex)
+              }}
              >
               <img className="card-image" alt="" src={product.gallery[0]} />
               <h5>OUT OF STOCK</h5>

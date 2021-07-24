@@ -48,9 +48,8 @@ class Card extends Component {
  }
 
  addItemsToStore(data, inStock) {
-  console.log(inStock)
   if (!inStock) {
-   toast.warn('Selected Price is OUT OF STOCK. \n You cant it Add to Cart!', {
+   toast.warn('Selected Price is OUT OF STOCK. \n You can`t it Add to Cart!', {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 2000,
    })
@@ -70,7 +69,7 @@ class Card extends Component {
   return (
    <button
     onClick={() => this.addItemsToStore(data, data.inStock)}
-    className={`button-add-to-card-${!data.inStock && 'disabled'}`}
+    className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}
    >
     ADD TO CART
    </button>
@@ -93,28 +92,65 @@ class Card extends Component {
   return true
  }
 
+ renderImagesThumbs(data) {
+  return (
+   <>
+    {data.gallery.map((url, index) => {
+     return (
+      <div className="pdp-section-gallery-thumbs" key={Math.random()}>
+       <img
+        key={url}
+        alt=""
+        src={url}
+        className="pdp-section-gallery-thumbs-item"
+        style={{ width: '100px', height: '100px' }}
+        onClick={() => this.changeBigImage(index)}
+       />
+      </div>
+     )
+    })}
+   </>
+  )
+ }
+
+ renderAtributesBtns(data) {
+  return (
+   <>
+    {data.attributes.map((criteria) => {
+     return (
+      <div className="item-citeria-wrapper" key={criteria.id}>
+       {`${criteria.name}:`}
+       <div className="item-citeria-items" key={Math.random()}>
+        {criteria.items.map((decision) => {
+         return (
+          <div
+           key={Math.random()}
+           onClick={() =>
+            this.saveToStore([criteria.name, decision.displayValue])
+           }
+          >
+           <RadioButton
+            decision={decision}
+            criteria={criteria}
+            isInStock={data.inStock}
+           />
+          </div>
+         )
+        })}
+       </div>
+      </div>
+     )
+    })}
+   </>
+  )
+ }
+
  render() {
-  const currencyIndex = this.props.currencyIndex
-  const data = this.props.data
+  const { currencyIndex, data } = this.props
   return (
    <>
     <div className="pdp-container">
-     <div className="pdp-section-gallery">
-      {data.gallery.map((url, index) => {
-       return (
-        <div className="pdp-section-gallery-thumbs" key={Math.random()}>
-         <img
-          key={url}
-          alt=""
-          src={url}
-          className="pdp-section-gallery-thumbs-item"
-          style={{ width: '100px', height: '100px' }}
-          onClick={() => this.changeBigImage(index)}
-         />
-        </div>
-       )
-      })}
-     </div>
+     <div className="pdp-section-gallery">{this.renderImagesThumbs(data)}</div>
      <div className="pdp-section-gallery-bigImage">
       <img
        className="pdp-section-gallery-bigImage-image"
@@ -124,33 +160,7 @@ class Card extends Component {
      </div>
      <div className="pdp-section-dashboard">
       <p>{data.name}</p>
-      <div className="item-options">
-       {data.attributes.map((criteria) => {
-        return (
-         <div className="item-citeria-wrapper" key={criteria.id}>
-          {`${criteria.name}:`}
-          <div className="item-citeria-items" key={Math.random()}>
-           {criteria.items.map((decision) => {
-            return (
-             <div
-              key={Math.random()}
-              onClick={() =>
-               this.saveToStore([criteria.name, decision.displayValue])
-              }
-             >
-              <RadioButton
-               decision={decision}
-               criteria={criteria}
-               isInStock={data.inStock}
-              />
-             </div>
-            )
-           })}
-          </div>
-         </div>
-        )
-       })}
-      </div>
+      <div className="item-options">{this.renderAtributesBtns(data)}</div>
       <h2>PRICE</h2>
       {this.getPrice(currencyIndex, data)}
       {this.addToCardBtn(data)}

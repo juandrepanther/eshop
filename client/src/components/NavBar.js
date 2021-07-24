@@ -7,6 +7,8 @@ import Logo from '../media/Logo.png'
 import Basket from '../media/Basket.png'
 import CartOverlay from './CartOverlay'
 import { NavLink } from 'react-router-dom'
+//import utility
+import itemBasketCount from '../utils/itemBasketCount'
 class NavBar extends PureComponent {
  constructor(props) {
   super(props)
@@ -17,7 +19,7 @@ class NavBar extends PureComponent {
   this.handleCurrency = this.handleCurrency.bind(this)
   this.showCartOverlay = this.showCartOverlay.bind(this)
   this.closeCartOverlay = this.closeCartOverlay.bind(this)
-  this.showBasketItem = this.showBasketItem.bind(this)
+  this.renderBasketCount = this.renderBasketCount.bind(this)
  }
 
  handleCurrency = (e) => {
@@ -34,10 +36,12 @@ class NavBar extends PureComponent {
   this.props.showPdp(false)
  }
 
- showBasketItem() {
-  const isItems = this.props.items
-  if (isItems.length !== 0) {
-   return <div className="small-basket-counter">{this.props.items.length}</div>
+ renderBasketCount() {
+  const allItems = this.props.items
+  if (allItems.length !== 0) {
+   return (
+    <div className="small-basket-counter">{itemBasketCount(allItems)}</div>
+   )
   }
  }
 
@@ -121,7 +125,7 @@ class NavBar extends PureComponent {
          className="basket"
          onClick={() => this.showCartOverlay()}
         />
-        {this.showBasketItem()}
+        {this.renderBasketCount()}
        </div>
       </div>
      </div>

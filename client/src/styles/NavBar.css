@@ -1,80 +1,80 @@
 .navbar-container {
-  width: 100%;
-  height: 50px;
-  justify-content: center;
-  margin-top: 20px;
+ width: 100%;
+ height: 50px;
+ justify-content: center;
+ margin-top: 20px;
 }
 
 .navbar-wrapper {
-  background-color: white;
-  width: 95%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+ background-color: white;
+ width: 95%;
+ margin: 0;
+ padding: 0;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
 }
 
 .nav-menu {
-  display: flex;
+ display: flex;
 }
 a {
-  text-decoration: none;
+ text-decoration: none;
 }
 
 .nav-item {
-  height: auto;
-  width: 100px;
-  list-style: none;
-  color: #1d1f22;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 120%;
-  text-align: center;
+ height: auto;
+ width: 100px;
+ list-style: none;
+ color: #1d1f22;
+ font-style: normal;
+ font-weight: 600;
+ font-size: 16px;
+ line-height: 120%;
+ text-align: center;
 }
 .currency-options-bar {
-  width: 33px;
-  border: none;
-  font-size: 18px;
-  margin-right: 20px;
+ width: 33px;
+ border: none;
+ font-size: 18px;
+ margin-right: 20px;
 }
 .logo {
-  height: 29.92669677734375px;
-  width: 31.181222915649414px;
-  border-radius: 0px;
+ height: 29.92669677734375px;
+ width: 31.181222915649414px;
+ border-radius: 0px;
 }
 .navbar-container-two {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 }
 
 .navbar-container-three {
-  width: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+ width: 50px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
 }
 
 .basket-wrapper {
-  position: relative;
+ position: relative;
 }
 .basket {
-  height: 18px;
-  width: 20px;
-  border-radius: 0px;
-  cursor: pointer;
+ height: 18px;
+ width: 20px;
+ border-radius: 0px;
+ cursor: pointer;
 }
 .small-basket-counter {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: -15px;
-  right: -10px;
-  background-color: #2c2c2c;
-  border-radius: 60px;
-  color: white;
-  text-align: center;
-  font-size: 14px;
+ position: absolute;
+ width: 20px;
+ height: 20px;
+ top: -15px;
+ right: -10px;
+ background-color: #2c2c2c;
+ border-radius: 60px;
+ color: white;
+ text-align: center;
+ font-size: 14px;
 }

@@ -129,8 +129,8 @@ class NavBar extends PureComponent {
        </div>
       </div>
      </div>
-     {this.state.showOverlay && <CartOverlay />}
     </div>
+    {this.state.showOverlay && <CartOverlay />}
    </>
   )
  }

@@ -57,20 +57,24 @@ class imageSlider extends Component {
   const length = item.data.gallery.length
   return (
    <>
-    <div
-     className="arrow-left"
-     key={Math.random()}
-     onClick={() => this.prevSlide(length)}
-    >
-     {length >= 2 ? <>&#60;</> : null}
-    </div>
-    <div
-     onClick={() => this.nextSlide(length)}
-     className="arrow-right"
-     key={Math.random()}
-    >
-     {length >= 2 ? <>&#62;</> : null}
-    </div>
+    {length >= 2 && (
+     <>
+      <div
+       className="arrow-left"
+       key={Math.random()}
+       onClick={() => this.prevSlide(length)}
+      >
+       &#60;
+      </div>
+      <div
+       onClick={() => this.nextSlide(length)}
+       className="arrow-right"
+       key={Math.random()}
+      >
+       &#62;
+      </div>
+     </>
+    )}
    </>
   )
  }
@@ -81,7 +85,6 @@ class imageSlider extends Component {
    <div className="cart-item-image" key={Math.random()}>
     <div className="cart-item-image-slider" key={Math.random()}>
      {this.renderImages()}
-
      <button
       key={Math.random()}
       onClick={() => this.deleteItem(itemIndex)}

@@ -1,168 +1,170 @@
-.cartoverlay-container {
-  position: relative;
-  position: fixed;
-  top: 78px;
-  right: 50px;
-  height: 540px;
-  width: 325px;
-  z-index: 999;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  align-items: stretch;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 26px;
-  letter-spacing: 0em;
+.cartoverlay-backdrop {
+ position: relative;
+ width: 100%;
+ height: 100%;
+ background-color: rgba(57, 55, 72, 0.22);
+ z-index: 999;
+}
 
-  background-color: white;
-  padding: 0px 16px;
+.cartoverlay-container {
+ position: absolute;
+ right: 0;
+ height: 540px;
+ width: 325px;
+ display: flex;
+ flex-direction: column;
+ align-items: stretch;
+ font-size: 16px;
+ font-style: normal;
+ font-weight: 700;
+ line-height: 26px;
+ letter-spacing: 0em;
+ background-color: white;
+ padding: 0px 16px;
 }
 
 .cartoverlay-header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 30px;
+ position: sticky;
+ width: 100%;
+ height: 30px;
 }
 
 .cartoverlay-items-wrapper {
-  overflow: auto;
-  width: 100%;
-  height: auto;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+ overflow: auto;
+ width: 100%;
+ height: auto;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ width: 100%;
 }
 
 .cartoverlay-item {
-  height: 137px;
-  display: flex;
-  width: 100%;
-  align-items: stretch;
-  padding: 5px 0px;
-  border-bottom: 1px solid #e5e5e5;
+ height: 137px;
+ display: flex;
+ width: 100%;
+ align-items: stretch;
+ padding: 5px 0px;
+ border-bottom: 1px solid #e5e5e5;
 }
 .cartoverlay-item-info {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+ flex-grow: 2;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
 }
 .cartoverlay-item-info > p {
-  flex-grow: 1;
+ flex-grow: 1;
 }
 .cartoverlay-item-counter {
-  flex-grow: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+ flex-grow: 0;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
 }
 .cartoverlay-item-counter > button {
-  width: 24px;
-  height: 24px;
-  font-size: 18px;
-  color: black;
-  text-align: center;
-  background-color: transparent;
-  border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+ width: 24px;
+ height: 24px;
+ font-size: 18px;
+ color: black;
+ text-align: center;
+ background-color: transparent;
+ border: 1px solid black;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ cursor: pointer;
 }
 
 .cartoverlay-item-image {
-  position: relative;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ position: relative;
+ flex-grow: 1;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 }
 .cartoverlay-item-image img {
-  width: 105px;
-  height: 137px;
+ width: 105px;
+ height: 137px;
 }
 .delete-item {
-  position: absolute;
-  cursor: pointer;
-  text-align: center;
-  top: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  color: red;
-  border: 1px solid rgb(255, 150, 150);
-  border-radius: 40%;
-  background-color: transparent;
+ position: absolute;
+ cursor: pointer;
+ text-align: center;
+ top: 0;
+ right: 0;
+ width: 24px;
+ height: 24px;
+ color: red;
+ border: 1px solid rgb(255, 150, 150);
+ border-radius: 40%;
+ background-color: transparent;
 }
 .delete-item:hover {
-  background-color: red;
-  color: white;
-  transition: 0.2s;
+ background-color: red;
+ color: white;
+ transition: 0.2s;
 }
 .cartoverlay-item-info-decisions-box-wrapper {
-  display: flex;
+ display: flex;
 }
 .cartoverlay-item-info-decisions-box {
-  width: auto;
-  height: 24px;
-  border: 1px solid black;
-  padding: 7px;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5px;
+ width: auto;
+ height: 24px;
+ border: 1px solid black;
+ padding: 7px;
+ flex-grow: 1;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-right: 5px;
 }
 
 .cartoverlay-total-box {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+ width: 100%;
+ height: 40px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
 }
 .cartoverlay-checkout-box {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 17px;
-  letter-spacing: 0em;
+ width: 100%;
+ height: 50px;
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ font-size: 14px;
+ font-style: normal;
+ font-weight: 600;
+ line-height: 17px;
+ letter-spacing: 0em;
 }
 .cartoverlay-footer-wrapper {
-  position: sticky;
-  bottom: 0;
-  background-color: white;
-  width: 100%;
+ position: sticky;
+ bottom: 0;
+ background-color: white;
+ width: 100%;
 }
 
 .cartoverlay-checkout-box button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 140px;
-  height: 43px;
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  cursor: pointer;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 140px;
+ height: 43px;
+ background-color: white;
+ color: black;
+ border: 1px solid black;
+ cursor: pointer;
 }
 .cartoverlay-checkout-box > button:nth-child(2) {
-  background-color: #5ece7b;
-  border: none;
-  color: white;
+ background-color: #5ece7b;
+ border: none;
+ color: white;
 }
 .cartoverlay-checkout-box > button:nth-child(1):hover {
-  background-color: #858585;
-  border: none;
-  color: white;
-  transition: 0.2s;
+ background-color: #858585;
+ border: none;
+ color: white;
+ transition: 0.2s;
 }

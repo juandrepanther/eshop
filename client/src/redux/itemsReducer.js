@@ -9,7 +9,17 @@ export const itemsReducer = createSlice({
  initialState,
  reducers: {
   addItems: (state, { payload }) => {
-   state.items.push(payload)
+   const { decisions } = payload
+   let ifNotExists = false
+   if (state.items.length === 0) state.items.push(payload)
+   if (state.items.length >= 1) {
+    state.items.map((item) =>
+     JSON.stringify(item.decisions) === JSON.stringify(decisions)
+      ? (ifNotExists = false)
+      : (ifNotExists = true)
+    )
+   }
+   if (ifNotExists) state.items.push(payload)
   },
 
   deleteItem: (state, action) => {

@@ -7,6 +7,7 @@ import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import '../styles/Cards.css'
 
+//filtering with graphQL variables
 const FILTER_PRODUCTS = gql`
  query ($category: String!) {
   category(input: { title: $category }) {
@@ -56,6 +57,9 @@ class Cards extends PureComponent {
   const status = this.props.status.status
   let { category = '' } = this.props.match.params
 
+  /*below conditional rendering is important,
+  because grapgql querry in this case uses uri as variable
+  */
   return (
    <>
     {category !== 'cart' ? (

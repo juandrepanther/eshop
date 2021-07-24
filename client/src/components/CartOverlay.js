@@ -74,14 +74,38 @@ class CartOverlay extends PureComponent {
   deleteItem({ itemIndex: itemIndex })
  }
 
- render() {
-  const items = this.props.items
-  const currency = this.props.currency
-  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-  const currencyIndex = currencyItem.indexOf(currency)
-
+ renderDecisions(item) {
   return (
    <>
+    {Object.values(item.decisions).map((decision) => {
+     return (
+      <div key={Math.random()} className="cartoverlay-item-info-decisions-box">
+       {decision}
+      </div>
+     )
+    })}
+   </>
+  )
+ }
+
+ renderCounterUpdater(item) {
+  return (
+   <>
+    <div className="cartoverlay-item-counter">
+     <button onClick={() => this.updateCounter(item.id, 'increment')}>+</button>
+     <div>{item.count}</div>
+     <button onClick={() => this.updateCounter(item.id, 'decrement')}>-</button>
+    </div>
+   </>
+  )
+ }
+ render() {
+  const { items, currency } = this.props
+  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
+  const currencyIndex = currencyItem.indexOf(currency)
+  console.log(items)
+  return (
+   <div className="cartoverlay-backdrop">
     <div className="cartoverlay-container">
      <div className="cartoverlay-header">
       {items.length === 1
@@ -99,27 +123,10 @@ class CartOverlay extends PureComponent {
            className="cartoverlay-item-info-decisions-box-wrapper"
            key={Math.random()}
           >
-           {Object.values(item.decisions).map((decision) => {
-            return (
-             <div
-              key={Math.random()}
-              className="cartoverlay-item-info-decisions-box"
-             >
-              {decision}
-             </div>
-            )
-           })}
+           {this.renderDecisions(item)}
           </div>
          </div>
-         <div className="cartoverlay-item-counter">
-          <button onClick={() => this.updateCounter(item.id, 'increment')}>
-           +
-          </button>
-          <div>{item.count}</div>
-          <button onClick={() => this.updateCounter(item.id, 'decrement')}>
-           -
-          </button>
-         </div>
+         {this.renderCounterUpdater(item)}
          <div className="cartoverlay-item-image">
           <img alt="" src={item.data.gallery[0]} />
           <button
@@ -136,9 +143,7 @@ class CartOverlay extends PureComponent {
      <div className="cartoverlay-footer-wrapper">
       <div className="cartoverlay-total-box">
        <div className="cartoverlay-total-text">Total</div>
-       <div className="cartoverlay-total-price">{`${
-        this.props.currency
-       } ${this.getTotal()}`}</div>
+       <div className="cartoverlay-total-price">{`${currency} ${this.getTotal()}`}</div>
       </div>
       <div className="cartoverlay-checkout-box">
        <NavLink to="/cart">
@@ -148,7 +153,7 @@ class CartOverlay extends PureComponent {
       </div>
      </div>
     </div>
-   </>
+   </div>
   )
  }
 }

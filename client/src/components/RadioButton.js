@@ -2,9 +2,7 @@ import { PureComponent } from 'react'
 
 class RadioButton extends PureComponent {
  render() {
-  const decision = this.props.decision
-  const criteria = this.props.criteria
-  const isInStock = this.props.isInStock
+  const { decision, criteria, isInStock } = this.props
 
   return (
    <label className="item-criteria-items-boxwrapper">

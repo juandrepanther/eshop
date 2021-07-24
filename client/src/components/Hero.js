@@ -1,6 +1,5 @@
 import { PureComponent } from 'react'
 import { Route } from 'react-router-dom'
-import '../styles/Category.css'
 import Cards from './Cards'
 import MainCart from './MainCart'
 class Hero extends PureComponent {

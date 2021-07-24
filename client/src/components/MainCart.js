@@ -39,8 +39,7 @@ class MainCart extends Component {
  }
 
  renderItems() {
-  const items = this.props.items
-  const currency = this.props.currency
+  const { items, currency } = this.props
   const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
   const currencyIndex = currencyItem.indexOf(currency)
   return (

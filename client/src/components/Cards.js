@@ -5,6 +5,7 @@ import HoverBasket from '../media/HoverBasket.png'
 import Card from './Card'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import '../styles/Cards.css'
 
 const FILTER_PRODUCTS = gql`
  query ($category: String!) {

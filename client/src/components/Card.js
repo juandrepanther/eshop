@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import parse from 'html-react-parser'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
-import { showPdp } from '../redux/showPdpReducer'
 import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
+import '../styles/Card.css'
 
+//Toast import, styles and configuration
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 class Card extends Component {
  constructor(props) {
   super(props)
@@ -43,17 +47,34 @@ class Card extends Component {
   }
  }
 
- addItemsToStore(data) {
-  const { addItems, showPdp, deleteDecision } = this.props
-  addItems({
-   id: Math.random(),
-   data: data,
-   decisions: this.state.decisions,
-   count: 1,
-  })
+ addItemsToStore(data, inStock) {
+  console.log(inStock)
+  if (!inStock) {
+   toast.warn('Selected Price is OUT OF STOCK. \n You cant it Add to Cart!', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 2000,
+   })
+  } else {
+   const { addItems, deleteDecision } = this.props
+   addItems({
+    id: Math.random(),
+    data: data,
+    decisions: this.state.decisions,
+    count: 1,
+   })
+   deleteDecision()
+  }
+ }
 
-  showPdp(false)
-  deleteDecision()
+ addToCardBtn(data) {
+  return (
+   <button
+    onClick={() => this.addItemsToStore(data, data.inStock)}
+    className={`button-add-to-card-${!data.inStock && 'disabled'}`}
+   >
+    ADD TO CART
+   </button>
+  )
  }
 
  getPrice(currencyIndex, data) {
@@ -64,6 +85,7 @@ class Card extends Component {
   )
  }
 
+ //need for radioButtons states, otherwise not working. For re-render problem
  shouldComponentUpdate(nextProps, nextState) {
   if (this.state.decisions !== nextState.decisions) {
    return false
@@ -131,13 +153,7 @@ class Card extends Component {
       </div>
       <h2>PRICE</h2>
       {this.getPrice(currencyIndex, data)}
-      <button
-       onClick={() => this.addItemsToStore(data)}
-       className="button-add-to-card"
-       disabled={!data.inStock}
-      >
-       ADD TO CART
-      </button>
+      {this.addToCardBtn(data)}
       <div className="item-description">{parse(data.description)}</div>
      </div>
     </div>
@@ -151,5 +167,5 @@ const mapStateToProps = (state) => ({
  items: state.items.items,
  decisions: state.decisions.decisions,
 })
-const mapDispatchToProps = { addItems, showPdp, addDecision, deleteDecision }
+const mapDispatchToProps = { addItems, addDecision, deleteDecision }
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

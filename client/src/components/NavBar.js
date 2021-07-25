@@ -9,9 +9,18 @@ import Basket from '../media/Basket.png'
 import { NavLink } from 'react-router-dom'
 //import utility
 import itemBasketCount from '../utils/itemBasketCount'
+
 class NavBar extends PureComponent {
  constructor(props) {
   super(props)
+  this.state = {
+   all: 'transparent',
+   clothes: 'transparent',
+   tech: 'transparent',
+   allText: 'black',
+   clothesText: 'black',
+   techText: 'black',
+  }
   this.handleCurrency = this.handleCurrency.bind(this)
   this.showCartOverlay = this.showCartOverlay.bind(this)
   this.closeCartOverlay = this.closeCartOverlay.bind(this)
@@ -28,8 +37,35 @@ class NavBar extends PureComponent {
   showCartOverlay()
  }
 
- closeCartOverlay() {
-  this.setState({ ...this.state, showOverlay: false })
+ closeCartOverlay(navlink) {
+  if (navlink === 'clothes')
+   return this.setState({
+    clothes: '#5ECE7B',
+    tech: 'transparent',
+    all: 'transparent',
+    clothesText: '#5ECE7B',
+    techText: 'black',
+    allText: 'black',
+   })
+  if (navlink === 'tech')
+   return this.setState({
+    clothes: 'transparent',
+    tech: '#5ECE7B',
+    all: 'transparent',
+    clothesText: 'black',
+    techText: '#5ECE7B',
+    allText: 'black',
+   })
+  if (navlink === 'all')
+   return this.setState({
+    clothes: 'transparent',
+    tech: 'transparent',
+    all: '#5ECE7B',
+    clothesText: 'black',
+    techText: 'black',
+    allText: '#5ECE7B',
+   })
+
   this.props.showPdp(false)
  }
 
@@ -50,7 +86,11 @@ class NavBar extends PureComponent {
       <li
        className='nav-item'
        value='all'
-       onClick={() => this.closeCartOverlay()}>
+       style={{
+        borderBottom: `2px solid ${this.state.all}`,
+        color: `${this.state.allText}`,
+       }}
+       onClick={() => this.closeCartOverlay('all')}>
        ALL
       </li>
      </NavLink>
@@ -58,7 +98,11 @@ class NavBar extends PureComponent {
       <li
        className='nav-item'
        value='clothes'
-       onClick={() => this.closeCartOverlay()}>
+       style={{
+        borderBottom: `2px solid ${this.state.clothes}`,
+        color: `${this.state.clothesText}`,
+       }}
+       onClick={() => this.closeCartOverlay('clothes')}>
        CLOTHES
       </li>
      </NavLink>
@@ -66,7 +110,11 @@ class NavBar extends PureComponent {
       <li
        className='nav-item'
        value='tech'
-       onClick={() => this.closeCartOverlay()}>
+       style={{
+        borderBottom: `2px solid ${this.state.tech}`,
+        color: `${this.state.techText}`,
+       }}
+       onClick={() => this.closeCartOverlay('tech')}>
        TECH
       </li>
      </NavLink>

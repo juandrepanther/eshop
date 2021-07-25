@@ -23,7 +23,7 @@ a {
 }
 
 .nav-item {
- height: auto;
+ height: 40px;
  width: 100px;
  list-style: none;
  color: #1d1f22;
@@ -32,6 +32,7 @@ a {
  font-size: 16px;
  line-height: 120%;
  text-align: center;
+ margin-right: 3px;
 }
 .currency-options-bar {
  width: 33px;

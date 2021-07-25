@@ -13,6 +13,8 @@
 
 .pdp-section-gallery-thumbs-item {
  cursor: pointer;
+ max-width: 100px;
+ min-height: 100px; 
 }
 .pdp-section-gallery {
  display: flex;
@@ -77,7 +79,6 @@
  border: 1px solid #1d1f22;
  width: 63px;
  height: 45px;
-
  display: inline-block;
  vertical-align: top;
  display: flex;

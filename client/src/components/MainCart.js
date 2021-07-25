@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import '../styles/MainCart.css'
 import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 import ImageSlider from './imageSlider'
+import attributesBoxes from '../utils/attributesBoxes'
 
 class MainCart extends Component {
  constructor(props) {
@@ -46,35 +47,26 @@ class MainCart extends Component {
    <>
     {items.map((item, itemIndex) => {
      return (
-      <div className="cart-item" key={item.id.toString()}>
-       <div className="cart-item-info" key={Math.random()}>
+      <div className='cart-item' key={item.id.toString()}>
+       <div className='cart-item-info' key={Math.random()}>
         <p key={Math.random()}>{item.data.name}</p>
         {this.getPrice(item, currencyIndex)}
         <div
-         className="cart-item-info-decisions-box-wrapper"
-         key={Math.random()}
-        >
-         {Object.values(item.decisions).map((decision) => {
-          return (
-           <div className="cart-item-info-decisions-box" key={Math.random()}>
-            {decision}
-           </div>
-          )
-         })}
+         className='cart-item-info-decisions-box-wrapper'
+         key={Math.random()}>
+         {attributesBoxes(item)}
         </div>
        </div>
-       <div className="cart-item-counter" key={Math.random()}>
+       <div className='cart-item-counter' key={Math.random()}>
         <button
          onClick={() => this.updateCounter(item.id, 'increment')}
-         key={Math.random()}
-        >
+         key={Math.random()}>
          +
         </button>
         <div key={Math.random()}>{item.count}</div>
         <button
          onClick={() => this.updateCounter(item.id, 'decrement')}
-         key={Math.random()}
-        >
+         key={Math.random()}>
          -
         </button>
        </div>
@@ -88,8 +80,8 @@ class MainCart extends Component {
 
  render() {
   return (
-   <div className="cart-container">
-    <div className="cart-wrapper">
+   <div className='cart-container'>
+    <div className='cart-wrapper'>
      <h5>CART</h5>
      {this.renderItems()}
     </div>
@@ -103,5 +95,4 @@ const mapStateToProps = (state) => ({
  currency: state.currency.currency,
 })
 const mapDispatchToProps = { incrementCounter, decrementCounter }
-
 export default connect(mapStateToProps, mapDispatchToProps)(MainCart)

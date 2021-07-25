@@ -84,8 +84,8 @@
  align-items: center;
 }
 .cartoverlay-item-image img {
- width: 105px;
- height: 137px;
+ max-width: 105px;
+ max-height: 137px;
 }
 .delete-item {
  position: absolute;
@@ -101,23 +101,35 @@
  background-color: transparent;
 }
 .delete-item:hover {
- background-color: red;
+ background-color: red; 
  color: white;
  transition: 0.2s;
 }
 .cartoverlay-item-info-decisions-box-wrapper {
  display: flex;
+ 
 }
-.cartoverlay-item-info-decisions-box {
- width: auto;
+.cartoverlay-item-info-decisions-box-subwrapper {
+width: 40px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+margin-right: 5px;
+    
+}
+.cartoverlay-item-info-decisions-box-text {
+font-size: 8px;
+line-height: 100%;
+margin-bottom: 3px;
+}
+.cartoverlay-item-info-decisions-box-result {
+ width: 24px;
  height: 24px;
  border: 1px solid black;
  padding: 7px;
- flex-grow: 1;
  display: flex;
  justify-content: center;
  align-items: center;
- margin-right: 5px;
 }
 
 .cartoverlay-total-box {

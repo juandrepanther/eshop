@@ -40,10 +40,9 @@ class imageSlider extends Component {
      return (
       <div
        key={Math.random()}
-       className={index === this.state.imageIndex ? 'slide-active' : 'slide'}
-      >
+       className={index === this.state.imageIndex ? 'slide-active' : 'slide'}>
        {index === this.state.imageIndex && (
-        <img alt="" key={image} src={image} />
+        <img alt='' key={image} src={image} />
        )}
       </div>
      )
@@ -60,17 +59,15 @@ class imageSlider extends Component {
     {length >= 2 && (
      <>
       <div
-       className="arrow-left"
+       className='arrow-left'
        key={Math.random()}
-       onClick={() => this.prevSlide(length)}
-      >
+       onClick={() => this.prevSlide(length)}>
        &#60;
       </div>
       <div
        onClick={() => this.nextSlide(length)}
-       className="arrow-right"
-       key={Math.random()}
-      >
+       className='arrow-right'
+       key={Math.random()}>
        &#62;
       </div>
      </>
@@ -82,14 +79,13 @@ class imageSlider extends Component {
  render() {
   const itemIndex = this.props.itemIndex
   return (
-   <div className="cart-item-image" key={Math.random()}>
-    <div className="cart-item-image-slider" key={Math.random()}>
+   <div className='cart-item-image' key={Math.random()}>
+    <div className='cart-item-image-slider' key={Math.random()}>
      {this.renderImages()}
      <button
       key={Math.random()}
       onClick={() => this.deleteItem(itemIndex)}
-      className="delete-item"
-     >
+      className='delete-item'>
       X
      </button>
     </div>

@@ -6,10 +6,9 @@ import Card from './Card'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import '../styles/Cards.css'
-
 //filtering with graphQL variables
 const FILTER_PRODUCTS = gql`
- query ($category: String!) {
+ query($category: String!) {
   category(input: { title: $category }) {
    products {
     category
@@ -56,7 +55,6 @@ class Cards extends PureComponent {
   const icons = ['$', '£', '$', '¥', '₽']
   const status = this.props.status.status
   let { category = '' } = this.props.match.params
-
   /*below conditional rendering is important,
   because grapgql querry in this case uses uri as variable
   */
@@ -67,10 +65,9 @@ class Cards extends PureComponent {
       {({ loading, error, data }) => {
        if (loading) return <h4>Loading...</h4>
        if (error) console.log(error)
-
        return (
-        <div className="products-container">
-         <div className="products-card-wrapper">
+        <div className='products-container'>
+         <div className='products-card-wrapper'>
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {
             return (
@@ -79,13 +76,12 @@ class Cards extends PureComponent {
               className={`card-container ${stockOptions[0]}`}
               onClick={() => {
                this.handleClick(product, cardIndex)
-              }}
-             >
-              <div className="card-hover-cart">
-               <img alt="" src={HoverBasket} />
+              }}>
+              <div className='card-hover-cart'>
+               <img alt='' src={HoverBasket} />
               </div>
-              <img className="card-image" alt="" src={product.gallery[0]}></img>
-              <div className="card-text-box">
+              <img className='card-image' alt='' src={product.gallery[0]}></img>
+              <div className='card-text-box'>
                <h3>{product.name}</h3>
                <h3>
                 {`${icons[index]}`}
@@ -101,11 +97,10 @@ class Cards extends PureComponent {
               className={`card-container ${stockOptions[1]}`}
               onClick={() => {
                this.handleClick(product, cardIndex)
-              }}
-             >
-              <img className="card-image" alt="" src={product.gallery[0]} />
+              }}>
+              <img className='card-image' alt='' src={product.gallery[0]} />
               <h5>OUT OF STOCK</h5>
-              <div className="card-text-box">
+              <div className='card-text-box'>
                <h3>{product.name}</h3>
                <h3>
                 {`${icons[index]}`}

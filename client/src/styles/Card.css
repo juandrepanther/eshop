@@ -9,7 +9,6 @@
  width: 100%;
  height: 100%;
  background-color: rgb(255, 255, 255);
- backdrop-filter: blur(10px);
 }
 
 .pdp-section-gallery-thumbs-item {
@@ -47,7 +46,7 @@
 .pdp-section-gallery-bigImage-image {
  object-fit: contain;
  width: 100%;
- height: 100%;
+ max-height: 600px;
 }
 .item-citeria-wrapper {
  font-family: Roboto Condensed;

@@ -31,21 +31,23 @@ class CartOverlay extends PureComponent {
  //component life-cycles and handleClick for outside click detection
  componentDidMount() {
   document.addEventListener('mousedown', this.handleClickOutside)
-  //when cartoverlay is open, scrolling is disabled
-  document.body.style.overflow = 'hidden'
+  /*when cartoverlay is open, scrolling is disabled
+  Otherwise grey overlay with scroll looks non-friendly user I guess.
+  */
+  document.body.style.overflowY = 'hidden'
  }
 
  componentWillUnmount() {
   document.removeEventListener('mousedown', this.handleClickOutside)
   //when cartoverlay is closed, scrolling is enabled again
-  document.body.style.overflow = 'unset'
+  document.body.style.overflowY = 'unset'
  }
 
  setWrapperRef = (node) => (this.wrapperRef = node)
 
- handleClickOutside(event) {
+ handleClickOutside(e) {
   const showCartOverlay = this.props.showCartOverlay
-  if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+  if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
    showCartOverlay(false)
   }
  }
@@ -53,11 +55,9 @@ class CartOverlay extends PureComponent {
  getTotal() {
   const itemCurrencyArr = []
   const items = this.props.items
-
   items.map((item) =>
    item.data.prices.map((product) => itemCurrencyArr.push(product))
   )
-
   if (itemCurrencyArr.length) {
    const currentCurrency = this.props.currency
    const countersArr = this.props.items.map((item) => item.count)

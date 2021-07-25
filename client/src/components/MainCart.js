@@ -22,7 +22,7 @@ class MainCart extends Component {
   const itemCurrencyArr = []
   item.data.prices.map((product) => itemCurrencyArr.push(product))
   return (
-   <p>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
+   <>{`${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</>
   )
  }
 
@@ -50,7 +50,7 @@ class MainCart extends Component {
       <div className='cart-item' key={item.id.toString()}>
        <div className='cart-item-info' key={Math.random()}>
         <p key={Math.random()}>{item.data.name}</p>
-        {this.getPrice(item, currencyIndex)}
+        <h2>{this.getPrice(item, currencyIndex)}</h2>
         <div
          className='cart-item-info-decisions-box-wrapper'
          key={Math.random()}>

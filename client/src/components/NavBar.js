@@ -14,7 +14,7 @@ class NavBar extends PureComponent {
  constructor(props) {
   super(props)
   this.state = {
-   all: 'transparent',
+   all: '#5ECE7B',
    clothes: 'transparent',
    tech: 'transparent',
    allText: 'black',
@@ -38,6 +38,7 @@ class NavBar extends PureComponent {
  }
 
  closeCartOverlay(navlink) {
+  this.props.showPdp(false)
   if (navlink === 'clothes')
    return this.setState({
     clothes: '#5ECE7B',
@@ -65,8 +66,6 @@ class NavBar extends PureComponent {
     techText: 'black',
     allText: '#5ECE7B',
    })
-
-  this.props.showPdp(false)
  }
 
  renderBasketCount() {

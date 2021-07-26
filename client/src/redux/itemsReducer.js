@@ -12,10 +12,12 @@ export const itemsReducer = createSlice({
  initialState,
  reducers: {
   addItems: (state, { payload }) => {
-   const { decisions } = payload
+   const { decisions, data } = payload
+   //from payload data.name and from item - item.data.name
    let findDublicate = []
    for (const item of state.items)
-    JSON.stringify(item.decisions) === JSON.stringify(decisions)
+    JSON.stringify(item.decisions + item.data.name) ===
+    JSON.stringify(decisions + data.name)
      ? findDublicate.push(true)
      : findDublicate.push(false)
    const noExist = findDublicate.findIndex((item) => item === true)

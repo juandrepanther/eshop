@@ -80,7 +80,7 @@
 }
 
 .cart-item {
-  height: 137px;
+  height: 223px;
   margin: 5px 0px;
   display: flex;
   width: 100%;
@@ -96,9 +96,16 @@
 }
 .cart-item-info > p {
   flex-grow: 1;
+  font-size: 27px;
+  font-weight: 600;
 }
 .cart-item-info > h2 {
-  margin-bottom: 12px;
+  margin-bottom: 35px;
+  font-size: 18px;
+  font-weight: 900;
+}
+.cart-item-info-soft-text {
+  font-weight: 500;
 }
 .cart-item-counter {
   flex-grow: 0;

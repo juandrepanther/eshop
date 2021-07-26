@@ -86,7 +86,7 @@ font-family: 'Raleway', sans-serif;
  align-items: center;
 }
 .item-criteria-items-boxwrapper .radio-text:after {
- background: #1d1f22;
+ background: rgb(0, 0, 0);
  color: white;
  width: 65px;
  height: 48px;

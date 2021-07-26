@@ -4,6 +4,8 @@ import '../styles/MainCart.css'
 import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 import ImageSlider from './imageSlider'
 import attributesBoxes from '../utils/attributesBoxes'
+//utility textLiner
+import descriptionTextLiner from '../utils/descriptionTextLiner'
 
 class MainCart extends Component {
  constructor(props) {
@@ -49,7 +51,7 @@ class MainCart extends Component {
      return (
       <div className='cart-item' key={item.id.toString()}>
        <div className='cart-item-info' key={Math.random()}>
-        <p key={Math.random()}>{item.data.name}</p>
+        <p key={Math.random()}>{descriptionTextLiner(item.data.name)}</p>
         <h2>{this.getPrice(item, currencyIndex)}</h2>
         <div
          className='cart-item-info-decisions-box-wrapper'

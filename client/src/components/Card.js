@@ -5,10 +5,12 @@ import { addItems } from '../redux/itemsReducer'
 import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 import '../styles/Card.css'
+import getPrice from '../utils/getPrice'
 //Toast import, styles and configuration
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 toast.configure()
+
 class Card extends Component {
  constructor(props) {
   super(props)
@@ -18,7 +20,6 @@ class Card extends Component {
   }
   this.changeBigImage = this.changeBigImage.bind(this)
   this.saveToStore = this.saveToStore.bind(this)
-  this.getPrice = this.getPrice.bind(this)
   this.addItemsToStore = this.addItemsToStore.bind(this)
  }
 
@@ -90,14 +91,6 @@ class Card extends Component {
     className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}>
     ADD TO CART
    </button>
-  )
- }
-
- getPrice(currencyIndex, data) {
-  const productCurrencyArr = []
-  data.prices.map((product) => productCurrencyArr.push(product))
-  return (
-   <div className='pdp-section-dashboard-valid-price'>{`${productCurrencyArr[currencyIndex].currency} ${productCurrencyArr[currencyIndex].amount}`}</div>
   )
  }
  //need for radioButtons states, otherwise not working. For re-render problem
@@ -175,7 +168,7 @@ class Card extends Component {
       <p>{data.name}</p>
       <div className='item-options'>{this.renderAtributesBtns(data)}</div>
       <h2>PRICE</h2>
-      {this.getPrice(currencyIndex, data)}
+      {getPrice(this.props, currencyIndex)}
       {this.renderAddToCardBtn(data)}
       <div className='item-description'>{parse(data.description)}</div>
      </div>

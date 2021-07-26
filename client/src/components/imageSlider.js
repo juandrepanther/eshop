@@ -85,7 +85,7 @@ class imageSlider extends Component {
      <button
       key={Math.random()}
       onClick={() => this.deleteItem(itemIndex)}
-      className='delete-item'>
+      className='cart-delete-item'>
       X
      </button>
     </div>

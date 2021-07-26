@@ -9,6 +9,7 @@ import {
 } from '../redux/itemsReducer'
 import { showCartOverlay } from '../redux/cartOverlayReducer'
 import attributesBoxes from '../utils/attributesBoxes'
+import getPrice from '../utils/getPrice'
 
 class CartOverlay extends PureComponent {
  constructor(props) {
@@ -24,7 +25,6 @@ class CartOverlay extends PureComponent {
   //--//
   this.updateCounter = this.updateCounter.bind(this)
   this.getTotal = this.getTotal.bind(this)
-  this.getPrice = this.getPrice.bind(this)
   this.deleteItem = this.deleteItem.bind(this)
  }
 
@@ -70,15 +70,6 @@ class CartOverlay extends PureComponent {
     )
    return res.reduce((a, b) => a + b).toFixed(2)
   } else return '0'
- }
-
- getPrice(item, currencyIndex) {
-  const itemCurrencyArr = []
-  item.data.prices.map((product) => itemCurrencyArr.push(product))
-  return (
-   <p
-    key={Math.random()}>{`Price ${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</p>
-  )
  }
 
  updateCounter(itemId, task) {
@@ -137,7 +128,7 @@ class CartOverlay extends PureComponent {
         <div key={item.id} className='cartoverlay-item'>
          <div className='cartoverlay-item-info'>
           <p>{item.data.name}</p>
-          {this.getPrice(item, currencyIndex)}
+          {getPrice(item, currencyIndex)}
           <div
            className='cartoverlay-item-info-decisions-box-wrapper'
            key={Math.random()}>

@@ -5,8 +5,10 @@ export default function liner(sentence) {
  const otherWords = sentence.replace(firstWord, '')
  return (
   <>
-   <p>{firstWord}</p>
-   <p className='cart-item-info-soft-text'>{otherWords}</p>
+   <p className='cart-item-info-first-word'>
+    {!firstWord ? sentence : firstWord}
+   </p>
+   <p className='cart-item-info-soft-text'>{!firstWord ? '' : otherWords}</p>
   </>
  )
 }

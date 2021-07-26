@@ -4,8 +4,9 @@ import '../styles/MainCart.css'
 import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 import ImageSlider from './imageSlider'
 import attributesBoxes from '../utils/attributesBoxes'
-//utility textLiner
+//utility textLiner - it can add space line. Get price util.
 import descriptionTextLiner from '../utils/descriptionTextLiner'
+import getPrice from '../utils/getPrice'
 
 class MainCart extends Component {
  constructor(props) {
@@ -17,15 +18,6 @@ class MainCart extends Component {
    imageIndex: 0,
   }
   this.updateCounter = this.updateCounter.bind(this)
-  this.getPrice = this.getPrice.bind(this)
- }
-
- getPrice(item, currencyIndex) {
-  const itemCurrencyArr = []
-  item.data.prices.map((product) => itemCurrencyArr.push(product))
-  return (
-   <>{`${itemCurrencyArr[currencyIndex].currency} ${itemCurrencyArr[currencyIndex].amount}`}</>
-  )
  }
 
  updateCounter(itemId, task) {
@@ -51,8 +43,10 @@ class MainCart extends Component {
      return (
       <div className='cart-item' key={item.id.toString()}>
        <div className='cart-item-info' key={Math.random()}>
-        <p key={Math.random()}>{descriptionTextLiner(item.data.name)}</p>
-        <h2>{this.getPrice(item, currencyIndex)}</h2>
+        <div className='cart-item-info-text-wrap' key={Math.random()}>
+         {descriptionTextLiner(item.data.name)}
+        </div>
+        <h2>{getPrice(item, currencyIndex)}</h2>
         <div
          className='cart-item-info-decisions-box-wrapper'
          key={Math.random()}>

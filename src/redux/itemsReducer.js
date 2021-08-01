@@ -1,7 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-toast.configure()
 
 const initialState = {
  items: [],
@@ -23,14 +20,6 @@ export const itemsReducer = createSlice({
    const noExist = findDublicate.findIndex((item) => item === true)
    if (noExist === -1) {
     state.items.push(payload)
-   } else {
-    toast.warn(
-     'You can`t add this price with the same attribute! Go to Basket and multiply them!',
-     {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 4000,
-     }
-    )
    }
    findDublicate = []
   },
@@ -68,11 +57,7 @@ export const itemsReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {
- addItems,
- incrementCounter,
- decrementCounter,
- deleteItem,
-} = itemsReducer.actions
+export const { addItems, incrementCounter, decrementCounter, deleteItem } =
+ itemsReducer.actions
 
 export default itemsReducer.reducer

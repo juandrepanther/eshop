@@ -6,9 +6,10 @@ import Card from './Card'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import '../styles/Cards.css'
+import { addItems } from '../redux/itemsReducer'
 //filtering with graphQL variables
 const FILTER_PRODUCTS = gql`
- query($category: String!) {
+ query ($category: String!) {
   category(input: { title: $category }) {
    products {
     category
@@ -47,6 +48,16 @@ class Cards extends PureComponent {
   this.handleClick = this.handleClick.bind(this)
  }
 
+ addToCartFromPLP(productData) {
+  const { addItems } = this.props
+  addItems({
+   id: Math.random(),
+   data: productData,
+   decisions: {},
+   count: 1,
+  })
+ }
+
  displayProducts() {
   const currency = this.props.currency
   const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
@@ -66,8 +77,8 @@ class Cards extends PureComponent {
        if (loading) return <h4>Loading...</h4>
        if (error) console.log(error)
        return (
-        <div className='products-container'>
-         <div className='products-card-wrapper'>
+        <div className="products-container">
+         <div className="products-card-wrapper">
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {
             return (
@@ -76,12 +87,22 @@ class Cards extends PureComponent {
               className={`card-container ${stockOptions[0]}`}
               onClick={() => {
                this.handleClick(product, cardIndex)
-              }}>
-              <div className='card-hover-cart'>
-               <img alt='' src={HoverBasket} />
-              </div>
-              <img className='card-image' alt='' src={product.gallery[0]}></img>
-              <div className='card-text-box'>
+              }}
+             >
+              {!Object.keys(product.attributes).length && (
+               <div className="card-hover-cart">
+                <img
+                 alt=""
+                 src={HoverBasket}
+                 onClick={(e) => {
+                  e.stopPropagation()
+                  this.addToCartFromPLP(product)
+                 }}
+                />
+               </div>
+              )}
+              <img className="card-image" alt="" src={product.gallery[0]}></img>
+              <div className="card-text-box">
                <h3>{product.name}</h3>
                <h3>
                 {`${icons[index]}`}
@@ -97,10 +118,11 @@ class Cards extends PureComponent {
               className={`card-container ${stockOptions[1]}`}
               onClick={() => {
                this.handleClick(product, cardIndex)
-              }}>
-              <img className='card-image' alt='' src={product.gallery[0]} />
+              }}
+             >
+              <img className="card-image" alt="" src={product.gallery[0]} />
               <h5>OUT OF STOCK</h5>
-              <div className='card-text-box'>
+              <div className="card-text-box">
                <h3>{product.name}</h3>
                <h3>
                 {`${icons[index]}`}
@@ -143,5 +165,5 @@ const mapStateToProps = (state) => ({
  items: state.items.items,
  status: state.status,
 })
-const mapDispatchToProps = { showPdp }
+const mapDispatchToProps = { showPdp, addItems }
 export default connect(mapStateToProps, mapDispatchToProps)(Cards)

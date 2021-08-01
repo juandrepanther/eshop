@@ -6,10 +6,6 @@ import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 import '../styles/Card.css'
 import getPrice from '../utils/getPrice'
-//Toast import, styles and configuration
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-toast.configure()
 
 class Card extends Component {
  constructor(props) {
@@ -17,6 +13,7 @@ class Card extends Component {
   this.state = {
    bigImageUrl: 0,
    decisions: {},
+   warning: false,
   }
   this.changeBigImage = this.changeBigImage.bind(this)
   this.saveToStore = this.saveToStore.bind(this)
@@ -48,10 +45,10 @@ class Card extends Component {
 
  addItemsToStore(data, inStock) {
   if (!inStock) {
-   toast.warn('Selected Price is OUT OF STOCK. You can`t it Add to Cart!', {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000,
-   })
+   this.setState({ ...this.state, warning: true })
+   setTimeout(() => {
+    this.setState({ ...this.state, warning: false })
+   }, 2000)
   } else {
    const { addItems, deleteDecision } = this.props
    if (data.attributes.length) {
@@ -64,13 +61,7 @@ class Card extends Component {
      })
      deleteDecision()
     } else {
-     toast.warn(
-      'Please select Price Atributes! Without them price wont be added to Cart!',
-      {
-       position: toast.POSITION.TOP_CENTER,
-       autoClose: 3000,
-      }
-     )
+     return null
     }
    } else {
     addItems({
@@ -88,7 +79,8 @@ class Card extends Component {
   return (
    <button
     onClick={() => this.addItemsToStore(data, data.inStock)}
-    className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}>
+    className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}
+   >
     ADD TO CART
    </button>
   )
@@ -106,12 +98,12 @@ class Card extends Component {
    <>
     {data.gallery.map((url, index) => {
      return (
-      <div className='pdp-section-gallery-thumbs' key={Math.random()}>
+      <div className="pdp-section-gallery-thumbs" key={Math.random()}>
        <img
         key={url}
-        alt=''
+        alt=""
         src={url}
-        className='pdp-section-gallery-thumbs-item'
+        className="pdp-section-gallery-thumbs-item"
         onClick={() => this.changeBigImage(index)}
        />
       </div>
@@ -126,16 +118,17 @@ class Card extends Component {
    <>
     {data.attributes.map((criteria) => {
      return (
-      <div className='item-citeria-wrapper' key={criteria.id}>
+      <div className="item-citeria-wrapper" key={criteria.id}>
        {`${criteria.name}:`}
-       <div className='item-citeria-items' key={Math.random()}>
+       <div className="item-citeria-items" key={Math.random()}>
         {criteria.items.map((decision) => {
          return (
           <div
            key={Math.random()}
            onClick={() =>
             this.saveToStore([criteria.name, decision.displayValue])
-           }>
+           }
+          >
            <RadioButton
             decision={decision}
             criteria={criteria}
@@ -156,21 +149,27 @@ class Card extends Component {
   const { currencyIndex, data } = this.props
   return (
    <>
-    <div className='pdp-container'>
-     <div className='pdp-section-gallery'>{this.renderImagesThumbs(data)}</div>
-     <div className='pdp-section-gallery-bigImage'>
+    <div className="pdp-container">
+     <div className="pdp-section-gallery">{this.renderImagesThumbs(data)}</div>
+     <div className="pdp-section-gallery-bigImage">
       <img
-       className='pdp-section-gallery-bigImage-image'
-       alt=''
-       src={data.gallery[this.state.bigImageUrl]}></img>
+       className="pdp-section-gallery-bigImage-image"
+       alt=""
+       src={data.gallery[this.state.bigImageUrl]}
+      ></img>
      </div>
-     <div className='pdp-section-dashboard'>
+     <div className="pdp-section-dashboard">
       <p>{data.name}</p>
-      <div className='item-options'>{this.renderAtributesBtns(data)}</div>
+      <div className="item-options">{this.renderAtributesBtns(data)}</div>
       <h2>PRICE</h2>
       {getPrice(this.props, currencyIndex)}
       {this.renderAddToCardBtn(data)}
-      <div className='item-description'>{parse(data.description)}</div>
+      {this.state.warning && (
+       <h4 style={{ color: 'red', marginBottom: '10px' }}>
+        Item is OUT of STOCK
+       </h4>
+      )}
+      <div className="item-description">{parse(data.description)}</div>
      </div>
     </div>
    </>

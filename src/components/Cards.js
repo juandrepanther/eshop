@@ -1,39 +1,12 @@
 import React, { PureComponent } from 'react'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
-import Card from './Card'
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
 import '../styles/Cards.css'
 import { addItems } from '../redux/itemsReducer'
-//filtering with graphQL variables
-const FILTER_PRODUCTS = gql`
- query ($category: String!) {
-  category(input: { title: $category }) {
-   products {
-    category
-    name
-    description
-    gallery
-    prices {
-     amount
-     currency
-    }
-    inStock
-    attributes {
-     id
-     name
-     type
-     items {
-      id
-      displayValue
-     }
-    }
-   }
-  }
- }
-`
+import { FILTER_PRODUCTS } from '../querries/querries'
 
 const initialData = {
  data: {},
@@ -64,14 +37,13 @@ class Cards extends PureComponent {
   const index = currencyItem.indexOf(currency)
   const stockOptions = ['', 'notInStock']
   const icons = ['$', '£', '$', '¥', '₽']
-  const status = this.props.status.status
   let { category = '' } = this.props.match.params
   /*below conditional rendering is important,
   because grapgql querry in this case uses uri as variable
   */
   return (
    <>
-    {category !== 'cart' ? (
+    {category === '' || category === 'tech' || category === 'clothes' ? (
      <Query query={FILTER_PRODUCTS} variables={{ category: `${category}` }}>
       {({ loading, error, data }) => {
        if (loading) return <h4>Loading...</h4>
@@ -82,58 +54,65 @@ class Cards extends PureComponent {
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {
             return (
-             <div
-              key={product.description}
-              className={`card-container ${stockOptions[0]}`}
-              onClick={() => {
-               this.handleClick(product, cardIndex)
-              }}
-             >
-              {!Object.keys(product.attributes).length && (
-               <div className="card-hover-cart">
-                <img
-                 alt=""
-                 src={HoverBasket}
-                 onClick={(e) => {
-                  e.stopPropagation()
-                  this.addToCartFromPLP(product)
-                 }}
-                />
+             <NavLink to={`/${product.category}/${product.name}`}>
+              <div
+               key={product.description}
+               className={`card-container ${stockOptions[0]}`}
+               onClick={() => {
+                this.handleClick(product, cardIndex)
+               }}
+              >
+               {!Object.keys(product.attributes).length && (
+                <div className="card-hover-cart">
+                 <img
+                  alt=""
+                  src={HoverBasket}
+                  onClick={(e) => {
+                   e.stopPropagation()
+                   this.addToCartFromPLP(product)
+                  }}
+                 />
+                </div>
+               )}
+               <img
+                className="card-image"
+                alt=""
+                src={product.gallery[0]}
+               ></img>
+               <div className="card-text-box">
+                <h3>{product.name}</h3>
+                <h3>
+                 {`${icons[index]}`}
+                 {product.prices.map((i) => Object.values(i)[0])[index]}
+                </h3>
                </div>
-              )}
-              <img className="card-image" alt="" src={product.gallery[0]}></img>
-              <div className="card-text-box">
-               <h3>{product.name}</h3>
-               <h3>
-                {`${icons[index]}`}
-                {product.prices.map((i) => Object.values(i)[0])[index]}
-               </h3>
               </div>
-             </div>
+             </NavLink>
             )
            } else {
             return (
-             <div
-              key={product.description}
-              className={`card-container ${stockOptions[1]}`}
-              onClick={() => {
-               this.handleClick(product, cardIndex)
-              }}
-             >
-              <img className="card-image" alt="" src={product.gallery[0]} />
-              <h5>OUT OF STOCK</h5>
-              <div className="card-text-box">
-               <h3>{product.name}</h3>
-               <h3>
-                {`${icons[index]}`}
-                {product.prices.map((i) => Object.values(i)[0])[index]}
-               </h3>
+             <NavLink to={`/${product.category}/${product.name}`}>
+              <div
+               key={product.description}
+               className={`card-container ${stockOptions[1]}`}
+               onClick={() => {
+                this.handleClick(product, cardIndex)
+               }}
+              >
+               <img className="card-image" alt="" src={product.gallery[0]} />
+               <h5>OUT OF STOCK</h5>
+               <div className="card-text-box">
+                <h3>{product.name}</h3>
+                <h3>
+                 {`${icons[index]}`}
+                 {product.prices.map((i) => Object.values(i)[0])[index]}
+                </h3>
+               </div>
               </div>
-             </div>
+             </NavLink>
             )
            }
           })}
-          {status && <Card currencyIndex={index} data={this.state.data} />}
          </div>
         </div>
        )
@@ -156,6 +135,7 @@ class Cards extends PureComponent {
  }
 
  render() {
+  console.log(this.props)
   return <>{this.displayProducts()}</>
  }
 }
@@ -163,7 +143,6 @@ class Cards extends PureComponent {
 const mapStateToProps = (state) => ({
  currency: state.currency.currency,
  items: state.items.items,
- status: state.status,
 })
 const mapDispatchToProps = { showPdp, addItems }
 export default connect(mapStateToProps, mapDispatchToProps)(Cards)

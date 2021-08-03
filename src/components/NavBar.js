@@ -72,48 +72,51 @@ class NavBar extends PureComponent {
   const allItems = this.props.items
   if (allItems.length !== 0) {
    return (
-    <div className='small-basket-counter'>{itemBasketCount(allItems)}</div>
+    <div className="small-basket-counter">{itemBasketCount(allItems)}</div>
    )
   }
  }
 
  renderNavLinks() {
   return (
-   <div className='navbar-container-one'>
-    <ul className='nav-menu'>
-     <NavLink to='/'>
+   <div className="navbar-container-one">
+    <ul className="nav-menu">
+     <NavLink to="/">
       <li
-       className='nav-item'
-       value='all'
+       className="nav-item"
+       value="all"
        style={{
         borderBottom: `2px solid ${this.state.all}`,
         color: `${this.state.allText}`,
        }}
-       onClick={() => this.closeCartOverlay('all')}>
+       onClick={() => this.closeCartOverlay('all')}
+      >
        ALL
       </li>
      </NavLink>
-     <NavLink to='/clothes'>
+     <NavLink to="/clothes">
       <li
-       className='nav-item'
-       value='clothes'
+       className="nav-item"
+       value="clothes"
        style={{
         borderBottom: `2px solid ${this.state.clothes}`,
         color: `${this.state.clothesText}`,
        }}
-       onClick={() => this.closeCartOverlay('clothes')}>
+       onClick={() => this.closeCartOverlay('clothes')}
+      >
        CLOTHES
       </li>
      </NavLink>
-     <NavLink to='/tech'>
+     <NavLink to="/tech">
       <li
-       className='nav-item'
-       value='tech'
+       className="nav-item"
+       value="tech"
        style={{
         borderBottom: `2px solid ${this.state.tech}`,
         color: `${this.state.techText}`,
        }}
-       onClick={() => this.closeCartOverlay('tech')}>
+       onClick={() => this.closeCartOverlay('tech')}
+      >
        TECH
       </li>
      </NavLink>
@@ -125,22 +128,23 @@ class NavBar extends PureComponent {
  renderSelectCurrency() {
   return (
    <select
-    className='currency-options-bar'
+    className="currency-options-bar"
     value={this.props.currency}
-    onChange={this.handleCurrency}>
-    <option value='USD' className='option'>
+    onChange={this.handleCurrency}
+   >
+    <option value="USD" className="option">
      $ USD
     </option>
-    <option value='GBP' className='option'>
+    <option value="GBP" className="option">
      £ GBP
     </option>
-    <option value='AUD' className='option'>
+    <option value="AUD" className="option">
      $ AUD
     </option>
-    <option value='JPY' className='option'>
+    <option value="JPY" className="option">
      ¥ JPY
     </option>
-    <option value='RUB' className='option'>
+    <option value="RUB" className="option">
      ₽ RUB
     </option>
    </select>
@@ -150,20 +154,20 @@ class NavBar extends PureComponent {
  render() {
   return (
    <>
-    <div className='navbar-container'>
-     <div className='navbar-wrapper'>
+    <div className="navbar-container">
+     <div className="navbar-wrapper">
       {this.renderNavLinks()}
-      <div className='navbar-container-two'>
-       <img src={Logo} alt='' className='logo' />
+      <div className="navbar-container-two">
+       <img src={Logo} alt="" className="logo" />
       </div>
-      <div className='navbar-container-three'>
+      <div className="navbar-container-three">
        {this.renderSelectCurrency()}
-       <div className='basket-wrapper'>
+       <div className="basket-wrapper">
         <img
          src={Basket}
-         alt=''
-         className='basket'
-         onMouseEnter={() => this.showCartOverlay()}
+         alt=""
+         className="basket"
+         onClick={() => this.showCartOverlay()}
         />
         {this.renderBasketCount()}
        </div>

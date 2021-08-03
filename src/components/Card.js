@@ -6,6 +6,8 @@ import RadioButton from './RadioButton'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
 import '../styles/Card.css'
 import getPrice from '../utils/getPrice'
+import { ALL_PRODUCTS } from '../querries/querries'
+import { Query } from 'react-apollo'
 
 class Card extends Component {
  constructor(props) {
@@ -94,6 +96,7 @@ class Card extends Component {
  }
 
  renderImagesThumbs(data) {
+  console.log(data)
   return (
    <>
     {data.gallery.map((url, index) => {
@@ -146,32 +149,49 @@ class Card extends Component {
  }
 
  render() {
-  const { currencyIndex, data } = this.props
+  const { currencyIndex } = this.props
   return (
    <>
-    <div className="pdp-container">
-     <div className="pdp-section-gallery">{this.renderImagesThumbs(data)}</div>
-     <div className="pdp-section-gallery-bigImage">
-      <img
-       className="pdp-section-gallery-bigImage-image"
-       alt=""
-       src={data.gallery[this.state.bigImageUrl]}
-      ></img>
-     </div>
-     <div className="pdp-section-dashboard">
-      <p>{data.name}</p>
-      <div className="item-options">{this.renderAtributesBtns(data)}</div>
-      <h2>PRICE</h2>
-      {getPrice(this.props, currencyIndex)}
-      {this.renderAddToCardBtn(data)}
-      {this.state.warning && (
-       <h4 style={{ color: 'red', marginBottom: '10px' }}>
-        Item is OUT of STOCK
-       </h4>
-      )}
-      <div className="item-description">{parse(data.description)}</div>
-     </div>
-    </div>
+    <Query query={ALL_PRODUCTS}>
+     {({ loading, error, data }) => {
+      if (loading) return <h4>Loading...</h4>
+      if (error) console.log(error)
+
+      const { name } = this.props.match.params
+      const cardData = data.category.products.find(
+       (product) => product.name === name
+      )
+      return (
+       <div className="pdp-container">
+        <div className="pdp-section-gallery">
+         {this.renderImagesThumbs(cardData)}
+        </div>
+        <div className="pdp-section-gallery-bigImage">
+         <img
+          className="pdp-section-gallery-bigImage-image"
+          alt=""
+          src={cardData.gallery[this.state.bigImageUrl]}
+         ></img>
+        </div>
+        <div className="pdp-section-dashboard">
+         <p>{cardData.name}</p>
+         <div className="item-options">
+          {this.renderAtributesBtns(cardData)}
+         </div>
+         <h2>PRICE</h2>
+         {/* {getPrice(this.props, currencyIndex)} */}
+         {this.renderAddToCardBtn(cardData)}
+         {this.state.warning && (
+          <h4 style={{ color: 'red', marginBottom: '10px' }}>
+           Item is OUT of STOCK
+          </h4>
+         )}
+         <div className="item-description">{parse(cardData.description)}</div>
+        </div>
+       </div>
+      )
+     }}
+    </Query>
    </>
   )
  }

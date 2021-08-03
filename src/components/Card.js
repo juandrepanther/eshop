@@ -81,8 +81,7 @@ class Card extends Component {
   return (
    <button
     onClick={() => this.addItemsToStore(data, data.inStock)}
-    className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}
-   >
+    className={`button-add-to-card${!data.inStock ? '-disabled' : ''}`}>
     ADD TO CART
    </button>
   )
@@ -96,17 +95,16 @@ class Card extends Component {
  }
 
  renderImagesThumbs(data) {
-  console.log(data)
   return (
    <>
     {data.gallery.map((url, index) => {
      return (
-      <div className="pdp-section-gallery-thumbs" key={Math.random()}>
+      <div className='pdp-section-gallery-thumbs' key={Math.random()}>
        <img
         key={url}
-        alt=""
+        alt=''
         src={url}
-        className="pdp-section-gallery-thumbs-item"
+        className='pdp-section-gallery-thumbs-item'
         onClick={() => this.changeBigImage(index)}
        />
       </div>
@@ -121,17 +119,16 @@ class Card extends Component {
    <>
     {data.attributes.map((criteria) => {
      return (
-      <div className="item-citeria-wrapper" key={criteria.id}>
+      <div className='item-citeria-wrapper' key={criteria.id}>
        {`${criteria.name}:`}
-       <div className="item-citeria-items" key={Math.random()}>
+       <div className='item-citeria-items' key={Math.random()}>
         {criteria.items.map((decision) => {
          return (
           <div
            key={Math.random()}
            onClick={() =>
             this.saveToStore([criteria.name, decision.displayValue])
-           }
-          >
+           }>
            <RadioButton
             decision={decision}
             criteria={criteria}
@@ -162,20 +159,19 @@ class Card extends Component {
        (product) => product.name === name
       )
       return (
-       <div className="pdp-container">
-        <div className="pdp-section-gallery">
+       <div className='pdp-container'>
+        <div className='pdp-section-gallery'>
          {this.renderImagesThumbs(cardData)}
         </div>
-        <div className="pdp-section-gallery-bigImage">
+        <div className='pdp-section-gallery-bigImage'>
          <img
-          className="pdp-section-gallery-bigImage-image"
-          alt=""
-          src={cardData.gallery[this.state.bigImageUrl]}
-         ></img>
+          className='pdp-section-gallery-bigImage-image'
+          alt=''
+          src={cardData.gallery[this.state.bigImageUrl]}></img>
         </div>
-        <div className="pdp-section-dashboard">
+        <div className='pdp-section-dashboard'>
          <p>{cardData.name}</p>
-         <div className="item-options">
+         <div className='item-options'>
           {this.renderAtributesBtns(cardData)}
          </div>
          <h2>PRICE</h2>
@@ -186,7 +182,7 @@ class Card extends Component {
            Item is OUT of STOCK
           </h4>
          )}
-         <div className="item-description">{parse(cardData.description)}</div>
+         <div className='item-description'>{parse(cardData.description)}</div>
         </div>
        </div>
       )

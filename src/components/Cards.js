@@ -49,8 +49,8 @@ class Cards extends PureComponent {
        if (loading) return <h4>Loading...</h4>
        if (error) console.log(error)
        return (
-        <div className="products-container">
-         <div className="products-card-wrapper">
+        <div className='products-container'>
+         <div className='products-card-wrapper'>
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {
             return (
@@ -60,26 +60,25 @@ class Cards extends PureComponent {
                className={`card-container ${stockOptions[0]}`}
                onClick={() => {
                 this.handleClick(product, cardIndex)
-               }}
-              >
+               }}>
                {!Object.keys(product.attributes).length && (
-                <div className="card-hover-cart">
+                <div className='card-hover-cart'>
                  <img
-                  alt=""
+                  alt=''
                   src={HoverBasket}
                   onClick={(e) => {
                    e.stopPropagation()
+                   e.preventDefault()
                    this.addToCartFromPLP(product)
                   }}
                  />
                 </div>
                )}
                <img
-                className="card-image"
-                alt=""
-                src={product.gallery[0]}
-               ></img>
-               <div className="card-text-box">
+                className='card-image'
+                alt=''
+                src={product.gallery[0]}></img>
+               <div className='card-text-box'>
                 <h3>{product.name}</h3>
                 <h3>
                  {`${icons[index]}`}
@@ -97,11 +96,10 @@ class Cards extends PureComponent {
                className={`card-container ${stockOptions[1]}`}
                onClick={() => {
                 this.handleClick(product, cardIndex)
-               }}
-              >
-               <img className="card-image" alt="" src={product.gallery[0]} />
+               }}>
+               <img className='card-image' alt='' src={product.gallery[0]} />
                <h5>OUT OF STOCK</h5>
-               <div className="card-text-box">
+               <div className='card-text-box'>
                 <h3>{product.name}</h3>
                 <h3>
                  {`${icons[index]}`}

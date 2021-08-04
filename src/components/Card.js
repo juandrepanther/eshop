@@ -98,9 +98,8 @@ class Card extends Component {
    <>
     {data.gallery.map((url, index) => {
      return (
-      <div className='pdp-section-gallery-thumbs' key={Math.random()}>
+      <div key={url}>
        <img
-        key={url}
         alt=''
         src={url}
         className='pdp-section-gallery-thumbs-item'

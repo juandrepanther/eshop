@@ -46,8 +46,13 @@ class Cards extends PureComponent {
       {({ loading, error, data }) => {
        if (loading) return <h4>Loading...</h4>
        if (error) console.log(error)
+       const categoryTitle =
+        this.props.location.pathname === '/'
+         ? 'ALL'
+         : this.props.location.pathname.replace('/', '').toUpperCase()
        return (
         <div className='products-container'>
+         <div className='products-category-title'>{categoryTitle}</div>
          <div className='products-card-wrapper'>
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {

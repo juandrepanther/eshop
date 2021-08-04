@@ -27,6 +27,13 @@
  opacity: 1;
  transition: 0.5s;
 }
+
+.products-category-title {
+    font-size: 42px;
+    font-weight: 400;
+    padding: 40px 0px 20px 10px;
+}
+
 .card-hover-cart {
  opacity: 0;
  position: absolute;

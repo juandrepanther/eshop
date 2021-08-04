@@ -118,7 +118,7 @@ class Card extends Component {
     {data.attributes.map((criteria) => {
      return (
       <div className='item-citeria-wrapper' key={criteria.id}>
-       {`${criteria.name}:`}
+       {`${criteria.name.toUpperCase()}:`}
        <div className='item-citeria-items' key={Math.random()}>
         {criteria.items.map((decision) => {
          return (
@@ -172,7 +172,7 @@ class Card extends Component {
          <div className='item-options'>
           {this.renderAtributesBtns(cardData)}
          </div>
-         <h2>PRICE</h2>
+         <h2 className='price-title'>PRICE</h2>
          {getPrice(cardData, currency)}
          {this.renderAddToCardBtn(cardData)}
          {this.state.warning && (

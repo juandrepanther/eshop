@@ -17,7 +17,7 @@ export default function getPrice(item, currency) {
       if (error) console.log(error)
       const currencyIndex = data.currencies.indexOf(currency)
       return (
-       <>{`${icons[currencyIndex]} ${itemCurrencyArr[currencyIndex].amount}`}</>
+       <div className='price'>{`${icons[currencyIndex]} ${itemCurrencyArr[currencyIndex].amount}`}</div>
       )
      }}
     </Query>
@@ -34,7 +34,7 @@ export default function getPrice(item, currency) {
       if (error) console.log(error)
       const currencyIndex = data.currencies.indexOf(currency)
       return (
-       <>{`${icons[currencyIndex]} ${itemCurrencyArr[currencyIndex].amount}`}</>
+       <div className='price'>{`${icons[currencyIndex]} ${itemCurrencyArr[currencyIndex].amount}`}</div>
       )
      }}
     </Query>

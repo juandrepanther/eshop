@@ -85,8 +85,9 @@
   display: flex;
   width: 100%;
   align-items: stretch;
-  padding: 5px 0px;
-  border-top: 1px solid #e5e5e5;
+  padding: 10px 0px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px ;
 }
 .cart-item-info {
   flex-grow: 2;
@@ -185,4 +186,10 @@
   background-color: red; 
   color: white;
   transition: 0.2s;
+ }
+ .cartoverlay-item-info-decisions-box-text {
+   font-size: 14px;
+ }
+ .cartoverlay-item-info-decisions-box-subwrapper {
+   margin-right: 25px;
  }

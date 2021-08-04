@@ -1,7 +1,9 @@
 .products-container {
  position: relative;
- width: 100%;
+ width: 1440px;
  height: 100%;
+ margin-left: auto;
+ margin-right: auto;
 }
 
 .products-card-wrapper {
@@ -19,6 +21,7 @@
  align-items: center;
  justify-content: space-between;
  width: 386px;
+ height: 444px;
  margin: 20px;
  padding: 16px 16px;
  cursor: pointer;
@@ -78,7 +81,8 @@
  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .card-image {
- width: 100%;
+ width: auto;
+ height: 330px;
 }
 .card-text-box {
  position: relative;
@@ -87,8 +91,9 @@
  height: 60px;
  background-color: white;
  margin-right: 16px;
+ color: black;
 }
 .card-text-box h3 {
  margin-top: 5px;
- padding-left: 16px;
+ margin-bottom: 10px;
 }

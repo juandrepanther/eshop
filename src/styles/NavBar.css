@@ -1,8 +1,9 @@
 .navbar-container {
- width: 100%;
+ width: 1440px;
  height: 50px;
- justify-content: center;
  margin-top: 20px;
+ margin-left: auto;
+ margin-right: auto;
 }
 
 .navbar-wrapper {
@@ -37,10 +38,40 @@ a {
 }
 .currency-options-bar {
  width: 33px;
- border: none;
+ border: 0px;
  font-size: 18px;
  margin-right: 20px;
 }
+.currency-options-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.currency-options-arrow > div {
+   padding-bottom: 7px;
+   padding-left: 5px;
+}
+.currency-options-items {
+    position: absolute;
+    z-index: 999;
+    width: 114px;
+    height: auto;
+    padding: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.option {
+    margin: 5px 0px;
+    cursor: pointer;
+}
+.option:hover {
+    font-weight: 600;
+}
+
 .logo {
  height: 29.92669677734375px;
  width: 31.181222915649414px;

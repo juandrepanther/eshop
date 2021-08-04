@@ -37,6 +37,7 @@
  line-height: 27px;
  letter-spacing: 0em;
  text-align: left;
+ margin-bottom: 35px;
 }
 .pdp-section-gallery-bigImage {
  box-sizing: border-box;
@@ -59,6 +60,28 @@
 }
 .item-citeria-items {
  display: flex;
+}
+.item-options {
+    margin-bottom: 15px;
+}
+.price-title {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 18px;
+    letter-spacing: 0em;
+    
+}
+.price {
+    margin-top: 6px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    margin-bottom: 10px;
+
+
 }
 .item-criteria-items-boxwrapper {
  position: relative;
@@ -83,6 +106,9 @@
  display: flex;
  justify-content: center;
  align-items: center;
+}
+.item-description {
+    margin-top: 15px;
 }
 .item-criteria-items-boxwrapper .radio-text:after {
  background: rgb(0, 0, 0);

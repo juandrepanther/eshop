@@ -15,7 +15,7 @@ export const store = configureStore(
    items: itemsReducer,
    status: showPdpReducer,
    decisions: decisionsReducer,
-   showCartOverlay: cartOverlayReducer,
+   isOverlay: cartOverlayReducer,
   },
  },
  composeWithDevTools()

@@ -1,15 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
- showCartOverlay: false,
+ isOverlay: false,
 }
 
 export const cartOverlayReducer = createSlice({
- name: 'showCartOverlay',
+ name: 'isOverlay',
  initialState,
  reducers: {
   showCartOverlay: (state, { payload }) => {
-   state.showCartOverlay = !state.showCartOverlay || payload
+   if (payload === false) {
+    state.isOverlay = false
+   } else {
+    state.isOverlay = !state.isOverlay
+   }
   },
  },
 })

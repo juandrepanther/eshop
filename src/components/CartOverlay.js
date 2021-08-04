@@ -19,42 +19,11 @@ class CartOverlay extends PureComponent {
    count: 1,
    item: [],
   }
-  //for click detection out of cartOverlay component
-  this.setWrapperRef = this.setWrapperRef.bind(this)
-  this.handleClickOutside = this.handleClickOutside.bind(this)
-  //--//
   this.updateCounter = this.updateCounter.bind(this)
   this.getTotal = this.getTotal.bind(this)
   this.deleteItem = this.deleteItem.bind(this)
  }
 
- //component life-cycles and handleClick for outside click detection
- componentDidMount() {
-  document.addEventListener('mouseup', this.handleClickOutside)
-  /*when cartoverlay is open, scrolling is disabled
-  Otherwise grey overlay with scroll looks non-friendly user I guess.
-  */
-  document.body.style.overflowY = 'hidden'
- }
-
- componentWillUnmount() {
-  document.removeEventListener('mouseup', this.handleClickOutside)
-  //when cartoverlay is closed, scrolling is enabled again
-  document.body.style.overflowY = 'unset'
- }
-
- setWrapperRef = (node) => (this.wrapperRef = node)
-
- handleClickOutside(e) {
-  //const showCartOverlay = this.props.showCartOverlay
-  if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-   const el = document.querySelector('.cartoverlay-backdrop')
-
-   el.style.display = 'none'
-   //showCartOverlay(false)
-  }
- }
- //--//
  getTotal() {
   const itemCurrencyArr = []
   const items = this.props.items
@@ -109,7 +78,7 @@ class CartOverlay extends PureComponent {
   )
  }
  viewBagHandler = () => {
-  const showCartOverlay = this.props.showCartOverlay
+  const { showCartOverlay } = this.props
   showCartOverlay()
  }
 
@@ -117,54 +86,52 @@ class CartOverlay extends PureComponent {
   const { items, currency } = this.props
 
   return (
-   <div className='cartoverlay-backdrop'>
-    <div className='cartoverlay-container' ref={this.setWrapperRef}>
-     <div className='cartoverlay-header'>
-      {items.length === 1
-       ? `My Bag ${items.length} item`
-       : `My Bag ${items.length} items`}
-     </div>
-     <div className='cartoverlay-items-wrapper'>
-      {items.map((item, itemIndex) => {
-       return (
-        <div key={item.id} className='cartoverlay-item'>
-         <div className='cartoverlay-item-info'>
-          <p>{item.data.name}</p>
-          {getPrice(item, currency)}
-          <div
-           className='cartoverlay-item-info-decisions-box-wrapper'
-           key={Math.random()}>
-           {this.renderDecisions(item)}
-          </div>
-         </div>
-         {this.renderCounterUpdater(item)}
-         <div className='cartoverlay-item-image'>
-          <img alt='' src={item.data.gallery[0]} />
-          <button
-           onClick={() => this.deleteItem(itemIndex)}
-           className='delete-item'>
-           X
-          </button>
+   <div className='cartoverlay-container'>
+    <div className='cartoverlay-header'>
+     {items.length === 1
+      ? `My Bag ${items.length} item`
+      : `My Bag ${items.length} items`}
+    </div>
+    <div className='cartoverlay-items-wrapper'>
+     {items.map((item, itemIndex) => {
+      return (
+       <div key={item.id} className='cartoverlay-item'>
+        <div className='cartoverlay-item-info'>
+         <p>{item.data.name}</p>
+         {getPrice(item, currency)}
+         <div
+          className='cartoverlay-item-info-decisions-box-wrapper'
+          key={Math.random()}>
+          {this.renderDecisions(item)}
          </div>
         </div>
-       )
-      })}
+        {this.renderCounterUpdater(item)}
+        <div className='cartoverlay-item-image'>
+         <img alt='' src={item.data.gallery[0]} />
+         <button
+          onClick={() => this.deleteItem(itemIndex)}
+          className='delete-item'>
+          X
+         </button>
+        </div>
+       </div>
+      )
+     })}
+    </div>
+    <div className='cartoverlay-footer-wrapper'>
+     <div className='cartoverlay-total-box'>
+      <div className='cartoverlay-total-text'>Total</div>
+      <div className='cartoverlay-total-price'>{`${currency} ${this.getTotal()}`}</div>
      </div>
-     <div className='cartoverlay-footer-wrapper'>
-      <div className='cartoverlay-total-box'>
-       <div className='cartoverlay-total-text'>Total</div>
-       <div className='cartoverlay-total-price'>{`${currency} ${this.getTotal()}`}</div>
-      </div>
-      <div className='cartoverlay-checkout-box'>
-       <NavLink to='/cart'>
-        <button
-         className='cartoverlay-checkout-bagBtn'
-         onClick={() => this.viewBagHandler()}>
-         VIEW BAG
-        </button>
-       </NavLink>
-       <button className='cartoverlay-checkout-checkBtn'>CHECK OUT</button>
-      </div>
+     <div className='cartoverlay-checkout-box'>
+      <NavLink to='/cart'>
+       <button
+        className='cartoverlay-checkout-bagBtn'
+        onClick={() => this.viewBagHandler()}>
+        VIEW BAG
+       </button>
+      </NavLink>
+      <button className='cartoverlay-checkout-checkBtn'>CHECK OUT</button>
      </div>
     </div>
    </div>

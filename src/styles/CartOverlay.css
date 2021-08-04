@@ -1,12 +1,13 @@
 .cartoverlay-backdrop {
  position: absolute;
- width: 100%;
  height: 100%;
+ width: 100%;
  background-color: rgba(57, 55, 72, 0.22);
- z-index: 999;
+ z-index: 990;
 }
 
 .cartoverlay-container {
+    z-index: 999;
  position: absolute;
  right: 0;
  height: 540px;

@@ -2,21 +2,20 @@ import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { changeCurrency } from '../redux/currencyReducer'
 import { showCartOverlay } from '../redux/cartOverlayReducer'
-import { showPdp } from '../redux/showPdpReducer'
 import '../styles/NavBar.css'
 import Logo from '../media/Logo.png'
 import UpArrow from '../media/upArrow.png'
 import DownArrow from '../media/downArrow.png'
 import Basket from '../media/Basket.png'
 import { NavLink } from 'react-router-dom'
+import CartOverlay from './CartOverlay'
 //import utilities
 import itemBasketCount from '../utils/itemBasketCount'
 import currencySymbol from '../utils/currencySymbol'
-
 class NavBar extends PureComponent {
  constructor(props) {
   super(props)
-  this.state = { isClicked: false }
+  this.state = { isClicked: false, isOverlay: false }
   this.handleCurrency = this.handleCurrency.bind(this)
   this.showCartOverlay = this.showCartOverlay.bind(this)
   this.renderBasketCount = this.renderBasketCount.bind(this)
@@ -33,6 +32,11 @@ class NavBar extends PureComponent {
   const { showCartOverlay } = this.props
   showCartOverlay()
  }
+ showCartOverlayNavBar = (e) => {
+  e.stopPropagation()
+  const { showCartOverlay } = this.props
+  showCartOverlay(false)
+ }
 
  renderBasketCount() {
   const allItems = this.props.items
@@ -45,7 +49,9 @@ class NavBar extends PureComponent {
 
  renderNavLinks() {
   return (
-   <div className='navbar-container-one'>
+   <div
+    className='navbar-container-one'
+    onClick={(e) => this.showCartOverlayNavBar(e)}>
     <ul className='nav-menu'>
      <NavLink exact to='/' activeClassName='selected'>
       <li className='nav-item' value='all'>
@@ -66,9 +72,8 @@ class NavBar extends PureComponent {
    </div>
   )
  }
- showOptions() {
-  this.setState({ isClicked: !this.state.isClicked })
- }
+
+ showOptions = () => this.setState({ isClicked: !this.state.isClicked })
 
  renderSelectCurrency() {
   return (
@@ -141,18 +146,21 @@ class NavBar extends PureComponent {
       </div>
       <div className='navbar-container-three'>
        {this.renderSelectCurrency()}
-       <div className='basket-wrapper'>
-        <img
-         src={Basket}
-         alt=''
-         className='basket'
-         onClick={() => this.showCartOverlay()}
-        />
+       <div className='basket-wrapper' onClick={() => this.showCartOverlay()}>
+        <img src={Basket} alt='' className='basket' />
         {this.renderBasketCount()}
        </div>
       </div>
      </div>
     </div>
+    {this.props.isOverlay && (
+     <>
+      <div
+       className='cartoverlay-backdrop'
+       onClick={() => this.showCartOverlay()}></div>
+      <CartOverlay />
+     </>
+    )}
    </>
   )
  }
@@ -161,7 +169,8 @@ class NavBar extends PureComponent {
 const mapStateToProps = (state) => ({
  currency: state.currency.currency,
  items: state.items.items,
+ isOverlay: state.isOverlay.isOverlay,
 })
 
-const mapDispatchToProps = { changeCurrency, showPdp, showCartOverlay }
+const mapDispatchToProps = { changeCurrency, showCartOverlay }
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

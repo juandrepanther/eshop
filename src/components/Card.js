@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import parse from 'html-react-parser'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import RadioButton from './RadioButton'
@@ -146,7 +145,7 @@ class Card extends Component {
  }
 
  render() {
-  const { currencyIndex } = this.props
+  const { currency } = this.props
   return (
    <>
     <Query query={ALL_PRODUCTS}>
@@ -175,14 +174,16 @@ class Card extends Component {
           {this.renderAtributesBtns(cardData)}
          </div>
          <h2>PRICE</h2>
-         {/* {getPrice(this.props, currencyIndex)} */}
+         {getPrice(cardData, currency)}
          {this.renderAddToCardBtn(cardData)}
          {this.state.warning && (
           <h4 style={{ color: 'red', marginBottom: '10px' }}>
            Item is OUT of STOCK
           </h4>
          )}
-         <div className='item-description'>{parse(cardData.description)}</div>
+         <div
+          className='item-description'
+          dangerouslySetInnerHTML={{ __html: cardData.description }}></div>
         </div>
        </div>
       )

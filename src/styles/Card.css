@@ -135,10 +135,4 @@
  background-color: #18a33d;
  transition: 0.2s;
 }
-.item-description {
- overflow: auto;
- font-size: 16px;
- font-style: normal;
- font-weight: 400;
- letter-spacing: 0em;
-}
+

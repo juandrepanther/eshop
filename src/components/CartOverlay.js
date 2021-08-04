@@ -30,7 +30,7 @@ class CartOverlay extends PureComponent {
 
  //component life-cycles and handleClick for outside click detection
  componentDidMount() {
-  document.addEventListener('mousedown', this.handleClickOutside)
+  document.addEventListener('mouseup', this.handleClickOutside)
   /*when cartoverlay is open, scrolling is disabled
   Otherwise grey overlay with scroll looks non-friendly user I guess.
   */
@@ -38,7 +38,7 @@ class CartOverlay extends PureComponent {
  }
 
  componentWillUnmount() {
-  document.removeEventListener('mousedown', this.handleClickOutside)
+  document.removeEventListener('mouseup', this.handleClickOutside)
   //when cartoverlay is closed, scrolling is enabled again
   document.body.style.overflowY = 'unset'
  }
@@ -46,9 +46,12 @@ class CartOverlay extends PureComponent {
  setWrapperRef = (node) => (this.wrapperRef = node)
 
  handleClickOutside(e) {
-  const showCartOverlay = this.props.showCartOverlay
+  //const showCartOverlay = this.props.showCartOverlay
   if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-   showCartOverlay(false)
+   const el = document.querySelector('.cartoverlay-backdrop')
+
+   el.style.display = 'none'
+   //showCartOverlay(false)
   }
  }
  //--//
@@ -112,8 +115,7 @@ class CartOverlay extends PureComponent {
 
  render() {
   const { items, currency } = this.props
-  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-  const currencyIndex = currencyItem.indexOf(currency)
+
   return (
    <div className='cartoverlay-backdrop'>
     <div className='cartoverlay-container' ref={this.setWrapperRef}>
@@ -128,7 +130,7 @@ class CartOverlay extends PureComponent {
         <div key={item.id} className='cartoverlay-item'>
          <div className='cartoverlay-item-info'>
           <p>{item.data.name}</p>
-          {getPrice(item, currencyIndex)}
+          {getPrice(item, currency)}
           <div
            className='cartoverlay-item-info-decisions-box-wrapper'
            key={Math.random()}>

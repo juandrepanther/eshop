@@ -35,8 +35,6 @@ class MainCart extends Component {
 
  renderItems() {
   const { items, currency } = this.props
-  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-  const currencyIndex = currencyItem.indexOf(currency)
   return (
    <>
     {items.map((item, itemIndex) => {
@@ -46,7 +44,7 @@ class MainCart extends Component {
         <div className='cart-item-info-text-wrap' key={Math.random()}>
          {descriptionTextLiner(item.data.name)}
         </div>
-        <h2>{getPrice(item, currencyIndex)}</h2>
+        <h2>{getPrice(item, currency)}</h2>
         <div
          className='cart-item-info-decisions-box-wrapper'
          key={Math.random()}>

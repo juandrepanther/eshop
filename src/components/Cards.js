@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
+import getPrice from '../utils/getPrice'
 import { Query } from 'react-apollo'
 import '../styles/Cards.css'
 import { addItems } from '../redux/itemsReducer'
@@ -32,11 +33,8 @@ class Cards extends PureComponent {
  }
 
  displayProducts() {
-  const currency = this.props.currency
-  const currencyItem = ['USD', 'GBP', 'AUD', 'JPY', 'RUB']
-  const index = currencyItem.indexOf(currency)
+  const { currency } = this.props
   const stockOptions = ['', 'notInStock']
-  const icons = ['$', '£', '$', '¥', '₽']
   let { category = '' } = this.props.match.params
   /*below conditional rendering is important,
   because grapgql querry in this case uses uri as variable
@@ -54,9 +52,10 @@ class Cards extends PureComponent {
           {data.category.products.map((product, cardIndex) => {
            if (product.inStock) {
             return (
-             <NavLink to={`/${product.category}/${product.name}`}>
+             <NavLink
+              to={`/${product.category}/${product.name}`}
+              key={product.description}>
               <div
-               key={product.description}
                className={`card-container ${stockOptions[0]}`}
                onClick={() => {
                 this.handleClick(product, cardIndex)
@@ -80,19 +79,17 @@ class Cards extends PureComponent {
                 src={product.gallery[0]}></img>
                <div className='card-text-box'>
                 <h3>{product.name}</h3>
-                <h3>
-                 {`${icons[index]}`}
-                 {product.prices.map((i) => Object.values(i)[0])[index]}
-                </h3>
+                {getPrice(product, currency)}
                </div>
               </div>
              </NavLink>
             )
            } else {
             return (
-             <NavLink to={`/${product.category}/${product.name}`}>
+             <NavLink
+              to={`/${product.category}/${product.name}`}
+              key={product.description}>
               <div
-               key={product.description}
                className={`card-container ${stockOptions[1]}`}
                onClick={() => {
                 this.handleClick(product, cardIndex)
@@ -101,10 +98,7 @@ class Cards extends PureComponent {
                <h5>OUT OF STOCK</h5>
                <div className='card-text-box'>
                 <h3>{product.name}</h3>
-                <h3>
-                 {`${icons[index]}`}
-                 {product.prices.map((i) => Object.values(i)[0])[index]}
-                </h3>
+                {getPrice(product, currency)}
                </div>
               </div>
              </NavLink>
@@ -133,7 +127,6 @@ class Cards extends PureComponent {
  }
 
  render() {
-  console.log(this.props)
   return <>{this.displayProducts()}</>
  }
 }

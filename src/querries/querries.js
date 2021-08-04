@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost'
 
 export const FILTER_PRODUCTS = gql`
- query ($category: String!) {
+ query($category: String!) {
   category(input: { title: $category }) {
    products {
     category
@@ -51,5 +51,10 @@ export const ALL_PRODUCTS = gql`
     }
    }
   }
+ }
+`
+export const ALL_CURRENCIES = gql`
+ {
+  currencies
  }
 `

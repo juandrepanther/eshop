@@ -32,8 +32,7 @@ class NavBar extends PureComponent {
   const { showCartOverlay } = this.props
   showCartOverlay()
  }
- showCartOverlayNavBar = (e) => {
-  e.stopPropagation()
+ showCartOverlayNavBar = () => {
   const { showCartOverlay } = this.props
   showCartOverlay(false)
  }
@@ -73,7 +72,10 @@ class NavBar extends PureComponent {
   )
  }
 
- showOptions = () => this.setState({ isClicked: !this.state.isClicked })
+ showOptions = () => {
+  this.showCartOverlayNavBar()
+  this.setState({ isClicked: !this.state.isClicked })
+ }
 
  renderSelectCurrency() {
   return (

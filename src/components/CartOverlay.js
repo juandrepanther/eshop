@@ -24,6 +24,14 @@ class CartOverlay extends PureComponent {
   this.deleteItem = this.deleteItem.bind(this)
  }
 
+ componentDidMount() {
+  document.body.style.overflowY = 'hidden'
+ }
+
+ componentWillUnmount() {
+  document.body.style.overflowY = 'unset'
+ }
+
  getTotal() {
   const itemCurrencyArr = []
   const items = this.props.items

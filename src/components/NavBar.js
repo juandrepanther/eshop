@@ -127,6 +127,9 @@ class NavBar extends PureComponent {
     {this.props.isOverlay && (
      <>
       <div
+       className='cartoverlay-outsideCLick-listenner'
+       onClick={() => this.showCartOverlay()}></div>
+      <div
        className='cartoverlay-backdrop'
        onClick={() => this.showCartOverlay()}></div>
       <CartOverlay />
@@ -134,6 +137,9 @@ class NavBar extends PureComponent {
     )}
     {this.props.isCurrencySwitcher && (
      <>
+      <div
+       className='cartoverlay-outsideCLick-listenner'
+       onClick={() => this.showOptions()}></div>
       <div
        className='currency-backdrop'
        onClick={() => this.showOptions()}></div>

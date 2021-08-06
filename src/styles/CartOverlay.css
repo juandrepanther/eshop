@@ -1,3 +1,9 @@
+.cartoverlay-outsideCLick-listenner {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
 .cartoverlay-backdrop {
  position: absolute;
  height: 100%;
@@ -7,7 +13,7 @@
 }
 
 .cartoverlay-container {
-    z-index: 999;
+z-index: 999;
  position: absolute;
  right: 0;
  height: 540px;
@@ -22,6 +28,9 @@
  letter-spacing: 0em;
  background-color: white;
  padding: 0px 16px;
+}
+.navbar-wrapper {
+    
 }
 
 .cartoverlay-header {

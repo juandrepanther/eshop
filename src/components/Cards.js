@@ -6,6 +6,7 @@ import getPrice from '../utils/getPrice'
 import { Query } from 'react-apollo'
 import '../styles/Cards.css'
 import { addItems } from '../redux/itemsReducer'
+import { showOutModal } from '../redux/outStockReducer'
 import { FILTER_PRODUCTS } from '../querries/querries'
 
 const initialData = {
@@ -96,7 +97,7 @@ class Cards extends PureComponent {
               <div
                className={`card-container ${stockOptions[1]}`}
                onClick={() => {
-                this.handleClick(product, cardIndex)
+                this.handleClick(product, cardIndex, true)
                }}>
                <img className='card-image' alt='' src={product.gallery[0]} />
                <h5>OUT OF STOCK</h5>
@@ -119,7 +120,11 @@ class Cards extends PureComponent {
   )
  }
 
- handleClick(data, cardIndex) {
+ handleClick(data, cardIndex, isOutOfStock) {
+  const { showOutModal } = this.props
+  if (isOutOfStock) {
+   showOutModal(true)
+  }
   this.setState({
    ...this.state,
    data: data,
@@ -137,5 +142,5 @@ const mapStateToProps = (state) => ({
  currency: state.currency.currency,
  items: state.items.items,
 })
-const mapDispatchToProps = { addItems }
+const mapDispatchToProps = { addItems, showOutModal }
 export default connect(mapStateToProps, mapDispatchToProps)(Cards)

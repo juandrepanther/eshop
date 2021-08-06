@@ -17,6 +17,7 @@ class Card extends Component {
   this.state = {
    bigImageUrl: 0,
    decisions: {},
+   inStock: false,
   }
   this.changeBigImage = this.changeBigImage.bind(this)
   this.saveToStore = this.saveToStore.bind(this)

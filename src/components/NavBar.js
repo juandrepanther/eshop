@@ -2,6 +2,7 @@ import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { changeCurrency } from '../redux/currencyReducer'
 import { showCartOverlay } from '../redux/cartOverlayReducer'
+import { showCurrencySwitcher } from '../redux/CurrSwitchReducer'
 import '../styles/NavBar.css'
 import Logo from '../media/Logo.png'
 import UpArrow from '../media/upArrow.png'
@@ -9,13 +10,12 @@ import DownArrow from '../media/downArrow.png'
 import Basket from '../media/Basket.png'
 import { NavLink } from 'react-router-dom'
 import CartOverlay from './CartOverlay'
-//import utilities
 import itemBasketCount from '../utils/itemBasketCount'
 import currencySymbol from '../utils/currencySymbol'
 class NavBar extends PureComponent {
  constructor(props) {
   super(props)
-  this.state = { isClicked: false, isOverlay: false }
+  this.state = { isOverlay: false }
   this.handleCurrency = this.handleCurrency.bind(this)
   this.showCartOverlay = this.showCartOverlay.bind(this)
   this.renderBasketCount = this.renderBasketCount.bind(this)
@@ -23,18 +23,15 @@ class NavBar extends PureComponent {
 
  handleCurrency = (e) => {
   const clickedValue = e.target.attributes[0].nodeValue
-  const { changeCurrency } = this.props
+  const { changeCurrency, showCurrencySwitcher } = this.props
   changeCurrency(clickedValue)
-  this.setState({ isClicked: false })
+  showCurrencySwitcher(false)
  }
 
  showCartOverlay = () => {
-  const { showCartOverlay } = this.props
+  const { showCartOverlay, showCurrencySwitcher } = this.props
+  showCurrencySwitcher(false)
   showCartOverlay()
- }
- showCartOverlayNavBar = () => {
-  const { showCartOverlay } = this.props
-  showCartOverlay(false)
  }
 
  renderBasketCount() {
@@ -48,9 +45,7 @@ class NavBar extends PureComponent {
 
  renderNavLinks() {
   return (
-   <div
-    className='navbar-container-one'
-    onClick={(e) => this.showCartOverlayNavBar(e)}>
+   <div className='navbar-container-one' onClick={() => this.closeHandler()}>
     <ul className='nav-menu'>
      <NavLink exact to='/' activeClassName='selected'>
       <li className='nav-item' value='all'>
@@ -73,11 +68,19 @@ class NavBar extends PureComponent {
  }
 
  showOptions = () => {
-  this.showCartOverlayNavBar()
-  this.setState({ isClicked: !this.state.isClicked })
+  const { showCurrencySwitcher, showCartOverlay } = this.props
+  showCartOverlay(false)
+  showCurrencySwitcher()
+ }
+
+ closeHandler = () => {
+  const { showCartOverlay, showCurrencySwitcher } = this.props
+  showCurrencySwitcher(false)
+  showCartOverlay(false)
  }
 
  renderSelectCurrency() {
+  const { isCurrencySwitcher } = this.props
   return (
    <div className='currency-options-bar' onChange={this.handleCurrency}>
     <div
@@ -87,7 +90,7 @@ class NavBar extends PureComponent {
       {currencySymbol(this.props.currency)}
      </div>
      <div className='currency-options-arrow'>
-      {this.state.isClicked ? (
+      {isCurrencySwitcher ? (
        <div>
         <img alt='' src={UpArrow} />
        </div>
@@ -98,41 +101,6 @@ class NavBar extends PureComponent {
       )}
      </div>
     </div>
-
-    {this.state.isClicked && (
-     <div className='currency-options-items'>
-      <div
-       data-value='USD'
-       className='option'
-       onClick={(e) => this.handleCurrency(e)}>
-       $ USD
-      </div>
-      <div
-       data-value='GBP'
-       className='option'
-       onClick={(e) => this.handleCurrency(e)}>
-       £ GBP
-      </div>
-      <div
-       data-value='AUD'
-       className='option'
-       onClick={(e) => this.handleCurrency(e)}>
-       $ AUD
-      </div>
-      <div
-       data-value='JPY'
-       className='option'
-       onClick={(e) => this.handleCurrency(e)}>
-       ¥ JPY
-      </div>
-      <div
-       data-value='RUB'
-       className='option'
-       onClick={(e) => this.handleCurrency(e)}>
-       ₽ RUB
-      </div>
-     </div>
-    )}
    </div>
   )
  }
@@ -148,6 +116,7 @@ class NavBar extends PureComponent {
       </div>
       <div className='navbar-container-three'>
        {this.renderSelectCurrency()}
+
        <div className='basket-wrapper' onClick={() => this.showCartOverlay()}>
         <img src={Basket} alt='' className='basket' />
         {this.renderBasketCount()}
@@ -163,6 +132,45 @@ class NavBar extends PureComponent {
       <CartOverlay />
      </>
     )}
+    {this.props.isCurrencySwitcher && (
+     <>
+      <div
+       className='currency-backdrop'
+       onClick={() => this.showOptions()}></div>
+      <div className='currency-options-items'>
+       <div
+        data-value='USD'
+        className='option'
+        onClick={(e) => this.handleCurrency(e)}>
+        $ USD
+       </div>
+       <div
+        data-value='GBP'
+        className='option'
+        onClick={(e) => this.handleCurrency(e)}>
+        £ GBP
+       </div>
+       <div
+        data-value='AUD'
+        className='option'
+        onClick={(e) => this.handleCurrency(e)}>
+        $ AUD
+       </div>
+       <div
+        data-value='JPY'
+        className='option'
+        onClick={(e) => this.handleCurrency(e)}>
+        ¥ JPY
+       </div>
+       <div
+        data-value='RUB'
+        className='option'
+        onClick={(e) => this.handleCurrency(e)}>
+        ₽ RUB
+       </div>
+      </div>
+     </>
+    )}
    </>
   )
  }
@@ -172,7 +180,12 @@ const mapStateToProps = (state) => ({
  currency: state.currency.currency,
  items: state.items.items,
  isOverlay: state.isOverlay.isOverlay,
+ isCurrencySwitcher: state.isCurrencySwitcher.isCurrencySwitcher,
 })
 
-const mapDispatchToProps = { changeCurrency, showCartOverlay }
+const mapDispatchToProps = {
+ showCurrencySwitcher,
+ changeCurrency,
+ showCartOverlay,
+}
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

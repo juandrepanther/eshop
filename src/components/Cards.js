@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { showPdp } from '../redux/showPdpReducer'
 import HoverBasket from '../media/HoverBasket.png'
 import getPrice from '../utils/getPrice'
 import { Query } from 'react-apollo'
@@ -121,14 +120,12 @@ class Cards extends PureComponent {
  }
 
  handleClick(data, cardIndex) {
-  const { showPdp } = this.props
   this.setState({
    ...this.state,
    data: data,
    cardIndex: cardIndex,
    showPdp: true,
   })
-  showPdp(true)
  }
 
  render() {
@@ -140,5 +137,5 @@ const mapStateToProps = (state) => ({
  currency: state.currency.currency,
  items: state.items.items,
 })
-const mapDispatchToProps = { showPdp, addItems }
+const mapDispatchToProps = { addItems }
 export default connect(mapStateToProps, mapDispatchToProps)(Cards)

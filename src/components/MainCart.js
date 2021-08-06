@@ -4,7 +4,6 @@ import '../styles/MainCart.css'
 import { incrementCounter, decrementCounter } from '../redux/itemsReducer'
 import ImageSlider from './imageSlider'
 import attributesBoxes from '../utils/attributesBoxes'
-//utility textLiner - it can add space line. Get price util.
 import descriptionTextLiner from '../utils/descriptionTextLiner'
 import getPrice from '../utils/getPrice'
 

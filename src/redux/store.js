@@ -5,6 +5,8 @@ import itemsReducer from './itemsReducer'
 import decisionsReducer from './decisionsReducer'
 import cartOverlayReducer from './cartOverlayReducer'
 import showCurrencySwitcher from './CurrSwitchReducer'
+import outStockReducer from './outStockReducer'
+import noAttrReducer from './noAttrReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 export const store = configureStore(
@@ -16,6 +18,8 @@ export const store = configureStore(
    decisions: decisionsReducer,
    isOverlay: cartOverlayReducer,
    isCurrencySwitcher: showCurrencySwitcher,
+   isOut: outStockReducer,
+   isAttr: noAttrReducer,
   },
  },
  composeWithDevTools()

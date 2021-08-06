@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
  items: [],
+ dublicate: false,
 }
 
 export const itemsReducer = createSlice({
@@ -20,8 +21,17 @@ export const itemsReducer = createSlice({
    const noExist = findDublicate.findIndex((item) => item === true)
    if (noExist === -1) {
     state.items.push(payload)
+   } else {
+    state.dublicate = true
    }
    findDublicate = []
+  },
+  isDublicate: (state, { payload }) => {
+   if (payload === false) {
+    state.dublicate = false
+   } else {
+    state.dublicate = !state.dublicate
+   }
   },
 
   deleteItem: (state, action) => {
@@ -57,7 +67,12 @@ export const itemsReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItems, incrementCounter, decrementCounter, deleteItem } =
- itemsReducer.actions
+export const {
+ addItems,
+ incrementCounter,
+ decrementCounter,
+ deleteItem,
+ isDublicate,
+} = itemsReducer.actions
 
 export default itemsReducer.reducer

@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addItems } from '../redux/itemsReducer'
 import RadioButton from './RadioButton'
+import Modal from './Modal'
 import { addDecision, deleteDecision } from '../redux/decisionsReducer'
+import { showOutModal } from '../redux/outStockReducer'
+import { showAttrModal } from '../redux/noAttrReducer'
 import '../styles/Card.css'
 import getPrice from '../utils/getPrice'
 import { ALL_PRODUCTS } from '../querries/querries'
@@ -14,7 +17,6 @@ class Card extends Component {
   this.state = {
    bigImageUrl: 0,
    decisions: {},
-   warning: false,
   }
   this.changeBigImage = this.changeBigImage.bind(this)
   this.saveToStore = this.saveToStore.bind(this)
@@ -45,11 +47,10 @@ class Card extends Component {
  }
 
  addItemsToStore(data, inStock) {
+  const { showOutModal, showAttrModal } = this.props
   if (!inStock) {
-   this.setState({ ...this.state, warning: true })
-   setTimeout(() => {
-    this.setState({ ...this.state, warning: false })
-   }, 2000)
+   this.setState({ ...this.state, isOutOfStock: true })
+   showOutModal(true)
   } else {
    const { addItems, deleteDecision } = this.props
    if (data.attributes.length) {
@@ -62,6 +63,7 @@ class Card extends Component {
      })
      deleteDecision()
     } else {
+     showAttrModal()
      return null
     }
    } else {
@@ -144,14 +146,14 @@ class Card extends Component {
  }
 
  render() {
-  const { currency } = this.props
+  const { currency, isOut, isAttr, items } = this.props
+  const isDublicate = items.dublicate
   return (
    <>
     <Query query={ALL_PRODUCTS}>
      {({ loading, error, data }) => {
       if (loading) return <h4>Loading...</h4>
       if (error) console.log(error)
-
       const { name } = this.props.match.params
       const cardData = data.category.products.find(
        (product) => product.name === name
@@ -175,10 +177,15 @@ class Card extends Component {
          <h2 className='price-title'>PRICE</h2>
          {getPrice(cardData, currency)}
          {this.renderAddToCardBtn(cardData)}
-         {this.state.warning && (
-          <h4 style={{ color: 'red', marginBottom: '10px' }}>
-           Item is OUT of STOCK
-          </h4>
+         {/* WARNING MODALS */}
+         {isOut && (
+          <Modal>Item is OUT of STOCK! You can`t add it to the Cart!</Modal>
+         )}
+         {isAttr && (
+          <Modal>Please choose needed Attributes and then Add To Cart!</Modal>
+         )}
+         {isDublicate && (
+          <Modal>You can`t add the same price with the same attributes!</Modal>
          )}
          <div
           className='item-description'
@@ -195,8 +202,16 @@ class Card extends Component {
 
 const mapStateToProps = (state) => ({
  currency: state.currency.currency,
- items: state.items.items,
+ items: state.items,
  decisions: state.decisions.decisions,
+ isOut: state.isOut.isOut,
+ isAttr: state.isAttr.isAttr,
 })
-const mapDispatchToProps = { addItems, addDecision, deleteDecision }
+const mapDispatchToProps = {
+ addItems,
+ addDecision,
+ deleteDecision,
+ showOutModal,
+ showAttrModal,
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

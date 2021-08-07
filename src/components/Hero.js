@@ -7,10 +7,10 @@ class Hero extends PureComponent {
  render() {
   return (
    <>
-    <Route exact path='/' component={Cards} />
-    <Route exact path='/:category' component={Cards} />
-    <Route exact path='/cart' component={MainCart} />
-    <Route exact path='/:category/:name' component={Card} />
+    <Route exact path="/" component={Cards} />
+    <Route exact path="/:category" component={Cards} />
+    <Route exact path="/cart" component={MainCart} />
+    <Route exact path="/:category/:name" component={Card} />
    </>
   )
  }

@@ -32,94 +32,6 @@ class Cards extends PureComponent {
   })
  }
 
- displayProducts() {
-  const { currency } = this.props
-  const stockOptions = ['', 'notInStock']
-  let { category = '' } = this.props.match.params
-  /*below conditional rendering is important,
-  because grapgql querry in this case uses uri as variable
-  */
-  return (
-   <>
-    {category === '' || category === 'tech' || category === 'clothes' ? (
-     <Query query={FILTER_PRODUCTS} variables={{ category: `${category}` }}>
-      {({ loading, error, data }) => {
-       if (loading) return <h4>Loading...</h4>
-       if (error) console.log(error)
-       const categoryTitle =
-        this.props.location.pathname === '/'
-         ? 'ALL'
-         : this.props.location.pathname.replace('/', '').toUpperCase()
-       return (
-        <div className='products-container'>
-         <div className='products-category-title'>{categoryTitle}</div>
-         <div className='products-card-wrapper'>
-          {data.category.products.map((product, cardIndex) => {
-           if (product.inStock) {
-            return (
-             <NavLink
-              to={`/${product.category}/${product.name}`}
-              key={product.description}>
-              <div
-               className={`card-container ${stockOptions[0]}`}
-               onClick={() => {
-                this.handleClick(product, cardIndex)
-               }}>
-               {!Object.keys(product.attributes).length && (
-                <div className='card-hover-cart'>
-                 <img
-                  alt=''
-                  src={HoverBasket}
-                  onClick={(e) => {
-                   e.stopPropagation()
-                   e.preventDefault()
-                   this.addToCartFromPLP(product)
-                  }}
-                 />
-                </div>
-               )}
-               <img
-                className='card-image'
-                alt=''
-                src={product.gallery[0]}></img>
-               <div className='card-text-box'>
-                <h3>{product.name}</h3>
-                {getPrice(product, currency)}
-               </div>
-              </div>
-             </NavLink>
-            )
-           } else {
-            return (
-             <NavLink
-              to={`/${product.category}/${product.name}`}
-              key={product.description}>
-              <div
-               className={`card-container ${stockOptions[1]}`}
-               onClick={() => {
-                this.handleClick(product, cardIndex, true)
-               }}>
-               <img className='card-image' alt='' src={product.gallery[0]} />
-               <h5>OUT OF STOCK</h5>
-               <div className='card-text-box'>
-                <h3>{product.name}</h3>
-                {getPrice(product, currency)}
-               </div>
-              </div>
-             </NavLink>
-            )
-           }
-          })}
-         </div>
-        </div>
-       )
-      }}
-     </Query>
-    ) : null}
-   </>
-  )
- }
-
  handleClick(data, cardIndex, isOutOfStock) {
   const { showOutModal } = this.props
   if (isOutOfStock) {
@@ -133,8 +45,97 @@ class Cards extends PureComponent {
   })
  }
 
+ renderInStockItems(product, cardIndex) {
+  const { currency } = this.props
+  return (
+   <NavLink
+    to={`/${product.category}/${product.name}`}
+    key={product.description}
+   >
+    <div
+     className="card-container"
+     onClick={() => {
+      this.handleClick(product, cardIndex)
+     }}
+    >
+     {!Object.keys(product.attributes).length && (
+      <div className="card-hover-cart">
+       <img
+        alt=""
+        src={HoverBasket}
+        onClick={(e) => {
+         e.stopPropagation()
+         e.preventDefault()
+         this.addToCartFromPLP(product)
+        }}
+       />
+      </div>
+     )}
+     <img className="card-image" alt="" src={product.gallery[0]}></img>
+     <div className="card-text-box">
+      <h3>{product.name}</h3>
+      {getPrice(product, currency)}
+     </div>
+    </div>
+   </NavLink>
+  )
+ }
+
+ renderOutOfStockItems(product, cardIndex) {
+  const { currency } = this.props
+  return (
+   <NavLink
+    to={`/${product.category}/${product.name}`}
+    key={product.description}
+   >
+    <div
+     className="card-container notInStock"
+     onClick={() => {
+      this.handleClick(product, cardIndex, true)
+     }}
+    >
+     <img className="card-image" alt="" src={product.gallery[0]} />
+     <h5>OUT OF STOCK</h5>
+     <div className="card-text-box">
+      <h3>{product.name}</h3>
+      {getPrice(product, currency)}
+     </div>
+    </div>
+   </NavLink>
+  )
+ }
  render() {
-  return <>{this.displayProducts()}</>
+  let { category = '' } = this.props.match.params
+  return (
+   <>
+    {category === '' || category === 'tech' || category === 'clothes' ? (
+     <Query query={FILTER_PRODUCTS} variables={{ category: `${category}` }}>
+      {({ loading, error, data }) => {
+       if (loading) return <h4>Loading...</h4>
+       if (error) console.log(error)
+       const categoryTitle =
+        this.props.location.pathname === '/'
+         ? 'ALL'
+         : this.props.location.pathname.replace('/', '').toUpperCase()
+       return (
+        <div className="products-container">
+         <div className="products-category-title">{categoryTitle}</div>
+         <div className="products-card-wrapper">
+          {data.category.products.map((product, cardIndex) => {
+           if (product.inStock) {
+            return this.renderInStockItems(product, cardIndex)
+           } else {
+            return this.renderOutOfStockItems(product, cardIndex)
+           }
+          })}
+         </div>
+        </div>
+       )
+      }}
+     </Query>
+    ) : null}
+   </>
+  )
  }
 }
 

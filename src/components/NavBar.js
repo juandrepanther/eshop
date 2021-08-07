@@ -38,27 +38,27 @@ class NavBar extends PureComponent {
   const allItems = this.props.items
   if (allItems.length !== 0) {
    return (
-    <div className='small-basket-counter'>{itemBasketCount(allItems)}</div>
+    <div className="small-basket-counter">{itemBasketCount(allItems)}</div>
    )
   }
  }
 
  renderNavLinks() {
   return (
-   <div className='navbar-container-one' onClick={() => this.closeHandler()}>
-    <ul className='nav-menu'>
-     <NavLink exact to='/' activeClassName='selected'>
-      <li className='nav-item' value='all'>
+   <div className="navbar-container-one" onClick={() => this.closeHandler()}>
+    <ul className="nav-menu">
+     <NavLink exact to="/" activeClassName="selected">
+      <li className="nav-item" value="all">
        ALL
       </li>
      </NavLink>
-     <NavLink to='/clothes' activeClassName='selected'>
-      <li className='nav-item' value='clothes'>
+     <NavLink to="/clothes" activeClassName="selected">
+      <li className="nav-item" value="clothes">
        CLOTHES
       </li>
      </NavLink>
-     <NavLink to='/tech' activeClassName='selected'>
-      <li className='nav-item' value='tech'>
+     <NavLink to="/tech" activeClassName="selected">
+      <li className="nav-item" value="tech">
        TECH
       </li>
      </NavLink>
@@ -82,21 +82,22 @@ class NavBar extends PureComponent {
  renderSelectCurrency() {
   const { isCurrencySwitcher } = this.props
   return (
-   <div className='currency-options-bar' onChange={this.handleCurrency}>
+   <div className="currency-options-bar" onChange={this.handleCurrency}>
     <div
-     className='currency-options-wrapper'
-     onClick={() => this.showOptions()}>
-     <div className='currency-options-active'>
+     className="currency-options-wrapper"
+     onClick={() => this.showOptions()}
+    >
+     <div className="currency-options-active">
       {currencySymbol(this.props.currency)}
      </div>
-     <div className='currency-options-arrow'>
+     <div className="currency-options-arrow">
       {isCurrencySwitcher ? (
        <div>
-        <img alt='' src={UpArrow} />
+        <img alt="" src={UpArrow} />
        </div>
       ) : (
        <div>
-        <img alt='' src={DownArrow} />
+        <img alt="" src={DownArrow} />
        </div>
       )}
      </div>
@@ -104,79 +105,89 @@ class NavBar extends PureComponent {
    </div>
   )
  }
-
+ renderCartOverlay() {
+  return (
+   <>
+    <div
+     className="cartoverlay-outsideCLick-listenner"
+     onClick={() => this.showCartOverlay()}
+    ></div>
+    <div
+     className="cartoverlay-backdrop"
+     onClick={() => this.showCartOverlay()}
+    ></div>
+    <CartOverlay />
+   </>
+  )
+ }
+ renderCurrencySwitcher() {
+  return (
+   <>
+    <div
+     className="cartoverlay-outsideCLick-listenner"
+     onClick={() => this.showOptions()}
+    ></div>
+    <div className="currency-backdrop" onClick={() => this.showOptions()}></div>
+    <div className="currency-options-items">
+     <div
+      data-value="USD"
+      className="option"
+      onClick={(e) => this.handleCurrency(e)}
+     >
+      $ USD
+     </div>
+     <div
+      data-value="GBP"
+      className="option"
+      onClick={(e) => this.handleCurrency(e)}
+     >
+      £ GBP
+     </div>
+     <div
+      data-value="AUD"
+      className="option"
+      onClick={(e) => this.handleCurrency(e)}
+     >
+      $ AUD
+     </div>
+     <div
+      data-value="JPY"
+      className="option"
+      onClick={(e) => this.handleCurrency(e)}
+     >
+      ¥ JPY
+     </div>
+     <div
+      data-value="RUB"
+      className="option"
+      onClick={(e) => this.handleCurrency(e)}
+     >
+      ₽ RUB
+     </div>
+    </div>
+   </>
+  )
+ }
  render() {
   return (
    <>
-    <div className='navbar-container'>
-     <div className='navbar-wrapper'>
+    <div className="navbar-container">
+     <div className="navbar-wrapper">
       {this.renderNavLinks()}
-      <div className='navbar-container-two'>
-       <img src={Logo} alt='' className='logo' />
+      <div className="navbar-container-two">
+       <img src={Logo} alt="" className="logo" />
       </div>
-      <div className='navbar-container-three'>
+      <div className="navbar-container-three">
        {this.renderSelectCurrency()}
-
-       <div className='basket-wrapper' onClick={() => this.showCartOverlay()}>
-        <img src={Basket} alt='' className='basket' />
+       <div className="basket-wrapper" onClick={() => this.showCartOverlay()}>
+        <img src={Basket} alt="" className="basket" />
         {this.renderBasketCount()}
        </div>
       </div>
      </div>
     </div>
-    {this.props.isOverlay && (
-     <>
-      <div
-       className='cartoverlay-outsideCLick-listenner'
-       onClick={() => this.showCartOverlay()}></div>
-      <div
-       className='cartoverlay-backdrop'
-       onClick={() => this.showCartOverlay()}></div>
-      <CartOverlay />
-     </>
-    )}
-    {this.props.isCurrencySwitcher && (
-     <>
-      <div
-       className='cartoverlay-outsideCLick-listenner'
-       onClick={() => this.showOptions()}></div>
-      <div
-       className='currency-backdrop'
-       onClick={() => this.showOptions()}></div>
-      <div className='currency-options-items'>
-       <div
-        data-value='USD'
-        className='option'
-        onClick={(e) => this.handleCurrency(e)}>
-        $ USD
-       </div>
-       <div
-        data-value='GBP'
-        className='option'
-        onClick={(e) => this.handleCurrency(e)}>
-        £ GBP
-       </div>
-       <div
-        data-value='AUD'
-        className='option'
-        onClick={(e) => this.handleCurrency(e)}>
-        $ AUD
-       </div>
-       <div
-        data-value='JPY'
-        className='option'
-        onClick={(e) => this.handleCurrency(e)}>
-        ¥ JPY
-       </div>
-       <div
-        data-value='RUB'
-        className='option'
-        onClick={(e) => this.handleCurrency(e)}>
-        ₽ RUB
-       </div>
-      </div>
-     </>
-    )}
+    {this.props.isOverlay && this.renderCartOverlay()}
+    {this.props.isCurrencySwitcher && this.renderCurrencySwitcher()}
    </>
   )
  }
